@@ -16,11 +16,13 @@ void Timer::Start()
 }
 
 int Timer::ReadSec() const
-{
-	return (SDL_GetTicks() - startTime) / 1000;
+{ 
+	int secs = (SDL_GetTicks() - startTime) / 1000;
+	return secs;
 }
 
 float Timer::ReadMSec() const
 {
-	return (float)(SDL_GetTicks() - startTime);
+	float Msecs = (float)(SDL_GetTicks() - startTime);
+	return Msecs;
 }

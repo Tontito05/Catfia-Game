@@ -22,6 +22,8 @@ public:
 
 	bool CleanUp();
 
+	void ResetDash();
+
 	// L08 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -41,4 +43,9 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 1.2f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
+
+	bool isDashingL = false;
+	bool isDashingR = false;
+	float DashForce = 10;
+	float DashSlower = 0;
 };

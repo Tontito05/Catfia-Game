@@ -3,6 +3,8 @@
 #include "Input.h"
 #include "Render.h"
 
+
+
 enum class EntityType
 {
 	PLAYER,

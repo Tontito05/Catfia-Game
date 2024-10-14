@@ -47,14 +47,29 @@ bool Player::Update(float dt)
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
+
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		velocity.x = -0.3 * dt;
+
+		//Set the dash so the player can use it on the LEFT
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
+			// Apply an initial Left force
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
+			isDashingL = true;
+		}
 	}
 
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		velocity.x = 0.3 * dt;
+
+		//Set the dash so the player can use it on the RIGHT
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
+			// Apply an initial Right force
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
+			isDashingR = true;
+		}
 	}
 	
 	//Jump
@@ -68,6 +83,9 @@ bool Player::Update(float dt)
 	if(isJumping == true)
 	{
 		velocity = pbody->body->GetLinearVelocity();
+
+		//We insert this here so the player camn move during the jump, so we dont limit the movement
+		//Move Left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * dt;
 		}
@@ -77,6 +95,36 @@ bool Player::Update(float dt)
 		}
 	}
 
+	//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
+
+	//Right Dash
+	if (isDashingR == true)
+	{
+		//The parameter that creates the slowing sensation of the dash
+		DashSlower -= 0.15f;
+		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+		velocity = pbody->body->GetLinearVelocity();
+		
+		//where we look if the dash has finished or not
+		DashForce += DashSlower;
+		if (DashForce <=0)
+		{
+			ResetDash();
+		}
+	}
+	//Left Dash
+	else if (isDashingL == true)
+	{
+		//Same as on top
+		DashSlower += 0.15f;
+		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+		velocity = pbody->body->GetLinearVelocity();
+		DashForce -= DashSlower;
+		if (DashForce <= 0)
+		{
+			ResetDash();
+		}
+	}
 	// Apply the velocity to the player
 	pbody->body->SetLinearVelocity(velocity);
 
@@ -131,4 +179,12 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	default:
 		break;
 	}
+}
+
+void Player::ResetDash()
+{
+	DashForce = 10;
+	DashSlower = 0;
+	isDashingL = false;
+	isDashingR = false;
 }
