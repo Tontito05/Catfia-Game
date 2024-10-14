@@ -7,8 +7,6 @@
 #include "PerfTimer.h"
 #include "pugixml.hpp"
 
-using namespace pugi;
-
 // Modules
 class Window;
 class Input;
@@ -18,6 +16,8 @@ class Audio;
 class Scene;
 class EntityManager;
 class Map;
+//L08 TODO 2: Add Physics module
+class Physics;
 
 class Engine
 {
@@ -91,8 +91,12 @@ public:
 	std::shared_ptr<Textures> textures;
 	std::shared_ptr<Audio> audio;
 	std::shared_ptr<Scene> scene;
+	// L04: TODO 1: Add the EntityManager Module to the Engine
 	std::shared_ptr<EntityManager> entityManager;
 	std::shared_ptr<Map> map;
+	// L08: TODO 2: Add Physics module
+	std::shared_ptr<Physics> physics;
+
 
 private: 
 
@@ -119,6 +123,6 @@ private:
 
 	std::string gameTitle = "Platformer Game";
 
-	// Variable to load and store the XML file in memory
-	xml_document configFile;
+	//L05 TODO 2: Declare a xml_document to load the config file
+	pugi::xml_document configFile;
 };
