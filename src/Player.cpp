@@ -49,12 +49,12 @@ bool Player::Update(float dt)
 
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = -0.2 * dt;
+		velocity.x = -0.3 * dt;
 	}
 
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = 0.2 * dt;
+		velocity.x = 0.3 * dt;
 	}
 	
 	//Jump
@@ -68,6 +68,13 @@ bool Player::Update(float dt)
 	if(isJumping == true)
 	{
 		velocity = pbody->body->GetLinearVelocity();
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			velocity.x = -0.4 * dt;
+		}
+		// Move right
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			velocity.x = 0.4 * dt;
+		}
 	}
 
 	// Apply the velocity to the player

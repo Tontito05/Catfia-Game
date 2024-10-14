@@ -172,6 +172,7 @@ void Engine::PrepareUpdate()
     frameTime.Start();
 }
 
+
 // ---------------------------------------------
 void Engine::FinishUpdate()
 {
