@@ -41,11 +41,11 @@ public:
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
-	float jumpForce = 1.2f; // The force to apply when jumping
+	float jumpForce = 2.5f; // The force to apply when jumping
 	bool isJumping = false; // Flag to check if the player is currently jumping
 
 	bool isDashingL = false;
 	bool isDashingR = false;
-	float DashForce = 10;
+	float DashForce = 3;
 	float DashSlower = 0;
 };

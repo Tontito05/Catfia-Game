@@ -27,7 +27,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//L03: TODO 2: Initialize Player parameters
-	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/player1.png");
+	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/gato de pie first bocetos.png");
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
@@ -101,7 +101,7 @@ bool Player::Update(float dt)
 	if (isDashingR == true)
 	{
 		//The parameter that creates the slowing sensation of the dash
-		DashSlower -= 0.15f;
+		DashSlower -= 0.05;
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 		velocity = pbody->body->GetLinearVelocity();
 		
@@ -116,7 +116,7 @@ bool Player::Update(float dt)
 	else if (isDashingL == true)
 	{
 		//Same as on top
-		DashSlower += 0.15f;
+		DashSlower += 0.05;
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 		velocity = pbody->body->GetLinearVelocity();
 		DashForce -= DashSlower;
@@ -183,7 +183,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 
 void Player::ResetDash()
 {
-	DashForce = 10;
+	DashForce = 4;
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
