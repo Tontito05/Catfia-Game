@@ -193,6 +193,7 @@ void Engine::FinishUpdate()
 
     // Amount of time since game start (use a low resolution timer)
     secondsSinceStartup = startupTime.ReadSec();
+    Mtime = startupTime.ReadMSec();
 
     // Amount of ms took the last update (dt)
     dt = (float)frameTime.ReadMs();

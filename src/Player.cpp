@@ -25,7 +25,7 @@ bool Player::Awake() {
 }
 
 bool Player::Start() {
-
+	
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/gato de pie first bocetos.png");
 
@@ -47,108 +47,107 @@ bool Player::Update(float dt)
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
-
-	// Move left
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = -0.4 * dt;
-
-		//Set the dash so the player can use it on the LEFT
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
-			// Apply an initial Left force
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
-			isDashingL = true;
-		}
-	}
-
-	// Move right
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = 0.4 * dt;
-
-		//Set the dash so the player can use it on the RIGHT
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
-			// Apply an initial Right force
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
-			isDashingR = true;
-		}
-	}
-	
-	//Jump
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && isJumping == false) {
-		// Apply an initial upward force
-		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		isJumping = true;
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		
-	}
-
-	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
-	if(isJumping == true)
-	{
-		velocity = pbody->body->GetLinearVelocity();
-		//We insert this here so the player camn move during the jump, so we dont limit the movement
-		//Move Left
+		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			velocity.x = -0.3 * dt;
+			velocity.x = -0.4 * dt;
+
+			//Set the dash so the player can use it on the LEFT
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
+				// Apply an initial Left force
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
+				isDashingL = true;
+			}
 		}
+
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.3 * dt;
-		}
-		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)&&(JumpMinus>0)) 
-		{
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
-			velocity = pbody->body->GetLinearVelocity();
-		}
-		else
-		{
-			JumpMinus -= 0.1;
-		}
-	}
+			velocity.x = 0.4 * dt;
 
-	//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
-
-	//Right Dash
-	if (CanDash == true)
-	{
-		if (isDashingR == true)
-		{
-			//The parameter that creates the slowing sensation of the dash
-			DashSlower -= 0.05;
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
-			velocity = pbody->body->GetLinearVelocity();
-
-			//where we look if the dash has finished or not
-			DashForce += DashSlower;
-			if (DashForce <= 0)
-			{
-				ResetDash();
+			//Set the dash so the player can use it on the RIGHT
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
+				// Apply an initial Right force
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
+				isDashingR = true;
 			}
 		}
-		//Left Dash
-		else if (isDashingL == true)
+
+		//Jump
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && isJumping == false) {
+			// Apply an initial upward force
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+			isJumping = true;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+		}
+
+		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
+		if (isJumping == true)
 		{
-			//Same as on top
-			DashSlower += 0.05;
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 			velocity = pbody->body->GetLinearVelocity();
-			DashForce -= DashSlower;
-			if (DashForce <= 0)
+			//We insert this here so the player camn move during the jump, so we dont limit the movement
+			//Move Left
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				velocity.x = -0.3 * dt;
+			}
+			// Move right
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				velocity.x = 0.3 * dt;
+			}
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
 			{
-				ResetDash();
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+				velocity = pbody->body->GetLinearVelocity();
+			}
+			else
+			{
+				JumpMinus -= 0.1;
 			}
 		}
-	}
 
-	// Apply the velocity to the player
-	pbody->body->SetLinearVelocity(velocity);
+		//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
 
-	b2Transform pbodyPos = pbody->body->GetTransform();
-	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
-	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+		//Right Dash
+		if (CanDash == true)
+		{
+			if (isDashingR == true)
+			{
+				//The parameter that creates the slowing sensation of the dash
+				DashSlower -= 0.01;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
+				//where we look if the dash has finished or not
+				DashForce += DashSlower;
+				if (DashForce <= 0)
+				{
+					ResetDash();
+				}
+			}
+			//Left Dash
+			else if (isDashingL == true)
+			{
+				//Same as on top
+				DashSlower += 0.01;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				DashForce -= DashSlower;
+				if (DashForce <= 0)
+				{
+					ResetDash();
+				}
+			}
+		}
+
+		// Apply the velocity to the player
+		pbody->body->SetLinearVelocity(velocity);
+
+		b2Transform pbodyPos = pbody->body->GetTransform();
+		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
+		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+
+		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
 	return true;
 }
 
