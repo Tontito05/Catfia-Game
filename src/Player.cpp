@@ -50,7 +50,7 @@ bool Player::Update(float dt)
 
 	// Move left
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		velocity.x = -0.3 * dt;
+		velocity.x = -0.4 * dt;
 
 		//Set the dash so the player can use it on the LEFT
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
@@ -62,7 +62,7 @@ bool Player::Update(float dt)
 
 	// Move right
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		velocity.x = 0.3 * dt;
+		velocity.x = 0.4 * dt;
 
 		//Set the dash so the player can use it on the RIGHT
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
@@ -73,62 +73,74 @@ bool Player::Update(float dt)
 	}
 	
 	//Jump
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false) {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && isJumping == false) {
 		// Apply an initial upward force
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 		isJumping = true;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		// Apply an initial upward force
+		
 	}
 
 	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 	if(isJumping == true)
 	{
 		velocity = pbody->body->GetLinearVelocity();
-
 		//We insert this here so the player camn move during the jump, so we dont limit the movement
 		//Move Left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			velocity.x = -0.4 * dt;
+			velocity.x = -0.3 * dt;
 		}
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * dt;
+			velocity.x = 0.3 * dt;
+		}
+		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)&&(JumpMinus>0)) 
+		{
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+			velocity = pbody->body->GetLinearVelocity();
+		}
+		else
+		{
+			JumpMinus -= 0.1;
 		}
 	}
 
 	//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
 
 	//Right Dash
-	if (isDashingR == true)
+	if (CanDash == true)
 	{
-		//The parameter that creates the slowing sensation of the dash
-		DashSlower -= 0.05;
-		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
-		velocity = pbody->body->GetLinearVelocity();
-		
-		//where we look if the dash has finished or not
-		DashForce += DashSlower;
-		if (DashForce <=0)
+		if (isDashingR == true)
 		{
-			ResetDash();
+			//The parameter that creates the slowing sensation of the dash
+			DashSlower -= 0.05;
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+			velocity = pbody->body->GetLinearVelocity();
+
+			//where we look if the dash has finished or not
+			DashForce += DashSlower;
+			if (DashForce <= 0)
+			{
+				ResetDash();
+			}
+		}
+		//Left Dash
+		else if (isDashingL == true)
+		{
+			//Same as on top
+			DashSlower += 0.05;
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+			velocity = pbody->body->GetLinearVelocity();
+			DashForce -= DashSlower;
+			if (DashForce <= 0)
+			{
+				ResetDash();
+			}
 		}
 	}
-	//Left Dash
-	else if (isDashingL == true)
-	{
-		//Same as on top
-		DashSlower += 0.05;
-		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
-		velocity = pbody->body->GetLinearVelocity();
-		DashForce -= DashSlower;
-		if (DashForce <= 0)
-		{
-			ResetDash();
-		}
-	}
+
 	// Apply the velocity to the player
 	pbody->body->SetLinearVelocity(velocity);
 
@@ -158,6 +170,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (pbody->body->GetLinearVelocity().y == 0)
 		{
 			isJumping = false;
+			JumpMinus = 1;
+			isDashingL = false;
+			isDashingR = false;
+			CanDash = true;
+		}
+		else
+		{
+			isJumping = true;
 		}
 		break;
 	case ColliderType::ITEM:
@@ -193,6 +213,5 @@ void Player::ResetDash()
 {
 	DashForce = 4;
 	DashSlower = 0;
-	isDashingL = false;
-	isDashingR = false;
+	CanDash = false;
 }
