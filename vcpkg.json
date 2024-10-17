@@ -3,11 +3,8 @@
     "pugixml",
     "sdl2",
     "sdl2-image",
-<<<<<<< Updated upstream
     "sdl2-mixer",
-    "box2d"
-=======
+    "box2d",
     "sdl2-mixer"
->>>>>>> Stashed changes
   ]
 }

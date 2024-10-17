@@ -79,6 +79,10 @@ bool Player::Update(float dt)
 		isJumping = true;
 	}
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		// Apply an initial upward force
+	}
+
 	// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 	if(isJumping == true)
 	{
@@ -150,7 +154,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
-		isJumping = false;
+
+		if (pbody->body->GetLinearVelocity().y == 0)
+		{
+			isJumping = false;
+		}
 		break;
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
