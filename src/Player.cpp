@@ -26,19 +26,20 @@ bool Player::Awake() {
 }
 
 bool Player::Start() {
-	
+
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/gato de pie first bocetos.png");
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2.5, bodyType::DYNAMIC);
 
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
 
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
+
 	return true;
 }
 
@@ -47,8 +48,6 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-
-
 
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -60,6 +59,7 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
 				isDashingL = true;
 			}
+			state = States::WALKING_L;
 		}
 
 		// Move right
@@ -72,6 +72,7 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 				isDashingR = true;
 			}
+			state = States::WALKING_R;
 		}
 
 		//Reset
@@ -81,24 +82,42 @@ bool Player::Update(float dt)
 		}
 
 		//Jump
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-			isJumping = true;
+			Jumping = true;
 		}
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
-		if (isJumping == true)
+		if (Jumping == true)
 		{
 			velocity = pbody->body->GetLinearVelocity();
 			//We insert this here so the player camn move during the jump, so we dont limit the movement
 			//Move Left
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.3 * dt;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5)
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+
+				state = States::JUMPING_L;
 			}
 			// Move right
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.3 * dt;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5)
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+
+				state = States::JUMPING_R;
+			}
+
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+				velocity = pbody->body->GetLinearVelocity();
+			}
+			else
+			{
+				JumpMinus -= 0.1;
 			}
 		}
 
@@ -110,34 +129,45 @@ bool Player::Update(float dt)
 			if (isDashingR == true)
 			{
 				//The parameter that creates the slowing sensation of the dash
-				DashSlower -= 0.01;
+				DashSlower -= 0.01f;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-
+				velocity.y = 0;
 				//where we look if the dash has finished or not
 				DashForce += DashSlower;
 				if (DashForce <= 0)
 				{
 					ResetDash();
 				}
+				state = States::DASH_L;
 			}
 			//Left Dash
 			else if (isDashingL == true)
 			{
 				//Same as on top
-				DashSlower += 0.01;
+				DashSlower += 0.01f;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
+				velocity.y = 0;
 				DashForce -= DashSlower;
 				if (DashForce <= 0)
 				{
 					ResetDash();
 				}
+				state = States::DASH_R;
 			}
 		}
 
-		// Apply the velocity to the player
+		//Stop the acceleration
+
+
+		if (pbody->body->GetLinearVelocity().y > 10)
+		{
+			velocity.y = TerminalVelocity.y;
+		}
 		pbody->body->SetLinearVelocity(velocity);
+		// Apply the velocity to the player
+
 
 		b2Transform pbodyPos = pbody->body->GetTransform();
 		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
@@ -157,59 +187,62 @@ bool Player::CleanUp()
 
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
-	switch (physB->ctype)
-	{
-	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
-		//reset the jump flag when touching the ground
 
-		isJumping = false;			
-		JumpMinus = 1;
-		isDashingL = false;
-		isDashingR = false;
-		CanDash = true;
+		switch (physB->ctype)
+		{
+		case ColliderType::PLATFORM:
+			LOG("Collision PLATFORM");
+			//reset the jump flag when touching the ground
 
-		break;
-	case ColliderType::ITEM:
-		LOG("Collision ITEM");
-		break;
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
-	case ColliderType::WALL:
-		LOG("Collision WALL");
-		isDashingL = false;
-		isDashingR = false;
-		break;
-	default:
-		break;
-	}
+			Jumping = false;
+			JumpMinus = 1;
+			isDashingL = false;
+			isDashingR = false;
+			CanDash = true;
+
+			break;
+		case ColliderType::ITEM:
+			LOG("Collision ITEM");
+			break;
+		case ColliderType::UNKNOWN:
+			LOG("Collision UNKNOWN");
+			break;
+		case ColliderType::WALL:
+			LOG("Collision WALL");
+			isDashingL = false;
+			isDashingR = false;
+			break;
+		default:
+			break;
+		}
 }
 
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
-	switch (physB->ctype)
-	{
-	case ColliderType::PLATFORM:
-		LOG("End Collision PLATFORM");
-		break;
-	case ColliderType::ITEM:
-		LOG("End Collision ITEM");
-		break;
-	case ColliderType::UNKNOWN:
-		LOG("End Collision UNKNOWN");
-		break;
-	case ColliderType::WALL:
-		LOG("End Collision WALL");
-		break;
-	default:
-		break;
-	}
+
+		switch (physB->ctype)
+		{
+		case ColliderType::PLATFORM:
+			LOG("End Collision PLATFORM");
+			break;
+		case ColliderType::ITEM:
+			LOG("End Collision ITEM");
+			break;
+		case ColliderType::UNKNOWN:
+			LOG("End Collision UNKNOWN");
+			break;
+		case ColliderType::WALL:
+			LOG("End Collision WALL");
+			break;
+		default:
+			break;
+		}
 }
 
 void Player::ResetDash()
 {
-	DashForce = 4;
+
+	DashForce = 1.5;
 	DashSlower = 0;
 	CanDash = false;
 }
