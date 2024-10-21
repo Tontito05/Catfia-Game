@@ -164,8 +164,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		isDashingR = false;
 		CanDash = true;
 
-
-
 		break;
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
@@ -190,6 +188,9 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
+		break;
+	case ColliderType::WALL:
+		LOG("End Collision WALL");
 		break;
 	default:
 		break;

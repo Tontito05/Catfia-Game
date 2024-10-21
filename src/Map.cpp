@@ -224,6 +224,17 @@ bool Map::Load(std::string path, std::string fileName)
             }
         }
 
+        for (const auto& ObjectGroups : mapData.objectgroups) {
+            if (ObjectGroups->properties.GetProperty("Walls") != NULL && ObjectGroups->properties.GetProperty("Walls")->value == true) {
+                for (const auto& Object : ObjectGroups->objects)
+                {
+                    PhysBody* collider = Engine::GetInstance().physics.get()->CreateRectangle(Object.x + Object.width / 2, Object.y + Object.height / 2, Object.width, Object.height, STATIC);
+                    collider->ctype = ColliderType::WALL;
+                }
+
+            }
+        }
+
         ret = true;
 
         // L06: TODO 5: LOG all the data loaded iterate all tilesetsand LOG everything

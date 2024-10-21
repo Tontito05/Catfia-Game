@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="96">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="197">
  <editorsettings>
   <export target="Map.xml" format="tmx"/>
  </editorsettings>
@@ -11,70 +11,68 @@
    <property name="Collisions" type="bool" value="true"/>
    <property name="Draw" type="bool" value="false"/>
   </properties>
-  <object id="10" x="1654" y="-352" width="2"/>
-  <object id="37" x="32" y="320" width="224"/>
-  <object id="38" x="384" y="224" width="192"/>
-  <object id="39" x="736" y="224" width="192"/>
-  <object id="40" x="1056" y="320" width="160"/>
-  <object id="41" x="1216" y="160" width="192"/>
-  <object id="42" x="1408" y="288" width="192"/>
-  <object id="43" x="1408" y="480" width="128"/>
-  <object id="44" x="1568" y="704" width="448"/>
-  <object id="45" x="1632" y="864" width="128"/>
-  <object id="46" x="1216" y="960" width="192"/>
-  <object id="47" x="1408" y="1152" width="480"/>
-  <object id="48" x="1888" y="1152" width="448"/>
-  <object id="49" x="2336" y="1152" width="416"/>
-  <object id="50" x="2752" y="1152" width="288"/>
-  <object id="51" x="2272" y="1056" width="96"/>
-  <object id="52" x="1888" y="992" width="192"/>
-  <object id="53" x="1425" y="1085" width="63.25"/>
-  <object id="54" x="1584" y="1117" width="70.75"/>
-  <object id="55" x="1577" y="1136" width="6.75"/>
-  <object id="56" x="2290.75" y="988.25" width="62"/>
-  <object id="57" x="2857.25" y="1136" width="6.75"/>
-  <object id="58" x="2864.75" y="1117" width="69.75"/>
-  <object id="60" x="2962.75" y="1084.25" width="62.25"/>
-  <object id="61" x="2400" y="864" width="64"/>
-  <object id="62" x="2464" y="768" width="224"/>
-  <object id="63" x="2688" y="864" width="64"/>
+  <object id="37" x="32.8182" y="320" width="221.091"/>
+  <object id="38" x="386.455" y="224" width="187.67"/>
+  <object id="39" x="738.545" y="224" width="187.636"/>
+  <object id="40" x="1058.18" y="320" width="157.818"/>
+  <object id="41" x="1218.36" y="160" width="187.818"/>
+  <object id="42" x="1408" y="288" width="190.182"/>
+  <object id="43" x="1408" y="480" width="126.091"/>
+  <object id="44" x="1570.5" y="704" width="445.5"/>
+  <object id="45" x="1634.38" y="864" width="125.625"/>
+  <object id="46" x="1216" y="960" width="189.18"/>
+  <object id="47" x="1408" y="1152" width="1631.18"/>
+  <object id="51" x="2275" y="1056" width="90"/>
+  <object id="52" x="1892.18" y="992" width="183.636"/>
+  <object id="53" x="1427.18" y="1085" width="59.1591"/>
+  <object id="54" x="1587.13" y="1117" width="64.125"/>
+  <object id="55" x="1579.38" y="1136" width="4.375"/>
+  <object id="56" x="2292.5" y="988.25" width="58.25"/>
+  <object id="57" x="2858.19" y="1136" width="5.8125"/>
+  <object id="58" x="2865.81" y="1117" width="66.3125"/>
+  <object id="60" x="2964" y="1084.25" width="58.0625"/>
+  <object id="61" x="2403.5" y="864" width="60.5"/>
+  <object id="62" x="2468" y="768" width="216"/>
+  <object id="63" x="2688" y="864" width="60.625"/>
+  <object id="196" x="1667.33" y="96" width="92.6667"/>
  </objectgroup>
- <objectgroup id="10" name="Walls">
+ <objectgroup id="10" name="Walls" locked="1">
   <properties>
-   <property name="Collisions" type="bool" value="true"/>
+   <property name="Walls" type="bool" value="true"/>
   </properties>
-  <object id="64" x="0" y="0" width="32" height="320"/>
-  <object id="65" x="0" y="320" width="256" height="864"/>
-  <object id="66" x="384" y="224" width="192" height="960"/>
-  <object id="67" x="736" y="224" width="192" height="960"/>
-  <object id="69" x="640" y="0" width="32" height="160"/>
-  <object id="70" x="1056" y="320" width="352" height="448"/>
-  <object id="71" x="1216" y="160" width="192" height="160"/>
-  <object id="72" x="1408" y="288" width="192" height="32"/>
-  <object id="73" x="1408" y="480" width="128" height="32"/>
-  <object id="74" x="1056" y="768" width="160" height="192"/>
-  <object id="75" x="1056" y="960" width="352" height="224"/>
-  <object id="76" x="1664" y="96" width="96" height="32"/>
-  <object id="77" x="1760" y="0" width="448" height="544"/>
-  <object id="78" x="2016" y="544" width="192" height="160"/>
-  <object id="79" x="1568" y="704" width="192" height="32"/>
-  <object id="80" x="1632" y="864" width="128" height="32"/>
-  <object id="81" x="1760" y="704" width="448" height="192"/>
-  <object id="83" x="1408" y="1152" width="1632" height="32"/>
-  <object id="84" x="1888" y="992" width="192" height="32"/>
-  <object id="85" x="2272" y="1056" width="96" height="96"/>
-  <object id="86" x="2464" y="768" width="224" height="192"/>
-  <object id="87" x="2688" y="864" width="64" height="96"/>
-  <object id="88" x="2400" y="864" width="64" height="96"/>
-  <object id="89" x="1584.5" y="1118" width="70" height="34"/>
-  <object id="90" x="1577.5" y="1136" width="6.5" height="15.5"/>
-  <object id="91" x="1425" y="1086" width="63" height="65"/>
-  <object id="92" x="2290" y="988.5" width="62.5" height="66.5"/>
-  <object id="93" x="2864.5" y="1118" width="69.5" height="34"/>
-  <object id="94" x="2857.5" y="1137" width="7.5" height="14.5"/>
-  <object id="95" x="2963" y="1085" width="61" height="67.5"/>
+  <object id="161" x="0" y="0" width="32" height="320"/>
+  <object id="162" x="0" y="320" width="256" height="864"/>
+  <object id="163" x="384" y="224" width="192" height="960"/>
+  <object id="164" x="736" y="224" width="192" height="960"/>
+  <object id="165" x="640" y="0" width="32" height="160"/>
+  <object id="166" x="1056" y="320" width="352" height="448"/>
+  <object id="167" x="1216" y="160" width="192" height="160"/>
+  <object id="168" x="1408" y="288" width="192" height="32"/>
+  <object id="169" x="1408" y="480" width="128" height="32"/>
+  <object id="170" x="1056" y="768" width="160" height="192"/>
+  <object id="171" x="1056" y="960" width="352" height="224"/>
+  <object id="172" x="1664" y="96" width="96" height="32"/>
+  <object id="173" x="1760" y="0" width="448" height="544"/>
+  <object id="174" x="2016" y="544" width="192" height="160"/>
+  <object id="175" x="1568" y="704" width="192" height="32"/>
+  <object id="176" x="1632" y="864" width="128" height="32"/>
+  <object id="177" x="1760" y="704" width="448" height="192"/>
+  <object id="178" x="1408" y="1152" width="1632" height="32"/>
+  <object id="179" x="1888" y="992" width="192" height="32"/>
+  <object id="180" x="2272" y="1056" width="96" height="96"/>
+  <object id="181" x="2464" y="768" width="224" height="192"/>
+  <object id="182" x="2688" y="864" width="64" height="96"/>
+  <object id="183" x="2400" y="864" width="64" height="96"/>
+  <object id="184" x="1584.5" y="1118" width="70" height="34"/>
+  <object id="185" x="1577.5" y="1136" width="6.5" height="15.5"/>
+  <object id="186" x="1425" y="1086" width="63" height="65"/>
+  <object id="187" x="2290" y="988.5" width="62.5" height="66.5"/>
+  <object id="188" x="2864.5" y="1118" width="69.5" height="34"/>
+  <object id="189" x="2857.5" y="1137" width="7.5" height="14.5"/>
+  <object id="190" x="2963" y="1085" width="61" height="67.5"/>
+  <object id="195" x="3040" y="0" width="288" height="1184"/>
  </objectgroup>
- <layer id="5" name="bg" width="104" height="37">
+ <layer id="5" name="bg" width="104" height="37" locked="1">
   <properties>
    <property name="Draw" type="bool" value="true"/>
   </properties>
@@ -3929,7 +3927,7 @@
    <tile gid="97"/>
   </data>
  </layer>
- <layer id="6" name="MainMap" width="104" height="37">
+ <layer id="6" name="MainMap" width="104" height="37" locked="1">
   <properties>
    <property name="Draw" type="bool" value="true"/>
   </properties>
@@ -7784,7 +7782,7 @@
    <tile gid="70"/>
   </data>
  </layer>
- <layer id="7" name="Decorations" width="104" height="37">
+ <layer id="7" name="Decorations" width="104" height="37" locked="1">
   <properties>
    <property name="Draw" type="bool" value="true"/>
   </properties>
