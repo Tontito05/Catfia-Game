@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Log.h"
 #include "Physics.h"
+#include "Player.h"
 
 #include <math.h>
 
@@ -34,6 +35,15 @@ bool Map::Start() {
 bool Map::Update(float dt)
 {
     bool ret = true;
+
+    //Move BG
+    float BGvelx = 0.1;
+    float BGvely = 0.1;
+    Engine::GetInstance().render.get()->DrawTexture(BG1, -Engine::GetInstance().render.get()->camera.x *0.4, -Engine::GetInstance().render.get()->camera.y*0.4);
+    Engine::GetInstance().render.get()->DrawTexture(BG2, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
+    Engine::GetInstance().render.get()->DrawTexture(BG3, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
+    Engine::GetInstance().render.get()->DrawTexture(BG4, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
+
 
     if (mapLoaded) {
 
@@ -111,6 +121,12 @@ bool Map::CleanUp()
 bool Map::Load(std::string path, std::string fileName)
 {
     bool ret = false;
+
+    //Load BG
+    BG1 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/1.png");
+    BG2 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/2.png");
+    BG3 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/3.png");
+    BG4 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/5.png");
 
     // Assigns the name of the map file and the path
     mapFileName = fileName;

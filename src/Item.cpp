@@ -16,17 +16,19 @@ Item::Item() : Entity(EntityType::ITEM)
 Item::~Item() {}
 
 bool Item::Awake() {
+
+	position = Vector2D(200, 300);
 	return true;
 }
 
 bool Item::Start() {
 
 	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/goldCoin.png");
+	texture = Engine::GetInstance().textures.get()->Load("Assets/tiles/billete boceto.png");
 	
 	// L08 TODO 4: Add a physics to an item - initialize the physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texW,texH/2, bodyType::DYNAMIC);
 
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::ITEM;

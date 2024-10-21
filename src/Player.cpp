@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "Engine.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -20,7 +21,7 @@ Player::~Player() {
 bool Player::Awake() {
 
 	//L03: TODO 2: Initialize Player parameters
-	position = Vector2D(100, 100);
+	position = Vector2D(100, 300);
 	return true;
 }
 
@@ -38,9 +39,9 @@ bool Player::Start() {
 
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
-
 	return true;
 }
+
 
 bool Player::Update(float dt)
 {
@@ -48,10 +49,7 @@ bool Player::Update(float dt)
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 
-	if (isJumping == true)
-	{
-		LOG("%f", pbody->body->GetLinearVelocity().y);
-	}
+
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * dt;
@@ -74,6 +72,12 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 				isDashingR = true;
 			}
+		}
+
+		//Reset
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+			CleanUp();
 		}
 
 		//Jump
@@ -147,6 +151,7 @@ bool Player::CleanUp()
 {
 	LOG("Cleanup player");
 	Engine::GetInstance().textures.get()->UnLoad(texture);
+	
 	return true;
 }
 
@@ -170,6 +175,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
+		break;
+	case ColliderType::WALL:
+		LOG("Collision WALL");
+		isDashingL = false;
+		isDashingR = false;
 		break;
 	default:
 		break;

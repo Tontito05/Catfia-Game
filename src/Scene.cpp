@@ -15,7 +15,6 @@
 Scene::Scene() : Module()
 {
 	name = "scene";
-	img = nullptr;
 }
 
 // Destructor
@@ -42,13 +41,13 @@ bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
 	Engine::GetInstance().map->Load("Assets/New tile map/", "Map.tmx");
-
 	return true;
 }
 
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+
 	return true;
 }
 
@@ -58,13 +57,20 @@ bool Scene::Update(float dt)
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = Engine::GetInstance().window.get()->scale;
 	
-	//Engine::GetInstance().render.get()->camera.y = (- player->position.getY() * camSpeed) + Engine::GetInstance().window.get()->height/ 2;
-	//Engine::GetInstance().render.get()->camera.x = (- player->position.getX() * camSpeed) + Engine::GetInstance().window.get()->width/ 2;
+	//Camera movement
+	int mapLimitX = 3328;
+	int mapLimitY = 1184;
 
-	//Engine::GetInstance().render.get()->camera.x -= 1;
-
-
-
+	if (player->position.getY() > Engine::GetInstance().window.get()->height / 4 &&
+		player->position.getY() < mapLimitY - Engine::GetInstance().window.get()->height / 4)
+	{
+		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + Engine::GetInstance().window.get()->height / 2;
+	}
+	if (player->position.getX() > Engine::GetInstance().window.get()->width / 4 &&
+		player->position.getX() < mapLimitX - Engine::GetInstance().window.get()->width / 4)
+	{
+		Engine::GetInstance().render.get()->camera.x = (-player->position.getX() * camSpeed) + Engine::GetInstance().window.get()->width / 2;
+	}
 	return true;
 }
 
@@ -83,8 +89,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
-	SDL_DestroyTexture(img);
 
 	return true;
 }
