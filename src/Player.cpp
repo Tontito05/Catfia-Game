@@ -20,7 +20,7 @@ Player::~Player() {
 bool Player::Awake() {
 
 	//L03: TODO 2: Initialize Player parameters
-	position = Vector2D(0, 0);
+	position = Vector2D(100, 100);
 	return true;
 }
 
@@ -47,6 +47,11 @@ bool Player::Update(float dt)
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
+
+	if (isJumping == true)
+	{
+		LOG("%f", pbody->body->GetLinearVelocity().y);
+	}
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * dt;
@@ -72,14 +77,10 @@ bool Player::Update(float dt)
 		}
 
 		//Jump
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && isJumping == false) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping == false) {
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			isJumping = true;
-		}
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-
 		}
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
@@ -94,15 +95,6 @@ bool Player::Update(float dt)
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocity.x = 0.3 * dt;
-			}
-			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
-			{
-				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
-				velocity = pbody->body->GetLinearVelocity();
-			}
-			else
-			{
-				JumpMinus -= 0.1;
 			}
 		}
 
@@ -166,18 +158,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		//reset the jump flag when touching the ground
 
-		if (pbody->body->GetLinearVelocity().y == 0)
-		{
-			isJumping = false;
-			JumpMinus = 1;
-			isDashingL = false;
-			isDashingR = false;
-			CanDash = true;
-		}
-		else
-		{
-			isJumping = true;
-		}
+		isJumping = false;			
+		JumpMinus = 1;
+		isDashingL = false;
+		isDashingR = false;
+		CanDash = true;
+
+
+
 		break;
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");

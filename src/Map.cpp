@@ -180,38 +180,49 @@ bool Map::Load(std::string path, std::string fileName)
             mapData.layers.push_back(mapLayer);
         }
 
+        for (pugi::xml_node ObectNode = mapFileXML.child("map").child("objectgroup"); ObectNode != NULL; ObectNode = ObectNode.next_sibling("objectgroup")) {
+
+            // L07: TODO 4: Implement the load of a single layer 
+            //Load the attributes and saved in a new MapLayer
+            ObjectGroup* ObjectG = new ObjectGroup();
+            ObjectG->id = ObectNode.attribute("id").as_int();
+            ObjectG->name = ObectNode.attribute("name").as_string();
+
+            //L09: TODO 6 Call Load Layer Properties
+            LoadProperties(ObectNode, ObjectG->properties);
+
+            //Iterate over all the tiles and assign the values in the data array
+            for (pugi::xml_node tileNode = ObectNode.child("object"); tileNode != NULL; tileNode = tileNode.next_sibling("object")) {
+
+                Object* object_ = new Object();
+                object_->height = tileNode.attribute("height").as_int();
+                object_->width = tileNode.attribute("width").as_int();
+                object_->id = tileNode.attribute("id").as_int();
+                object_->x = tileNode.attribute("x").as_int();
+                object_->y = tileNode.attribute("y").as_int();
+
+                ObjectG->objects.push_back(*object_);
+
+            }
+            //add the layer to the map
+            mapData.objectgroups.push_back(ObjectG);
+        }
+
+
         // L08 TODO 3: Create colliders
         // L08 TODO 7: Assign collider type
         // Later you can create a function here to load and create the colliders from the map
 
-        for (const auto& mapLayer : mapData.layers) {
-            //Check if the property Draw exist get the value, if it's true draw the lawyer
-            if (mapLayer->properties.GetProperty("Collisions") != NULL && mapLayer->properties.GetProperty("Collisions")->value == true) {
-                for (int i = 0; i < mapData.width; i++) {
-                    for (int j = 0; j < mapData.height; j++) {
-
-                        // L07 TODO 9: Complete the draw function
-
-                        //Get the gid from tile
-                        int gid = mapLayer->Get(i, j);
-                        //Check if the gid is different from 0 - some tiles are empty
-                        if (gid != 0) {
-                            //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
-                            TileSet* tileSet = GetTilesetFromTileId(gid);
-                            if (tileSet != nullptr)
-                            {
-                                if (mapLayer->properties.GetProperty("Collisions") != NULL && mapLayer->properties.GetProperty("Collisions")->value == (true))
-                                {
-                                    PhysBody* Cell = Engine::GetInstance().physics.get()->CreateRectangle(i * 32 + 16, j * 32 + 16, 31, 31, STATIC);
-                                    Cell->ctype = ColliderType::PLATFORM;
-                                }
-                            }
-                        }
-                    }
+        for (const auto& ObjectGroups : mapData.objectgroups) {
+            if (ObjectGroups->properties.GetProperty("Collisions") != NULL && ObjectGroups->properties.GetProperty("Collisions")->value == true) {
+                for(const auto& Object:ObjectGroups->objects)
+                {
+                    PhysBody* collider = Engine::GetInstance().physics.get()->CreateRectangle(Object.x + Object.width / 2, Object.y + Object.height / 2, Object.width, Object.height, STATIC);
+                    collider->ctype = ColliderType::PLATFORM;
                 }
+               
             }
         }
-
 
         ret = true;
 
