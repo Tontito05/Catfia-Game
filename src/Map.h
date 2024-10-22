@@ -151,4 +151,6 @@ private:
     SDL_Texture* BG2;
     SDL_Texture* BG3;
     SDL_Texture* BG4;
+    float BGvelx = -0.2;
+    float BGvely = 0.41;
 };

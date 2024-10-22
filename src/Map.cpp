@@ -37,12 +37,11 @@ bool Map::Update(float dt)
     bool ret = true;
 
     //Move BG
-    float BGvelx = 0.1;
-    float BGvely = 0.1;
-    Engine::GetInstance().render.get()->DrawTexture(BG1, -Engine::GetInstance().render.get()->camera.x *0.4, -Engine::GetInstance().render.get()->camera.y*0.4);
-    Engine::GetInstance().render.get()->DrawTexture(BG2, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
-    Engine::GetInstance().render.get()->DrawTexture(BG3, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
-    Engine::GetInstance().render.get()->DrawTexture(BG4, Engine::GetInstance().render.get()->camera.x * BGvelx, Engine::GetInstance().render.get()->camera.y * BGvely);
+
+    Engine::GetInstance().render.get()->DrawTexture(BG1, -Engine::GetInstance().render.get()->camera.x *0.4, -Engine::GetInstance().render.get()->camera.y* BGvely);
+    Engine::GetInstance().render.get()->DrawTexture(BG2, Engine::GetInstance().render.get()->camera.x * (BGvelx+0.05), -Engine::GetInstance().render.get()->camera.y * BGvely);
+    Engine::GetInstance().render.get()->DrawTexture(BG3, Engine::GetInstance().render.get()->camera.x * (BGvelx + 0.03),- Engine::GetInstance().render.get()->camera.y * BGvely);
+    Engine::GetInstance().render.get()->DrawTexture(BG4, Engine::GetInstance().render.get()->camera.x * (BGvelx + 0.01), -Engine::GetInstance().render.get()->camera.y * BGvely);
 
 
     if (mapLoaded) {
