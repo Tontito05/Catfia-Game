@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "SDL2/SDL.h"
 #include "Box2D/Box2D.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -54,5 +55,12 @@ public:
 	float DashForce = 1.5;
 	float DashSlower = 0;
 	float JumpMinus = 1;
+
+	pugi::xml_node parameters;
+	Animation* currentAnimation = nullptr;
+	Animation idle;
+	Animation jump;
+	Animation walk;
+	Animation die;
 
 };
