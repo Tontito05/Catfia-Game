@@ -75,8 +75,11 @@ bool Render::Update(float dt)
 
 bool Render::PostUpdate()
 {
+	float* scale;
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
+	SDL_RenderSetLogicalSize(renderer, camera.w, camera.h);
 	return true;
 }
 
