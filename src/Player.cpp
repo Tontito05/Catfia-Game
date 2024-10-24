@@ -28,13 +28,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//L03: TODO 2: Initialize Player parameters
-	
-
-	idle.LoadAnimations(parameters.child("animations").child("idle"));
-	jump.LoadAnimations(parameters.child("animations").child("jump"));
-	walk.LoadAnimations(parameters.child("animations").child("walk"));
-	die.LoadAnimations(parameters.child("animations").child("die"));
-	currentAnimation = &idle;
+	texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/gato de pie first bocetos.png");
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
