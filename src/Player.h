@@ -66,6 +66,8 @@ public:
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
+	Animation jumping;
+	Animation falling;
 
 	bool Godmode = false;
 

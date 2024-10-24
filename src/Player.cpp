@@ -35,6 +35,8 @@ bool Player::Start() {
 	texH = parameters.attribute("h").as_int();
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	jumping.LoadAnimations(parameters.child("animations").child("jumping"));
+	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -102,7 +104,16 @@ bool Player::Update(float dt)
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			Jumping = true;
+			
+
+			currentAnimation = &jumping;
+		
+
 		}
+		/*if (Jumping == false) {
+
+			currentAnimation = &idle;
+		}*/
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 		if (Jumping == true)
@@ -134,7 +145,9 @@ bool Player::Update(float dt)
 			else
 			{
 				JumpMinus -= 0.1;
+				
 			}
+			
 		}
 
 		//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
