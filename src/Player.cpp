@@ -180,6 +180,8 @@ bool Player::Update(float dt)
 		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
+		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+		currentAnimation->Update();
 	return true;
 }
 

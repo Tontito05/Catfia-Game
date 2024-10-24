@@ -11,7 +11,7 @@
 
   <window>
     <resolution width="1280" height="720" scale="2"/>
-    <fullscreen value="true"/>
+    <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
@@ -20,7 +20,7 @@
 <scene>
 	<map path="Assets/Maps/" name="MapTemplate.tmx"/>
 	<entities>
-		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet cat animations.png">
+		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet_cat_animations.png">
 			<animations>
 				<idle loop="true" speed ="0.5">
 					<frame x="0" y="0" w="32" h="32"/>
