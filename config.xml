@@ -18,7 +18,7 @@
   </window>
 
 <scene>
-	<map path="Assets/Maps/" name="MapTemplate.tmx"/>
+
 	<entities>
 		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet_cat_animations.png">
 			<animations>
