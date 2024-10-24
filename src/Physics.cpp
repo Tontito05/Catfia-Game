@@ -40,10 +40,11 @@ bool Physics::Start()
 bool Physics::PreUpdate()
 {
 	bool ret = true;
+	float dt = Engine::GetInstance().Getdt() / 1000;
 
 	// Step (update) the World
 	// WARNING: WE ARE STEPPING BY CONSTANT 1/60 SECONDS!
-	world->Step(1.0f / 60.0f, 6, 2);
+	world->Step(dt, 6, 2);
 
 	// Because Box2D does not automatically broadcast collisions/contacts with sensors, 
 	// we have to manually search for collisions and "call" the equivalent to the ModulePhysics::BeginContact() ourselves...
