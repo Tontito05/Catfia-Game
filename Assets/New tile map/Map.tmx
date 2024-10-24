@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="203">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="209">
  <editorsettings>
   <export target="Map.xml" format="tmx"/>
  </editorsettings>
- <tileset firstgid="1" name="City night" tilewidth="32" tileheight="32" tilecount="128" columns="16">
-  <image source="1 Tiles/Tileset.png" width="512" height="256"/>
+ <tileset firstgid="1" name="City night" tilewidth="32" tileheight="32" tilecount="144" columns="16">
+  <image source="1 Tiles/Tileset.png" width="512" height="288"/>
  </tileset>
  <objectgroup id="8" name="Collisions">
   <properties>
@@ -35,6 +35,8 @@
   <object id="196" x="1673.33" y="96" width="86.6667"/>
   <object id="201" x="2181.78" y="1088" width="145.284"/>
   <object id="202" x="2229.82" y="1021.45" width="55.2727"/>
+  <object id="203" x="256" y="1152" width="128"/>
+  <object id="204" x="576" y="1152" width="160"/>
  </objectgroup>
  <objectgroup id="10" name="Walls">
   <properties>
@@ -72,6 +74,9 @@
   <object id="198" x="0" y="-32" width="3328" height="32"/>
   <object id="199" x="2225.5" y="1021.25" width="62.75" height="66.9091"/>
   <object id="200" x="2176" y="1088" width="160" height="64"/>
+  <object id="205" x="256" y="1152" width="128" height="32"/>
+  <object id="206" x="576" y="1152" width="160" height="32"/>
+  <object id="208" x="928" y="1152" width="128" height="32"/>
  </objectgroup>
  <layer id="5" name="bg" width="104" height="37">
   <properties>
@@ -7685,21 +7690,21 @@
    <tile gid="70"/>
    <tile gid="69"/>
    <tile gid="19"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile gid="17"/>
    <tile gid="69"/>
    <tile gid="69"/>
    <tile gid="69"/>
    <tile gid="70"/>
    <tile gid="19"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile gid="17"/>
    <tile gid="18"/>
    <tile gid="70"/>
@@ -8245,7 +8250,7 @@
    <tile/>
    <tile gid="2147483676"/>
    <tile/>
-   <tile gid="27"/>
+   <tile gid="139"/>
    <tile/>
    <tile gid="28"/>
    <tile/>
@@ -8427,7 +8432,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="138"/>
    <tile gid="31"/>
    <tile gid="32"/>
    <tile/>
@@ -8727,10 +8732,10 @@
    <tile/>
    <tile gid="124"/>
    <tile gid="125"/>
+   <tile gid="137"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile gid="28"/>
+   <tile gid="136"/>
    <tile/>
    <tile/>
    <tile/>
@@ -10740,7 +10745,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="116"/>
    <tile/>
    <tile/>
    <tile/>
@@ -10844,9 +10849,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="115"/>
+   <tile gid="98"/>
+   <tile gid="99"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11353,9 +11358,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="89"/>
+   <tile gid="90"/>
+   <tile gid="91"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11437,30 +11442,30 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="124"/>
+   <tile gid="125"/>
+   <tile gid="140"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="121"/>
+   <tile gid="122"/>
+   <tile gid="123"/>
+   <tile gid="13"/>
+   <tile gid="140"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="105"/>
+   <tile gid="106"/>
+   <tile gid="107"/>
+   <tile gid="140"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11516,7 +11521,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="29"/>
+   <tile gid="140"/>
    <tile gid="108"/>
    <tile gid="109"/>
    <tile gid="110"/>
@@ -11561,10 +11566,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile/>
    <tile/>
    <tile/>

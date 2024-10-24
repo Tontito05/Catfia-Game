@@ -38,8 +38,9 @@ bool Player::Start() {
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2.5, bodyType::DYNAMIC);
-	
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
+	pbody->body->GetFixtureList()[0].SetFriction(0);
+	pbody->body->SetFixedRotation(0);
 	
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -57,12 +58,19 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode==false)
 	{
 		Godmode = true;
 	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == true)
+	{
+		Godmode = false;
+	}
+
 	if (Godmode == false)
 	{
+
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * 16;
@@ -95,6 +103,11 @@ bool Player::Update(float dt)
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
 			CleanUp();
+			pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+			Engine::GetInstance().render.get()->camera.x = 0;
+			Engine::GetInstance().render.get()->camera.y = 0;
+			Awake();
+			Start();
 		}
 
 		//Jump
@@ -178,6 +191,7 @@ bool Player::Update(float dt)
 		//Stop the acceleration
 
 
+
 		if (pbody->body->GetLinearVelocity().y > 10)
 		{
 			velocity.y = TerminalVelocity.y;
@@ -185,6 +199,43 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(velocity);
 		// Apply the velocity to the player
 
+	}
+	else // GOD MODE 
+	{
+		b2Vec2 velocityGodMode = b2Vec2(0, 0);
+		// Move left
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			velocityGodMode.x = -0.5 * 16;
+			state = States::WALKING_L;
+		}
+
+		// Move right
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			velocityGodMode.x = 0.5 * 16;
+			state = States::WALKING_R;
+		}
+
+		//Fly
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+
+			velocityGodMode.y = -0.5 * 16;
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+
+			velocityGodMode.y = 0.5 * 16;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+			CleanUp();
+			pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+			Engine::GetInstance().render.get()->camera.x = 0;
+			Engine::GetInstance().render.get()->camera.y = 0;
+			Awake();
+			Start();
+		}
+
+		pbody->body->SetLinearVelocity(velocityGodMode);
 	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -202,7 +253,6 @@ bool Player::CleanUp()
 {
 	LOG("Cleanup player");
 	Engine::GetInstance().textures.get()->UnLoad(texture);
-	
 	return true;
 }
 
