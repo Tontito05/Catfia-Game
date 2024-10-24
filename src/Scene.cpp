@@ -61,13 +61,13 @@ bool Scene::Update(float dt)
 	int mapLimitX = 3328;
 	int mapLimitY = 1184;
 
-	if (player->position.getY() > Engine::GetInstance().window.get()->height / 2 &&
-		player->position.getY() < mapLimitY - Engine::GetInstance().window.get()->height / 2)
+	if (player->position.getY() > Engine::GetInstance().window.get()->height / (camSpeed*2) &&
+		player->position.getY() < mapLimitY - Engine::GetInstance().window.get()->height / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + Engine::GetInstance().window.get()->height / 2;
 	}
-	if (player->position.getX() > Engine::GetInstance().window.get()->width / 2 &&
-		player->position.getX() < mapLimitX - Engine::GetInstance().window.get()->width / 2)
+	if (player->position.getX() > Engine::GetInstance().window.get()->width / (camSpeed * 2) &&
+		player->position.getX() < mapLimitX - Engine::GetInstance().window.get()->width / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.x = (-player->position.getX() * camSpeed) + Engine::GetInstance().window.get()->width / 2;
 	}

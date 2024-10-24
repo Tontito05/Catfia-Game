@@ -51,7 +51,7 @@ public:
 	bool isDashingL = false;
 	bool isDashingR = false;
 	bool CanDash = true;
-	float DashForce = 1.5;
+	float DashForce = 3;
 	float DashSlower = 0;
 	float JumpMinus = 1;
 

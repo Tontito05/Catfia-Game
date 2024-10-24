@@ -32,7 +32,9 @@ bool Player::Start() {
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2.5, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW / 2.5,texH, bodyType::DYNAMIC);
+	pbody->body->GetFixtureList()[0].SetFriction(0);
+	pbody->body->SetFixedRotation(true);
 
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -51,11 +53,12 @@ bool Player::Update(float dt)
 
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			velocity.x = -0.4 * dt;
+			velocity.x = -0.4 * 16;
 
 			//Set the dash so the player can use it on the LEFT
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
 				// Apply an initial Left force
+				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
 				isDashingL = true;
 			}
@@ -64,11 +67,12 @@ bool Player::Update(float dt)
 
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * dt;
+			velocity.x = 0.4 * 16;
 
 			//Set the dash so the player can use it on the RIGHT
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
 				// Apply an initial Right force
+				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 				isDashingR = true;
 			}
@@ -94,7 +98,7 @@ bool Player::Update(float dt)
 			velocity = pbody->body->GetLinearVelocity();
 			//We insert this here so the player camn move during the jump, so we dont limit the movement
 			//Move Left
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5)
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
@@ -102,7 +106,7 @@ bool Player::Update(float dt)
 				state = States::JUMPING_L;
 			}
 			// Move right
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5)
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
@@ -126,6 +130,7 @@ bool Player::Update(float dt)
 		//Right Dash
 		if (CanDash == true)
 		{
+			
 			if (isDashingR == true)
 			{
 				//The parameter that creates the slowing sensation of the dash
@@ -242,7 +247,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 void Player::ResetDash()
 {
 
-	DashForce = 1.5;
+	DashForce = 3;
 	DashSlower = 0;
 	CanDash = false;
 }
