@@ -11,9 +11,13 @@
 
   <window>
     <resolution width="1280" height="720" scale="1"/>
+<<<<<<< Updated upstream
     <fullscreen value="true"/>
+=======
+    <fullscreen value="false"/>
+>>>>>>> Stashed changes
     <borderless value="false"/>
-    <resizable value="false"/>
+    <resizable value="true"/>
     <fullscreen_window value="false"/>
   </window>
 

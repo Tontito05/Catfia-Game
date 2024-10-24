@@ -46,6 +46,9 @@ bool Player::Start() {
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
 
+
+	pickCoinFxId = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+
 	return true;
 }
 
@@ -180,6 +183,8 @@ bool Player::Update(float dt)
 		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
+		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+		currentAnimation->Update();
 	return true;
 }
 
@@ -233,6 +238,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 			break;
 		case ColliderType::ITEM:
 			LOG("End Collision ITEM");
+			Engine::GetInstance().audio.get()->PlayFx(pickCoinFxId);
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("End Collision UNKNOWN");
