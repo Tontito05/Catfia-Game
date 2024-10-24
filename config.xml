@@ -18,9 +18,10 @@
   </window>
 
 <scene>
-
+	<map path="Assets/New tile map/" name="Map.tmx"/>
 	<entities>
-		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet_cat_animations.png">
+	
+		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/Idle.png">
 			<animations>
 				<idle loop="true" speed ="0.5">
 					<frame x="0" y="0" w="32" h="32"/>
