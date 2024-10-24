@@ -57,7 +57,12 @@ bool Player::Update(float dt)
 {
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		Godmode = true;
+	}
+	if (Godmode == false)
+	{
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * 16;
@@ -137,7 +142,7 @@ bool Player::Update(float dt)
 		//Right Dash
 		if (CanDash == true)
 		{
-			
+
 			if (isDashingR == true)
 			{
 				//The parameter that creates the slowing sensation of the dash
@@ -180,10 +185,13 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(velocity);
 		// Apply the velocity to the player
 
+	}
 
-		b2Transform pbodyPos = pbody->body->GetTransform();
-		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
-		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+	b2Transform pbodyPos = pbody->body->GetTransform();
+	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
+	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
 
 	
 

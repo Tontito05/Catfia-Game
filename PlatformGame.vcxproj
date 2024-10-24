@@ -112,7 +112,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sdl2main.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\noapm\Documents\GitHub\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link;C:\Users\toncg\Documents\GitHub\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link;C:\Users\theki\OneDrive\Escriptori\DialogueSystem-DialogueTutorial\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\toncg\Documents\GitHub\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link;C:\Users\noapm\Documents\GitHub\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link;C:\Users\theki\OneDrive\Escriptori\DialogueSystem-DialogueTutorial\Catfia-Game\vcpkg_installed\x64-windows\x64-windows\lib\manual-link</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /I /Y "$(ProjectDir)Assets" "$(OutDir)Assets"</Command>

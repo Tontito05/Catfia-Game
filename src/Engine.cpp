@@ -140,6 +140,15 @@ bool Engine::Update() {
     if (ret == true)
         ret = PostUpdate();
 
+    if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F11) == KEY_DOWN && maxFrameDuration != 32)
+    {
+        maxFrameDuration=32;
+    }
+    else if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F11) == KEY_DOWN && maxFrameDuration == 32)
+    {
+        maxFrameDuration = 16;
+    }
+
     FinishUpdate();
     return ret;
 }

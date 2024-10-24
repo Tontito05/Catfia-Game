@@ -137,6 +137,7 @@
     <ClInclude Include="src\Item.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="src\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

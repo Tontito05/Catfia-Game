@@ -62,8 +62,12 @@ public:
 	float JumpMinus = 1;
 
 
+
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
+
+	bool Godmode = false;
+
 
 };
