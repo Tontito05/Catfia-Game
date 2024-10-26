@@ -40,6 +40,9 @@ public:
 	//Declare player parameters
 	float speed = 5.0f;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* menu = NULL;
+	bool inMenu = false;
+	Vector2D menusize = { 606,332 };
 
 	int texW, texH;
 

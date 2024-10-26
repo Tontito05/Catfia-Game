@@ -58,7 +58,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	//L03 TODO 3: Make the camera movement independent of framerate
-	float camSpeed = Engine::GetInstance().window.get()->scale;
+	float camSpeed = 2;
 	
 	//Camera movement
 	int mapLimitX = 3328;

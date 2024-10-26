@@ -79,7 +79,7 @@ bool Render::PostUpdate()
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
-	//SDL_RenderSetLogicalSize(renderer, camera.w, camera.h);
+	SDL_RenderSetLogicalSize(renderer, camera.w, camera.h);
 	return true;
 }
 
@@ -113,8 +113,8 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	int scale = Engine::GetInstance().window.get()->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int)(camera.x * speed) + x * 2;
+	rect.y = (int)(camera.y * speed) + y * 2;
 
 	if(section != NULL)
 	{
@@ -126,8 +126,8 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= scale;
-	rect.h *= scale;
+	rect.w *= 2;
+	rect.h *= 2;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
