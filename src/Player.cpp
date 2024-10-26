@@ -37,7 +37,7 @@ bool Player::Start() {
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	jumpingright.LoadAnimations(parameters.child("animations").child("jumpingright"));
 	jumpingleft.LoadAnimations(parameters.child("animations").child("jumpingleft"));
-	//walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
+	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
@@ -88,6 +88,7 @@ bool Player::Update(float dt)
 				isDashingL = true;
 			}
 			state = States::WALKING_L;
+			
 		}
 
 		// Move right
@@ -103,7 +104,7 @@ bool Player::Update(float dt)
 			}
 			
 			state = States::WALKING_R;
-			currentAnimation = &walkingright;
+			
 		}
 
 		//Reset
@@ -124,10 +125,7 @@ bool Player::Update(float dt)
 			Jumping = true;
 
 		}
-		if (Jumping == false) {
 
-			currentAnimation = &idle;
-		}
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 		if (Jumping == true)
@@ -140,7 +138,6 @@ bool Player::Update(float dt)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-				currentAnimation = &jumpingleft;
 				state = States::JUMPING_L;
 				
 			}
@@ -149,7 +146,7 @@ bool Player::Update(float dt)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-				currentAnimation = &jumpingright;
+				
 				state = States::JUMPING_R;
 				
 			}
@@ -260,9 +257,27 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
+	if (Jumping == true && state == States::JUMPING_L) {
+		// Use jump animation
+		currentAnimation = &jumpingleft;
 
+	}
+	else if (Jumping == true && state == States::JUMPING_R) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (state == States::WALKING_L) {
+		currentAnimation = &walkingleft;
+	}
+	else if (state == States::WALKING_R) {
+		currentAnimation = &walkingright;
+	}
+	else {
+		currentAnimation = &idle;  // Only set to idle if no other state is active
+	}
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
+
 
 	return true;
 }
