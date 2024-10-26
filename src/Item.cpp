@@ -17,7 +17,7 @@ Item::~Item() {}
 
 bool Item::Awake() {
 
-	position = Vector2D(200, 300);
+
 	return true;
 }
 
