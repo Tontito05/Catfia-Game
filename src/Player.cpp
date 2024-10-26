@@ -35,7 +35,10 @@ bool Player::Start() {
 	texH = parameters.attribute("h").as_int();
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
-	jumping.LoadAnimations(parameters.child("animations").child("jumping"));
+	jumpingright.LoadAnimations(parameters.child("animations").child("jumpingright"));
+	jumpingleft.LoadAnimations(parameters.child("animations").child("jumpingleft"));
+	//walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
+	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
 
@@ -89,8 +92,8 @@ bool Player::Update(float dt)
 
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * 16;
-
+			velocity.x = 0.4 * 8;
+			
 			//Set the dash so the player can use it on the RIGHT
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
 				// Apply an initial Right force
@@ -98,7 +101,9 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 				isDashingR = true;
 			}
+			
 			state = States::WALKING_R;
+			currentAnimation = &walkingright;
 		}
 
 		//Reset
@@ -117,10 +122,6 @@ bool Player::Update(float dt)
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			Jumping = true;
-			
-
-			currentAnimation = &jumping;
-		
 
 		}
 		if (Jumping == false) {
@@ -131,6 +132,7 @@ bool Player::Update(float dt)
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 		if (Jumping == true)
 		{
+			
 			velocity = pbody->body->GetLinearVelocity();
 			//We insert this here so the player camn move during the jump, so we dont limit the movement
 			//Move Left
@@ -138,16 +140,18 @@ bool Player::Update(float dt)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-
+				currentAnimation = &jumpingleft;
 				state = States::JUMPING_L;
+				
 			}
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-
+				currentAnimation = &jumpingright;
 				state = States::JUMPING_R;
+				
 			}
 
 			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
@@ -226,6 +230,7 @@ bool Player::Update(float dt)
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			velocityGodMode.x = 0.5 * 16;
 			state = States::WALKING_R;
+			
 		}
 
 		//Fly
