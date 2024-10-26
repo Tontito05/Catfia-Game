@@ -110,10 +110,10 @@ bool Player::Update(float dt)
 		
 
 		}
-		/*if (Jumping == false) {
+		if (Jumping == false) {
 
 			currentAnimation = &idle;
-		}*/
+		}
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 		if (Jumping == true)
