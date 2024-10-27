@@ -257,19 +257,23 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
-	if (Jumping == true && state == States::JUMPING_L) {
+	if (Jumping==true&& state == States::JUMPING_L) {
 		// Use jump animation
 		currentAnimation = &jumpingleft;
 
 	}
-	else if (Jumping == true && state == States::JUMPING_R) {
+	else if (Jumping==true&& state == States::JUMPING_R) {
 
 		currentAnimation = &jumpingright;
 	}
-	else if (state == States::WALKING_L) {
+	else if (Jumping == true) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
 		currentAnimation = &walkingleft;
 	}
-	else if (state == States::WALKING_R) {
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&&state == States::WALKING_R) {
 		currentAnimation = &walkingright;
 	}
 	else {
