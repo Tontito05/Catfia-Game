@@ -36,6 +36,11 @@ bool Player::Start() {
 	texH = parameters.attribute("h").as_int();
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	jumpingright.LoadAnimations(parameters.child("animations").child("jumpingright"));
+	jumpingleft.LoadAnimations(parameters.child("animations").child("jumpingleft"));
+	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
+	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
+	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -80,6 +85,7 @@ bool Player::Update(float dt)
 		inMenu = false;
 	}
 
+
 	if (inMenu == false)
 	{
 		if (Godmode == false)
@@ -97,18 +103,114 @@ bool Player::Update(float dt)
 					isDashingL = true;
 				}
 				state = States::WALKING_L;
+
+		// Move left
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			velocity.x = -0.4 * 16;
+
+			//Set the dash so the player can use it on the LEFT
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
+				// Apply an initial Left force
+				pbody->body->SetLinearVelocity({ 0,0 });
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
+				isDashingL = true;
+			}
+			state = States::WALKING_L;
+			
+		}
+
+		// Move right
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			velocity.x = 0.4 * 8;
+			
+			//Set the dash so the player can use it on the RIGHT
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
+				// Apply an initial Right force
+				pbody->body->SetLinearVelocity({ 0,0 });
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
+				isDashingR = true;
+			}
+			
+			state = States::WALKING_R;
+			
+		}
+
+		//Reset
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+			CleanUp();
+			pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+			Engine::GetInstance().render.get()->camera.x = 0;
+			Engine::GetInstance().render.get()->camera.y = 0;
+			Awake();
+			Start();
+		}
+
+		//Jump
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
+			// Apply an initial upward force
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+			Jumping = true;
+
+		}
+
+
+		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
+		if (Jumping == true)
+		{
+			
+			velocity = pbody->body->GetLinearVelocity();
+			//We insert this here so the player camn move during the jump, so we dont limit the movement
+			//Move Left
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				state = States::JUMPING_L;
+				
 			}
 
 			// Move right
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.4 * 16;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				
+				state = States::JUMPING_R;
+				
+			}
 
-				//Set the dash so the player can use it on the RIGHT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
-					// Apply an initial Right force
-					pbody->body->SetLinearVelocity({ 0,0 });
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
-					isDashingR = true;
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+				velocity = pbody->body->GetLinearVelocity();
+			}
+			else
+			{
+				JumpMinus -= 0.1;
+				
+			}
+			
+		}
+
+		//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
+
+		//Right Dash
+		if (CanDash == true)
+		{
+
+			if (isDashingR == true)
+			{
+				//The parameter that creates the slowing sensation of the dash
+				DashSlower -= 0.01f;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				velocity.y = 0;
+				//where we look if the dash has finished or not
+				DashForce += DashSlower;
+				if (DashForce <= 0)
+				{
+					ResetDash();
 				}
 				state = States::WALKING_R;
 			}
@@ -253,13 +355,33 @@ bool Player::Update(float dt)
 		}
 	}
 
-	
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
+	if (Jumping==true&& state == States::JUMPING_L) {
+		// Use jump animation
+		currentAnimation = &jumpingleft;
 
+	}
+	else if (Jumping==true&& state == States::JUMPING_R) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (Jumping == true) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
+		currentAnimation = &walkingleft;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&&state == States::WALKING_R) {
+		currentAnimation = &walkingright;
+	}
+	else {
+		currentAnimation = &idle;  // Only set to idle if no other state is active
+	}
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 
@@ -268,6 +390,7 @@ bool Player::Update(float dt)
 		{
 			Engine::GetInstance().render.get()->DrawTexture(menu,(- Engine::GetInstance().render.get()->camera.x / 2)+20, (- Engine::GetInstance().render.get()->camera.y / 2)+20);
 		}
+
 
 	return true;
 }
