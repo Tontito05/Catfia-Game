@@ -25,6 +25,8 @@ public:
 
 	void ResetDash();
 
+	void ResetPlayer();
+
 	// L08 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -40,6 +42,9 @@ public:
 	//Declare player parameters
 	float speed = 5.0f;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* menu = NULL;
+	bool inMenu = false;
+	Vector2D menusize = { 606,332 };
 
 	int texW, texH;
 

@@ -259,20 +259,20 @@ bool Physics::PostUpdate()
 					{
 						v = b->GetWorldPoint(polygonShape->m_vertices[i]);
 						if (i > 0)
-							Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x), 
-																	     METERS_TO_PIXELS(prev.y), 
-																		 METERS_TO_PIXELS(v.x), 
-																		 METERS_TO_PIXELS(v.y), 
+							Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x*2), 
+																	     METERS_TO_PIXELS(prev.y*2), 
+																		 METERS_TO_PIXELS(v.x*2), 
+																		 METERS_TO_PIXELS(v.y*2), 
 																		 255, 255, 100);
 
 						prev = v;
 					}
 
 					v = b->GetWorldPoint(polygonShape->m_vertices[0]);
-					Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x),
-																 METERS_TO_PIXELS(prev.y),
-																 METERS_TO_PIXELS(v.x),
-																 METERS_TO_PIXELS(v.y),
+					Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x*2),
+																 METERS_TO_PIXELS(prev.y*2),
+																 METERS_TO_PIXELS(v.x*2),
+																 METERS_TO_PIXELS(v.y*2),
 																 255, 255, 100);
 				}
 				break;
