@@ -341,6 +341,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 			break;
 		case ColliderType::WALL:
 			LOG("End Collision WALL");
+			ResetDash();
 			break;
 		case ColliderType::DEATH:
 			LOG("End Collision DEATH");
