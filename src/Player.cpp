@@ -35,11 +35,17 @@ bool Player::Start() {
 	texH = parameters.attribute("h").as_int();
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	jumpingright.LoadAnimations(parameters.child("animations").child("jumpingright"));
+	jumpingleft.LoadAnimations(parameters.child("animations").child("jumpingleft"));
+	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
+	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
+	falling.LoadAnimations(parameters.child("animations").child("falling"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), texW / 2, bodyType::DYNAMIC);
-	
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
+	pbody->body->GetFixtureList()[0].SetFriction(0);
+	pbody->body->SetFixedRotation(0);
 	
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -58,6 +64,18 @@ bool Player::Update(float dt)
 	// L08 TODO 5: Add physics to the player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode==false)
+	{
+		Godmode = true;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == true)
+	{
+		Godmode = false;
+	}
+
+	if (Godmode == false)
+	{
+
 		// Move left
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			velocity.x = -0.4 * 16;
@@ -70,12 +88,13 @@ bool Player::Update(float dt)
 				isDashingL = true;
 			}
 			state = States::WALKING_L;
+			
 		}
 
 		// Move right
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			velocity.x = 0.4 * 16;
-
+			velocity.x = 0.4 * 8;
+			
 			//Set the dash so the player can use it on the RIGHT
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
 				// Apply an initial Right force
@@ -83,13 +102,20 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 				isDashingR = true;
 			}
+			
 			state = States::WALKING_R;
+			
 		}
 
 		//Reset
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
 			CleanUp();
+			pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+			Engine::GetInstance().render.get()->camera.x = 0;
+			Engine::GetInstance().render.get()->camera.y = 0;
+			Awake();
+			Start();
 		}
 
 		//Jump
@@ -97,11 +123,14 @@ bool Player::Update(float dt)
 			// Apply an initial upward force
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			Jumping = true;
+
 		}
+
 
 		// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 		if (Jumping == true)
 		{
+			
 			velocity = pbody->body->GetLinearVelocity();
 			//We insert this here so the player camn move during the jump, so we dont limit the movement
 			//Move Left
@@ -109,16 +138,17 @@ bool Player::Update(float dt)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-
 				state = States::JUMPING_L;
+				
 			}
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 			{
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
 				velocity = pbody->body->GetLinearVelocity();
-
+				
 				state = States::JUMPING_R;
+				
 			}
 
 			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
@@ -129,7 +159,9 @@ bool Player::Update(float dt)
 			else
 			{
 				JumpMinus -= 0.1;
+				
 			}
+			
 		}
 
 		//Glovals to add --> DashForce / DashSlower / PlayerVelocity 
@@ -137,7 +169,7 @@ bool Player::Update(float dt)
 		//Right Dash
 		if (CanDash == true)
 		{
-			
+
 			if (isDashingR == true)
 			{
 				//The parameter that creates the slowing sensation of the dash
@@ -173,6 +205,7 @@ bool Player::Update(float dt)
 		//Stop the acceleration
 
 
+
 		if (pbody->body->GetLinearVelocity().y > 10)
 		{
 			velocity.y = TerminalVelocity.y;
@@ -180,15 +213,75 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(velocity);
 		// Apply the velocity to the player
 
+	}
+	else // GOD MODE 
+	{
+		b2Vec2 velocityGodMode = b2Vec2(0, 0);
+		// Move left
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			velocityGodMode.x = -0.5 * 16;
+			state = States::WALKING_L;
+		}
 
-		b2Transform pbodyPos = pbody->body->GetTransform();
-		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
-		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+		// Move right
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			velocityGodMode.x = 0.5 * 16;
+			state = States::WALKING_R;
+			
+		}
 
+		//Fly
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+
+			velocityGodMode.y = -0.5 * 16;
+		}
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+
+			velocityGodMode.y = 0.5 * 16;
+		}
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+			CleanUp();
+			pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+			Engine::GetInstance().render.get()->camera.x = 0;
+			Engine::GetInstance().render.get()->camera.y = 0;
+			Awake();
+			Start();
+		}
+
+		pbody->body->SetLinearVelocity(velocityGodMode);
+	}
+
+	b2Transform pbodyPos = pbody->body->GetTransform();
+	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
+	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
+	if (Jumping==true&& state == States::JUMPING_L) {
+		// Use jump animation
+		currentAnimation = &jumpingleft;
 
+	}
+	else if (Jumping==true&& state == States::JUMPING_R) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (Jumping == true) {
+
+		currentAnimation = &jumpingright;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
+		currentAnimation = &walkingleft;
+	}
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&&state == States::WALKING_R) {
+		currentAnimation = &walkingright;
+	}
+	else {
+		currentAnimation = &idle;  // Only set to idle if no other state is active
+	}
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
+
 
 	return true;
 }
@@ -197,7 +290,6 @@ bool Player::CleanUp()
 {
 	LOG("Cleanup player");
 	Engine::GetInstance().textures.get()->UnLoad(texture);
-	
 	return true;
 }
 

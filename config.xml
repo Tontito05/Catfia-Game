@@ -20,20 +20,55 @@
 <scene>
 	<map path="Assets/New tile map/" name="Map.tmx"/>
 	<entities>
-	
-		<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet cat animations.png">
-			<animations>
-				<idle loop="true" speed ="0.1">
+	<player x="100" y="0" w="32" h ="32" texture="Assets/Textures/spritesheet.png">
+		<animations>
+				<idle loop="true" speed ="0.05">
 					<frame x="0" y="0" w="32" h="32"/>
 					<frame x="32" y="0" w="32" h="32"/>
-					<frame x="64" y="0" w="32" h="32"/>
-					<frame x="96" y="0" w="32" h="32"/>
-					<frame x="128" y="0" w="32" h="32"/>
-				
-					
-				
-					
+
 				</idle>
+				<jumpingright loop="true" speed ="0.1">
+					<frame x="0" y="64" w="32" h="32"/>
+					<frame x="32" y="64" w="32" h="32"/>
+					<frame x="64" y="64" w="32" h="32"/>
+					<frame x="96" y="64" w="32" h="32"/>
+					<frame x="128" y="64" w="32" h="32"/>
+					<frame x="160" y="64" w="32" h="32"/>
+					<frame x="192" y="64" w="32" h="32"/>
+					<frame x="224" y="64" w="32" h="32"/>
+				</jumpingright>
+			<jumpingleft loop="true" speed ="0.1">
+				<frame x="0" y="128" w="32" h="32"/>
+				<frame x="32" y="128" w="32" h="32"/>
+				<frame x="64" y="128" w="32" h="32"/>
+				<frame x="96" y="128" w="32" h="32"/>
+				<frame x="128" y="128" w="32" h="32"/>
+				<frame x="160" y="128" w="32" h="32"/>
+				<frame x="192" y="128" w="32" h="32"/>
+				<frame x="224" y="128" w="32" h="32"/>
+			</jumpingleft>
+				<walkingright loop="true" speed ="0.1">
+					<frame x="0" y="32" w="32" h="32"/>
+					<frame x="32" y="32" w="32" h="32"/>
+					<frame x="64" y="32" w="32" h="32"/>
+					<frame x="96" y="32" w="32" h="32"/>
+				</walkingright>
+			<walkingleft loop="true" speed ="0.1">
+				<frame x="0" y="160" w="32" h="32"/>
+				<frame x="32" y="160" w="32" h="32"/>
+				<frame x="64" y="160" w="32" h="32"/>
+				<frame x="96" y="160" w="32" h="32"/>
+			</walkingleft>
+			<dying loop="true" speed ="0.1">
+				<frame x="0" y="96" w="32" h="32"/>
+				<frame x="32" y="96" w="32" h="32"/>
+				<frame x="64" y="96" w="32" h="32"/>
+				<frame x="96" y="96" w="32" h="32"/>
+				<frame x="128" y="96" w="32" h="32"/>
+				<frame x="160" y="96" w="32" h="32"/>
+				<frame x="192" y="96" w="32" h="32"/>
+				<frame x="224" y="96" w="32" h="32"/>
+			</dying>
 			</animations>
 		</player>
 	</entities>

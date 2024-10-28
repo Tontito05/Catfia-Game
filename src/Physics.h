@@ -51,6 +51,7 @@ public:
 	b2Body* body;
 	Entity* listener;
 	ColliderType ctype;
+
 };
 
 // Module --------------------------------------
@@ -82,6 +83,7 @@ private:
 
 	// Debug mode
 	bool debug;
+
 
 	// Box2D World
 	b2World* world;
