@@ -66,7 +66,7 @@ public:
 	float DashSlower = 0;
 	float JumpMinus = 1;
 
-
+	bool isDead = false;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="222">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="104" height="37" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="224">
  <editorsettings>
   <export target="Map.xml" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" name="City night" tilewidth="32" tileheight="32" tilecount="144" columns="16">
   <image source="1 Tiles/Tileset.png" width="512" height="288"/>
  </tileset>
- <objectgroup id="8" name="Collisions">
+ <objectgroup id="8" name="Collisions" locked="1">
   <properties>
    <property name="Collisions" type="bool" value="true"/>
    <property name="Draw" type="bool" value="false"/>
@@ -35,6 +35,8 @@
   <object id="196" x="1673.33" y="96" width="86.6667"/>
   <object id="201" x="2181.78" y="1088" width="145.284"/>
   <object id="202" x="2229.82" y="1021.45" width="55.2727"/>
+  <object id="222" x="256" y="1152" width="128" height="32"/>
+  <object id="223" x="672" y="1152" width="64" height="32"/>
  </objectgroup>
  <objectgroup id="10" name="Walls">
   <properties>
@@ -77,10 +79,8 @@
  </objectgroup>
  <objectgroup id="11" name="Deadly">
   <properties>
-   <property name="Death" type="bool" value="true"/>
+   <property name="Deadly" type="bool" value="true"/>
   </properties>
-  <object id="209" x="256" y="1152" width="128" height="32"/>
-  <object id="210" x="672" y="1152" width="64" height="32"/>
   <object id="213" x="1920" y="1152" width="128" height="32"/>
   <object id="214" x="2464" y="1152" width="224" height="32"/>
   <object id="219" x="576" y="1152" width="96" height="32"/>

@@ -87,7 +87,7 @@ bool Player::Update(float dt)
 	}
 
 
-	if (inMenu == false)
+	if (inMenu == false && isDead == false)
 	{
 		if (Godmode == false)
 		{
@@ -97,11 +97,12 @@ bool Player::Update(float dt)
 				velocity.x = -0.4 * 16;
 
 				//Set the dash so the player can use it on the LEFT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingL == false) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Left force
 					pbody->body->SetLinearVelocity({ 0,0 });
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
 					isDashingL = true;
+					CanDash = false;
 				}
 				state = States::WALKING_L;
 
@@ -112,21 +113,16 @@ bool Player::Update(float dt)
 				velocity.x = 0.4 * 16;
 
 				//Set the dash so the player can use it on the RIGHT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && isDashingR == false) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
 					// Apply an initial Right force
 					pbody->body->SetLinearVelocity({ 0,0 });
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 					isDashingR = true;
+					CanDash = false;
 				}
 
 				state = States::WALKING_R;
 
-			}
-
-			//Reset
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-
-				ResetPlayer();
 			}
 
 			//Jump
@@ -175,8 +171,6 @@ bool Player::Update(float dt)
 				}
 
 			}
-			if (CanDash == true)
-			{
 
 				if (isDashingR == true)
 				{
@@ -208,7 +202,7 @@ bool Player::Update(float dt)
 					}
 					state = States::DASH_R;
 				}
-			}
+			
 
 			if (pbody->body->GetLinearVelocity().y > 10)
 			{
@@ -241,16 +235,17 @@ bool Player::Update(float dt)
 				velocityGodMode.y = 0.5 * 16;
 			}
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-
-				ResetPlayer();
-			}
-
 			pbody->body->SetLinearVelocity(velocityGodMode);
 		}
 
 	}
 
+
+	//Reset
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+
+		ResetPlayer();
+	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
@@ -310,8 +305,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 			Jumping = false;
 			JumpMinus = 1;
-			isDashingL = false;
-			isDashingR = false;
 			CanDash = true;
 
 			break;
@@ -323,12 +316,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::WALL:
 			LOG("Collision WALL");
-			isDashingL = false;
-			isDashingR = false;
+			ResetDash();
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			ResetPlayer();
+			isDead = true;
 			break;
 		}
 }
@@ -360,10 +352,10 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 
 void Player::ResetDash()
 {
-
 	DashForce = 3;
 	DashSlower = 0;
-	CanDash = false;
+	isDashingL = false;
+	isDashingR = false;
 }
 
 void Player::ResetPlayer()
@@ -374,4 +366,5 @@ void Player::ResetPlayer()
 	Engine::GetInstance().render.get()->camera.y = 0;
 	Awake();
 	Start();
+	isDead = false;
 }
