@@ -40,7 +40,7 @@ bool Player::Start() {
 	jumpingleft.LoadAnimations(parameters.child("animations").child("jumpingleft"));
 	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
-	falling.LoadAnimations(parameters.child("animations").child("falling"));
+	dying.LoadAnimations(parameters.child("animations").child("dying"));
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
@@ -251,12 +251,12 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
-	if (Jumping==true&& state == States::JUMPING_L) {
+	if (pbody->body->GetLinearVelocity().y < 0 && Jumping==true&& state == States::JUMPING_L) {
 		// Use jump animation
 		currentAnimation = &jumpingleft;
 
 	}
-	else if (Jumping==true&& state == States::JUMPING_R) {
+	else if (Jumping == true && state == States::JUMPING_R) {
 
 		currentAnimation = &jumpingright;
 	}
@@ -264,11 +264,22 @@ bool Player::Update(float dt)
 
 		currentAnimation = &jumpingright;
 	}
+
+	/*else if (pbody->body->GetLinearVelocity().y > 5) {
+
+		currentAnimation = &jumpingright;
+	}*/
+
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
 		currentAnimation = &walkingleft;
 	}
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&&state == States::WALKING_R) {
 		currentAnimation = &walkingright;
+	}
+	else if (isDead == true) {
+
+
+		currentAnimation = &dying;
 	}
 	else {
 		currentAnimation = &idle;  // Only set to idle if no other state is active
@@ -320,6 +331,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
+			
 			isDead = true;
 			break;
 		}

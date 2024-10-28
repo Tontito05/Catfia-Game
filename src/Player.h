@@ -75,7 +75,7 @@ public:
 	Animation jumpingleft;
 	Animation walkingleft;
 	Animation walkingright;
-	Animation falling;
+	Animation dying;
 
 	bool Godmode = false;
 
