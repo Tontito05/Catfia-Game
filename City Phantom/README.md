@@ -1,4 +1,4 @@
-Catfia is a platform based game in which you play as a member of a mafia exploring the suburbs of a big city, created by Ton Casals and Noa Pont.
+City Phantom is a platform based game in which you play as a member of a mafia exploring the suburbs of a big city, created by Ton Casals and Noa Pont.
 
 Controls:
 A and D for right and left movement
@@ -6,7 +6,7 @@ SPACE for jumping
 SHIFT for using the dash
 
 Debugging keys:
-H shows a menu explaining the keys
+M shows a menu explaining the keys
 F9 shows the colliders
 F10 God Mode 
 F11 cap FPS to 30
