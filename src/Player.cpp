@@ -178,7 +178,7 @@ bool Player::Update(float dt)
 					DashSlower -= 0.01f;
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
-					velocity.y = -0,5;
+					velocity.y = -1;
 					//where we look if the dash has finished or not
 					DashForce += DashSlower;
 					if (DashForce <= 0)
@@ -194,7 +194,7 @@ bool Player::Update(float dt)
 					DashSlower += 0.01f;
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
-					velocity.y = -0,5;
+					velocity.y = -1;
 					DashForce -= DashSlower;
 					if (DashForce <= 0)
 					{
@@ -328,12 +328,17 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::WALL:
 			LOG("Collision WALL");
-			
+			ResetDash();
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
 			
-			isDead = true;
+			if (Godmode == false) {
+				isDead = true;
+
+			}
+				
+			
 			break;
 		}
 }
