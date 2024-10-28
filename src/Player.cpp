@@ -332,13 +332,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			
-			if (Godmode == false) {
+			if (Godmode == false)
+			{
 				isDead = true;
-
 			}
-				
-			
+
 			break;
 		}
 }
@@ -360,7 +358,6 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 			break;
 		case ColliderType::WALL:
 			LOG("End Collision WALL");
-			
 			break;
 		case ColliderType::DEATH:
 			LOG("End Collision DEATH");
