@@ -1,4 +1,4 @@
-Catfia is a plataform based game in which you play as a member of a mafia exploring the suburbs of a big city, created by Ton Casals and Noa Pont.
+Catfia is a platform based game in which you play as a member of a mafia exploring the suburbs of a big city, created by Ton Casals and Noa Pont.
 
 Controls:
 A and D for right and left movement
