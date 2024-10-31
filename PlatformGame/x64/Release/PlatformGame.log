@@ -1,0 +1,170 @@
+﻿  Player.cpp
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(33,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(34,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(47,120): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(47,111): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(97,23): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(113,22): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(146,53): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(155,53): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(169,19): warning C4305: '-=': truncation from 'double' to 'float'
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(251,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\toncg\Documents\GitHub\Catfia-Game\src\Player.cpp(252,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  4 of 1154 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  PlatformGame.vcxproj -> C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Release\PlatformGame.exe
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Audio\Fx\hello_man.wav
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Audio\Music\music_spy.ogg
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\CityTiles.xml
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\MapMetadata.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\MapMetadata.tsx
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\MapTemplate.tmx
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\tiles boceto 1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\tiles boceto 2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\tmw_desert_spacing.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Maps\tmw_desert_spacing.xml
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\Font.txt
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\License.txt
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\Map.tmx
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\City NightTiles.xml
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tileset.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_01.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_02.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_03.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_04.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_05.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_06.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_07.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_08.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_09.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_10.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_11.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_12.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_13.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_14.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_15.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_16.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_17.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_18.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_19.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_20.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_21.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_22.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_23.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_24.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_25.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_26.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_27.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_28.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_29.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_30.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_31.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_32.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_33.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_34.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_35.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_36.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_37.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_38.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_39.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_40.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_41.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_42.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_43.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_44.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_45.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_46.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_47.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_48.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_49.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_50.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_51.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_52.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_53.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_54.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_55.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_56.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_57.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_58.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_59.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_60.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_61.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_62.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_63.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\1 Tiles\Tile_64.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Overlay.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Day\1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Day\2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Day\3.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Day\4.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Day\5.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Night\1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Night\2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Night\3.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Night\4.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\2 Background\Night\5.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\10.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\11.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\3.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\4.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\5.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\6.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\7.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\8.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\1 Tube\9.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\10.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\11.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\12.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\13.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\14.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\15.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\16.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\17.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\18.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\19.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\20.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\21.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\22.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\23.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\24.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\25.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\26.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\27.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\3.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\4.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\5.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\6.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\7.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\8.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\2 Decoration\9.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\2.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\3.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\4.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\5.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\6.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\7.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\8.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\3 Objects\3 Power lines\9.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\4 Animated objects\Card.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\4 Animated objects\Chest.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\4 Animated objects\Money.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\New tile map\4 Animated objects\Trap.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\Controlls.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\gato de pie first bocetos.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\goldCoin.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\Idle.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\player1.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\spritesheet cat animations.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\spritesheet.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\Textures\test.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\tiles\billete boceto.png
+  C:\Users\toncg\Documents\GitHub\Catfia-Game\Assets\tiles\moneda boceto.png
+  151 archivo(s) copiado(s)

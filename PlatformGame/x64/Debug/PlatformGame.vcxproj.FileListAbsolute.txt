@@ -1,0 +1,11 @@
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\pugixml.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\SDL2d.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\SDL2_imaged.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\libpng16d.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\zlibd1.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\SDL2_mixerd.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\vorbisfile.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\vorbis.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\ogg.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\x64\Debug\wavpackdll.dll
+C:\Users\toncg\Documents\GitHub\Catfia-Game\PlatformGame\x64\Debug\Platform.4970EBBF.Up2Date

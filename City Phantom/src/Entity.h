@@ -77,16 +77,3 @@ public:
 	Vector2D position;       
 	bool renderable = true;
 };
-enum class States {
-	IDLE_L,
-	IDLE_R,
-	WALKING_L,
-	WALKING_R,
-	DASH_L,
-	DASH_R,
-	JUMPING_L,
-	JUMPING_R,
-	FALLING_L,
-	FALLING_R
-
-};
