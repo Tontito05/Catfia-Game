@@ -43,7 +43,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
-	Engine::GetInstance().map->Load("Assets/New tile map/", "Map.tmx");
+	Engine::GetInstance().map->Load("Assets/Maps/", "Map.tmx");
 	return true;
 }
 
@@ -72,26 +72,7 @@ bool Scene::Update(float dt)
 	if (player->position.getX() > Engine::GetInstance().window.get()->width / (camSpeed * 2) &&
 		player->position.getX() < mapLimitX - Engine::GetInstance().window.get()->width / (camSpeed*2))
 	{
-
-		Engine::GetInstance().render.get()->camera.x = ((-player->position.getX() * camSpeed) + Engine::GetInstance().window.get()->width / 2)+camoffset;
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && camoffset<100 ) {
-			camoffset++;
-		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && camoffset > -100) {
-			camoffset--;
-		}
-		else if(camoffset !=0)
-		{
-			if (camoffset > 0)
-			{
-				camoffset--;
-			}
-			if (camoffset <0)
-			{
-				camoffset++;
-			}
-		}
+		Engine::GetInstance().render.get()->camera.x = (-player->position.getX() * camSpeed) + Engine::GetInstance().window.get()->width / 2;
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {

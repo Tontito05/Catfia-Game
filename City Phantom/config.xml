@@ -18,7 +18,7 @@
   </window>
 
 <scene>
-	<map path="Assets/New tile map/" name="Map.tmx"/>
+	<map path="Assets/Maps/" name="Map.tmx"/>
 	<entities>
 	<player x="150" y="300" w="32" h ="32" texture="Assets/Textures/spritesheet.png">
 		<animations>

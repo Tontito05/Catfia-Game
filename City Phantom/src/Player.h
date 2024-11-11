@@ -7,28 +7,12 @@
 
 struct SDL_Texture;
 
-enum class PlayerStates
-{
-	DEAD,
-	IDLE,
-	WALKING,
-	DASH,
-	JUMPING,
-	FALLING,
-
-};
-enum class POV
-{
-	LEFT,
-	RIGHT
-};
-
 class Player : public Entity
 {
 public:
 
 	Player();
-
+	
 	virtual ~Player();
 
 	bool Awake();
@@ -62,9 +46,6 @@ public:
 	bool inMenu = false;
 	Vector2D menusize = { 606,332 };
 
-	PlayerStates PS;
-	POV Player_POV;
-
 	int texW, texH;
 
 	//Audio fx
@@ -75,6 +56,7 @@ public:
 	float jumpForce = 2; // The force to apply when jumping
 	bool Jumping = false; // Flag to check if the player is currently jumping
 
+	States state;
 	b2Vec2 TerminalVelocity = b2Vec2(0, 10);
 
 	bool isDashingL = false;

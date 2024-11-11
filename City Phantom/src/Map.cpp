@@ -122,10 +122,10 @@ bool Map::Load(std::string path, std::string fileName)
     bool ret = false;
 
     //Load BG
-    BG1 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/1.png");
-    BG2 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/2.png");
-    BG3 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/3.png");
-    BG4 = Engine::GetInstance().textures.get()->Load("Assets/New tile map/2 Background/Night/5.png");
+    BG1 = Engine::GetInstance().textures.get()->Load("Assets/Maps/2 Background/Night/1.png");
+    BG2 = Engine::GetInstance().textures.get()->Load("Assets/Maps/2 Background/Night/2.png");
+    BG3 = Engine::GetInstance().textures.get()->Load("Assets/Maps/2 Background/Night/3.png");
+    BG4 = Engine::GetInstance().textures.get()->Load("Assets/Maps/2 Background/Night/5.png");
 
     // Assigns the name of the map file and the path
     mapFileName = fileName;

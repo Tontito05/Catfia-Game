@@ -9,8 +9,6 @@ class Scene : public Module
 {
 public:
 
-	int camoffset =0;
-
 	Scene();
 
 	// Destructor

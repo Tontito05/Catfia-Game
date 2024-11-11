@@ -12,7 +12,6 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name = "Player";
-	PS = PlayerStates::IDLE;
 }
 
 Player::~Player() {
@@ -70,7 +69,6 @@ bool Player::Update(float dt)
 	//God Mode Controll
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode==false)
 	{
-
 		Godmode = true;
 	}
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == true)
@@ -89,77 +87,92 @@ bool Player::Update(float dt)
 	}
 
 
-	if (inMenu == false && PS != PlayerStates::DEAD)
+	if (inMenu == false && isDead == false)
 	{
 		if (Godmode == false)
 		{
 
 			// Move left
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (PS == PlayerStates::IDLE || PS == PlayerStates::WALKING)) {
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				velocity.x = -0.4 * 16;
 
-				PS = PlayerStates::WALKING;
-				Player_POV = POV::LEFT;
+				//Set the dash so the player can use it on the LEFT
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
+					// Apply an initial Left force
+					pbody->body->SetLinearVelocity({ 0,0 });
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
+					isDashingL = true;
+					CanDash = false;
+				}
+				state = States::WALKING_L;
+
 			}
+
 			// Move right
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (PS == PlayerStates::IDLE || PS == PlayerStates::WALKING)) {
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				velocity.x = 0.4 * 16;
 
-				PS = PlayerStates::WALKING;
-				Player_POV = POV::RIGHT;
-			}
-			else if (PS == PlayerStates::WALKING)
-			{
-				PS = PlayerStates::IDLE;
+				//Set the dash so the player can use it on the RIGHT
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
+					// Apply an initial Right force
+					pbody->body->SetLinearVelocity({ 0,0 });
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
+					isDashingR = true;
+					CanDash = false;
+				}
+
+				state = States::WALKING_R;
+
 			}
 
 			//Jump
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && PS != PlayerStates::JUMPING) {
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 				// Apply an initial upward force
-				PS = PlayerStates::JUMPING;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				Jumping = true;
+
 			}
 
 
-			switch (PS)
+			// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
+			if (Jumping == true)
 			{
-			case PlayerStates::DEAD:
-				break;
-			case PlayerStates::IDLE:
-				break;
 
-			case PlayerStates::WALKING:
-
-				if (Player_POV == POV::LEFT)
+				velocity = pbody->body->GetLinearVelocity();
+				//We insert this here so the player camn move during the jump, so we dont limit the movement
+				//Move Left
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					velocity.x = -0.4 * 16;
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
+					velocity = pbody->body->GetLinearVelocity();
+					state = States::JUMPING_L;
 
-					if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
-						// Apply an initial Left force
-						pbody->body->SetLinearVelocity({ 0,0 });
-						pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
-						CanDash = false;
-						PS = PlayerStates::DASH;
-						velocity = pbody->body->GetLinearVelocity();
-					}
-				}
-				else if (Player_POV == POV::RIGHT)
-				{
-					velocity.x = 0.4 * 16;
-
-					if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
-						// Apply an initial Right force
-						pbody->body->SetLinearVelocity({ 0,0 });
-						pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
-						CanDash = false;
-						PS = PlayerStates::DASH;
-						velocity = pbody->body->GetLinearVelocity();
-					}
 				}
 
-				break;
-			case PlayerStates::DASH:
+				// Move right
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
+				{
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
+					velocity = pbody->body->GetLinearVelocity();
 
+					state = States::JUMPING_R;
 
-				if (Player_POV == POV::RIGHT)
+				}
+
+				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
+				{
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+					velocity = pbody->body->GetLinearVelocity();
+				}
+				else
+				{
+					JumpMinus -= 0.1;
+
+				}
+
+			}
+
+				if (isDashingR == true)
 				{
 					//The parameter that creates the slowing sensation of the dash
 					DashSlower -= 0.01f;
@@ -170,12 +183,12 @@ bool Player::Update(float dt)
 					DashForce += DashSlower;
 					if (DashForce <= 0)
 					{
-						PS = PlayerStates::IDLE;
 						ResetDash();
 					}
+					state = States::DASH_L;
 				}
 				//Left Dash
-				else if (Player_POV == POV::LEFT)
+				else if (isDashingL == true)
 				{
 					//Same as on top
 					DashSlower += 0.01f;
@@ -185,83 +198,17 @@ bool Player::Update(float dt)
 					DashForce -= DashSlower;
 					if (DashForce <= 0)
 					{
-						PS = PlayerStates::IDLE;
 						ResetDash();
 					}
+					state = States::DASH_R;
 				}
-
-				break;
-			case PlayerStates::JUMPING:
-
-
-				velocity = pbody->body->GetLinearVelocity();
-
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
-				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
-					velocity = pbody->body->GetLinearVelocity();
-					Player_POV = POV::LEFT;
-
-				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
-				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
-					velocity = pbody->body->GetLinearVelocity();
-					Player_POV = POV::RIGHT;
-
-				}
-				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) && (JumpMinus > 0))
-				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
-					velocity = pbody->body->GetLinearVelocity();
-				}
-				else
-				{
-					JumpMinus -= 0.05;
-
-				}
-
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true)
-				{
-					pbody->body->SetLinearVelocity({ 0,0 });
-					if (Player_POV == POV::LEFT)
-					{
-						pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
-					}
-					else if (Player_POV == POV::RIGHT)
-					{
-						pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
-					}
-					CanDash = false;
-					PS = PlayerStates::DASH;
-					velocity = pbody->body->GetLinearVelocity();
-				}
-
-				break;
-			case PlayerStates::FALLING:
-
-				if (pbody->body->GetLinearVelocity().y < 0.01)
-				{
-					PS = PlayerStates::IDLE;
-				}
-
-				break;
-			default:
-				break;
-			}
-
-
-
-
-
 			
 
-		if (pbody->body->GetLinearVelocity().y > 10)
-		{
-			velocity.y = TerminalVelocity.y;
-		}
-		pbody->body->SetLinearVelocity(velocity);
-
+			if (pbody->body->GetLinearVelocity().y > 10)
+			{
+				velocity.y = TerminalVelocity.y;
+			}
+			pbody->body->SetLinearVelocity(velocity);
 		}
 		else // GOD MODE 
 		{
@@ -269,12 +216,15 @@ bool Player::Update(float dt)
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				velocityGodMode.x = -0.5 * 16;
+				state = States::WALKING_L;
 			}
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocityGodMode.x = 0.5 * 16;
+				state = States::WALKING_R;
 			}
+
 			//Fly
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 
@@ -302,12 +252,12 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
-	if (pbody->body->GetLinearVelocity().y < 0 && Jumping==true&& PS == PlayerStates::JUMPING && Player_POV == POV::LEFT) {
+	if (pbody->body->GetLinearVelocity().y < 0 && Jumping==true&& state == States::JUMPING_L) {
 		// Use jump animation
 		currentAnimation = &jumpingleft;
 
 	}
-	else if (Jumping == true && PS == PlayerStates::JUMPING && Player_POV == POV::RIGHT) {
+	else if (Jumping == true && state == States::JUMPING_R) {
 
 		currentAnimation = &jumpingright;
 	}
@@ -321,10 +271,10 @@ bool Player::Update(float dt)
 		currentAnimation = &jumpingright;
 	}*/
 
-	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&& PS == PlayerStates::WALKING && Player_POV == POV::LEFT) {
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
 		currentAnimation = &walkingleft;
 	}
-	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&& PS == PlayerStates::WALKING && Player_POV == POV::RIGHT) {
+	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT&&state == States::WALKING_R) {
 		currentAnimation = &walkingright;
 	}
 	else if (isDead == true) {
@@ -365,7 +315,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision PLATFORM");
 			//reset the jump flag when touching the ground
 
-			PS = PlayerStates::IDLE;
+			Jumping = false;
 			JumpMinus = 1;
 			CanDash = true;
 
@@ -410,6 +360,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 			break;
 		case ColliderType::WALL:
 			LOG("End Collision WALL");
+			
 			break;
 		case ColliderType::DEATH:
 			LOG("End Collision DEATH");
@@ -423,15 +374,8 @@ void Player::ResetDash()
 {
 	DashForce = 3;
 	DashSlower = 0;
-
-	if (pbody->body->GetLinearVelocity().y > 0.01)
-	{
-		PS = PlayerStates::FALLING;
-	}
-	if (pbody->body->GetLinearVelocity().y < 0.01)
-	{
-		PS = PlayerStates::JUMPING;
-	}
+	isDashingL = false;
+	isDashingR = false;
 
 }
 
