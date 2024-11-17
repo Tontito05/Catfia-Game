@@ -1,0 +1,59 @@
+﻿  Audio.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Audio.cpp")
+  
+  Engine.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Engine.cpp")
+  
+  EntityManager.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/EntityManager.cpp")
+  
+  Input.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Input.cpp")
+  
+  Item.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Item.cpp")
+  
+  Map.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Map.cpp")
+  
+  PerfTimer.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\PerfTimer.h(2,10): error C1083: No se puede abrir el archivo incluir: 'SDL2\SDL_timer.h': No such file or directory
+  (compilando archivo de origen "src/PerfTimer.cpp")
+  
+  Physics.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Physics.cpp")
+  
+  PlatformGame.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/PlatformGame.cpp")
+  
+  Player.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Player.cpp")
+  
+  Render.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Render.cpp")
+  
+  Scene.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Scene.cpp")
+  
+  Textures.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Textures.cpp")
+  
+  Timer.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Timer.cpp(6,10): error C1083: No se puede abrir el archivo incluir: 'SDL2\SDL_timer.h': No such file or directory
+  Window.cpp
+C:\Users\noapo\Desktop\Catfia-Game\src\Module.h(4,10): error C1083: No se puede abrir el archivo incluir: 'pugixml.hpp': No such file or directory
+  (compilando archivo de origen "src/Window.cpp")
+  
+  Generando código...
