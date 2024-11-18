@@ -1,0 +1,10 @@
+-- Note: box2d only supports static library linkage. Building static library.
+-- Downloading https://github.com/erincatto/Box2D/archive/9ebbbcd960ad424e03e5de6e66a40764c16f51bc.tar.gz -> erincatto-Box2D-9ebbbcd960ad424e03e5de6e66a40764c16f51bc.tar.gz...
+-- Extracting source C:/Users/noapm/AppData/Local/vcpkg/downloads/erincatto-Box2D-9ebbbcd960ad424e03e5de6e66a40764c16f51bc.tar.gz
+-- Using source at C:/Users/noapm/Documents/GitHub/Catfia-Game/vcpkg_installed/x64-windows/vcpkg/blds/box2d/src/64c16f51bc-7b27809cb5.clean
+-- Found external ninja('1.11.0').
+-- Configuring x64-windows
+-- Building x64-windows-dbg
+-- Building x64-windows-rel
+-- Installing: C:/Users/noapm/Documents/GitHub/Catfia-Game/vcpkg_installed/x64-windows/vcpkg/pkgs/box2d_x64-windows/share/box2d/copyright
+-- Performing post-build validation
