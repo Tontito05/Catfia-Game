@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "Vector2D.h"
 #include <list>
 #include <vector>
 
@@ -133,11 +134,31 @@ public:
     // L07: TODO 8: Create a method that translates x,y coordinates from map positions to world positions
     Vector2D MapToWorld(int x, int y) const;
 
+    Vector2D WorldToMap(int x, int y);
+
     // L09: TODO 2: Implement function to the Tileset based on a tile id
     TileSet* GetTilesetFromTileId(int gid) const;
 
     // L09: TODO 6: Load a group of properties 
     bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+    int GetWidth() {
+        return mapData.width;
+    }
+
+    int GetHeight() {
+        return mapData.height;
+    }
+
+    int GetTileWidth() {
+        return mapData.tileWidth;
+    }
+
+    int GetTileHeight() {
+        return mapData.tileHeight;
+    }
+
+    MapLayer* GetNavigationLayer();
 
 public: 
     std::string mapFileName;

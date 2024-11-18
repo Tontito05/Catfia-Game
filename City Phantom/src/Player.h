@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "Vector2D.h"
 #include "SDL2/SDL.h"
 #include "Box2D/Box2D.h"
 #include "Animation.h"
@@ -36,6 +37,9 @@ public:
 		this->parameters = parameters;
 
 	}
+
+	void SetPosition(Vector2D pos);
+	Vector2D GetPosition();
 
 public:
 
