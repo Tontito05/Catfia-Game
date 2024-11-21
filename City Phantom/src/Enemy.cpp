@@ -37,7 +37,7 @@ bool Enemy::Start() {
 	currentAnimation = &idle;
 	
 	//Add a physics to an item - initialize the physics body
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, texW / 1.5, bodyType::DYNAMIC);
 
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
@@ -55,33 +55,12 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt)
 {
 	// Pathfinding testing inputs
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		Vector2D pos = GetPosition();
-		Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(),pos.getY());
-		pathfinding->ResetPath(tilePos);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
-		pathfinding->PropagateBFS();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateBFS();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
-		pathfinding->PropagateDijkstra();
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateDijkstra();
-	}
 
 	// L13: TODO 3:	Add the key inputs to propagate the A* algorithm with different heuristics (Manhattan, Euclidean, Squared)
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		SetPosition(OGposition);
+	}
 
 		if (SightDistance <= 5)
 		{
@@ -95,30 +74,7 @@ bool Enemy::Update(float dt)
 			pathfinding->ResetPath(tilePos);
 			SightDistance = 0;
 		}
-	}
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(MANHATTAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		pathfinding->PropagateAStar(EUCLIDEAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_N) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(EUCLIDEAN);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		pathfinding->PropagateAStar(SQUARED);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_M) == KEY_REPEAT &&
-		Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		pathfinding->PropagateAStar(SQUARED);
-	}
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();

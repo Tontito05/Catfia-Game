@@ -35,6 +35,7 @@ public:
 public:
 
 	int SightDistance = 0;
+	Vector2D OGposition;
 
 private:
 
