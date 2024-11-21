@@ -54,8 +54,7 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
-	// Pathfinding testing inputs
-
+	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 	// L13: TODO 3:	Add the key inputs to propagate the A* algorithm with different heuristics (Manhattan, Euclidean, Squared)
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
@@ -75,6 +74,35 @@ bool Enemy::Update(float dt)
 			SightDistance = 0;
 		}
 
+		Vector2D PosInMap = Engine::GetInstance().map->WorldToMap(position.getX(),position.getY());
+
+		if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
+			&& (pathfinding->foundDestination != true)
+			&& (stat == States::WALKING_R))
+		{
+			velocity.x = 0.4 * 16;
+		}
+		else if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == false)
+				&& (pathfinding->foundDestination != true)
+				&& (stat == States::WALKING_R))
+		{
+			stat = States::WALKING_L;
+		}
+
+		if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == true)
+			&& (pathfinding->foundDestination != true)
+			&& (stat == States::WALKING_L))
+		{
+			velocity.x = -0.4 * 16;
+		}
+		else if ((pathfinding->IsWalkable(PosInMap.getX() , PosInMap.getY()) == false)
+			&& (pathfinding->foundDestination != true)
+			&& (stat == States::WALKING_L))
+		{
+			stat = States::WALKING_R;
+		}
+
+		pbody->body->SetLinearVelocity(velocity);
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();

@@ -209,7 +209,7 @@ void Pathfinding::PropagateDijkstra() {
 
     // L12: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
 
-    bool foundDestination = false;
+    foundDestination = false;
     if (frontierDijkstra.size() > 0) {
         Vector2D frontierTile = frontierDijkstra.top().second;
         Vector2D playerPos = Engine::GetInstance().scene.get()->GetPlayerPosition();

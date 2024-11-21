@@ -39,6 +39,8 @@ public:
 
 private:
 
+	States stat = States::WALKING_R;
+
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
