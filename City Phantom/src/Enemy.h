@@ -34,6 +34,8 @@ public:
 
 public:
 
+	int SightDistance = 0;
+
 private:
 
 	SDL_Texture* texture;

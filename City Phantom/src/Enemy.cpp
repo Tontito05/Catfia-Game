@@ -82,7 +82,19 @@ bool Enemy::Update(float dt)
 	// L13: TODO 3:	Add the key inputs to propagate the A* algorithm with different heuristics (Manhattan, Euclidean, Squared)
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-		pathfinding->PropagateAStar(MANHATTAN);
+
+		if (SightDistance <= 5)
+		{
+			pathfinding->PropagateAStar(MANHATTAN);
+			SightDistance++;
+		}
+		else
+		{
+			Vector2D pos = GetPosition();
+			Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
+			pathfinding->ResetPath(tilePos);
+			SightDistance = 0;
+		}
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_B) == KEY_REPEAT &&

@@ -344,11 +344,7 @@ int Pathfinding::MovementCost(int x, int y)
 
     if ((x >= 0) && (x < map->GetWidth()) && (y >= 0) && (y < map->GetHeight()))
     {
-        int gid = layerNav->Get(x, y);
-        if (gid == highCostGid) {
-            ret = 5;
-        }
-        else ret = 1;
+        ret = 1;
     }
 
     return ret;

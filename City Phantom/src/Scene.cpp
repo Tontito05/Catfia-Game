@@ -16,6 +16,7 @@ Scene::Scene() : Module()
 {
 	name = "scene";
 	img = nullptr;
+
 }
 
 // Destructor
@@ -64,7 +65,39 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 
+	map = Engine::GetInstance().map.get();
+	layerNav = map->GetNavigationLayer();
+	if (enemyesIn == false)
+	{
+		CreateEnemyes();
+		enemyesIn = true;
+	}
+
 	return true;
+}
+
+void Scene::CreateEnemyes()
+{
+	for (int x = 0; x < map->GetWidth(); x++)
+	{
+		for (int y = 0; y < map->GetHeight(); y++)
+		{
+			if (layerNav != nullptr) {
+				if (x >= 0 && y >= 0 && x < map->GetWidth() && y < map->GetHeight()) {
+
+					int gid = layerNav->Get(x, y);
+					if (gid == enemySet)
+					{
+						enemyList[enemyCounter]->SetPosition(map->MapToWorld(x,y));
+						enemyList[enemyCounter]->ResetPath();
+
+						enemyCounter++;
+					}
+				}
+			}
+		}
+	}
+
 }
 
 // Called each loop iteration
@@ -94,7 +127,6 @@ bool Scene::Update(float dt)
 		LOG("%d", Engine::GetInstance().window.get()->height);
 
 	}
-
 
 	Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
 	Vector2D mouseTile = Engine::GetInstance().map.get()->WorldToMap(mousePos.getX() - Engine::GetInstance().render.get()->camera.x,
