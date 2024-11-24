@@ -252,7 +252,7 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
-	if (pbody->body->GetLinearVelocity().y < 0 && Jumping==true&& state == States::JUMPING_L) {
+	/*if (pbody->body->GetLinearVelocity().y < 0 && Jumping == true && state == States::JUMPING_L) {
 		// Use jump animation
 		currentAnimation = &jumpingleft;
 
@@ -269,7 +269,7 @@ bool Player::Update(float dt)
 	/*else if (pbody->body->GetLinearVelocity().y > 5) {
 
 		currentAnimation = &jumpingright;
-	}*/
+	}
 
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
 		currentAnimation = &walkingleft;
@@ -284,7 +284,7 @@ bool Player::Update(float dt)
 	}
 	else {
 		currentAnimation = &idle;  // Only set to idle if no other state is active
-	}
+	}*/
 
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
@@ -298,6 +298,10 @@ bool Player::Update(float dt)
 
 	return true;
 }
+
+
+
+
 
 bool Player::CleanUp()
 {

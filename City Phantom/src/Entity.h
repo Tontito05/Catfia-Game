@@ -40,6 +40,7 @@ public:
 	{
 		return true;
 	}
+	
 
 	void Enable()
 	{
@@ -77,6 +78,9 @@ public:
 	// want our Entity class, maybe it's not renderable...
 	Vector2D position;       
 	bool renderable = true;
+
+
+
 };
 enum class States {
 	IDLE_L,
@@ -88,6 +92,7 @@ enum class States {
 	JUMPING_L,
 	JUMPING_R,
 	FALLING_L,
-	FALLING_R
+	FALLING_R,
+	DYING
 
 };

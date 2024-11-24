@@ -20,6 +20,8 @@ public:
 
 	bool Update(float dt);
 
+	void EnemyAnimations();
+
 	bool CleanUp();
 
 	void SetParameters(pugi::xml_node parameters) {
@@ -47,6 +49,7 @@ private:
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
+	Animation dying;
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 };

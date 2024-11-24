@@ -21,6 +21,8 @@ public:
 
 	// Called every frame
 	bool Update(float dt);
+	
+	void SetAnimation(Entity* entity);
 
 	// Called before quitting
 	bool CleanUp();

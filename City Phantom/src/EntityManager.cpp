@@ -112,6 +112,67 @@ bool EntityManager::Update(float dt)
 	{
 		if (entity->active == false) continue;
 		ret = entity->Update(dt);
+		SetAnimation( entity);
 	}
+	
 	return ret;
+
 }
+
+void EntityManager::SetAnimation(Entity* entity) {
+
+
+	if (entity->type == EntityType::PLAYER) {
+
+		Player* player = dynamic_cast<Player*>(entity);
+
+		switch (player->state)
+		{
+		case States::IDLE_L:
+			player->currentAnimation = &player->idle;
+			break;
+		case States::IDLE_R:
+			player->currentAnimation = &player->idle;
+			break;
+		case States::WALKING_L:
+			player->currentAnimation = &player->walkingleft;
+			break;
+		case States::WALKING_R:
+			player->currentAnimation = &player->walkingright;
+			break;
+		case States::DASH_L:
+			player->currentAnimation = &player->walkingleft;
+			break;
+		case States::DASH_R:
+			player->currentAnimation = &player->walkingright;
+			break;
+		case States::JUMPING_L:
+			player->currentAnimation = &player->jumpingleft;
+			break;
+		case States::JUMPING_R:
+			player->currentAnimation = &player->jumpingright;
+			break;
+		case States::FALLING_L:
+			player->currentAnimation = &player->jumpingleft;
+			break;
+		case States::FALLING_R:
+			player->currentAnimation = &player->jumpingright;
+			break;
+
+		case States::DYING:
+			player->currentAnimation = &player->dying;
+			break;
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
+
+
+
+	}
+
+
+
+}
+
