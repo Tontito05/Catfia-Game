@@ -69,6 +69,8 @@ public:
 
 	};
 
+	bool isDead = false;
+
 public:
 
 	std::string name;

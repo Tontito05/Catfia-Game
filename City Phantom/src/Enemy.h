@@ -36,6 +36,10 @@ public:
 
 	b2Vec2 FollowPlayer();
 
+	void resetEnemy();
+
+	void Collision(PhysBody* physB);
+
 	void ResetPath();
 
 public:
@@ -49,6 +53,9 @@ public:
 	Animation walkingleft;
 	Animation dying;
 
+	bool isDead = false;
+	PhysBody* pbody;
+
 private:
 
 	States stat = States::WALKING_R;
@@ -57,7 +64,6 @@ private:
 	const char* texturePath;
 	int texW, texH;
 	pugi::xml_node parameters;
-
-	PhysBody* pbody;
 	Pathfinding* pathfinding;
+
 };

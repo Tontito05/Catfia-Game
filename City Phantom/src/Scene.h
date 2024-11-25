@@ -42,6 +42,7 @@ public:
 	MapLayer* layerNav;
 	Map* map;
 	int enemyCounter = 0;
+	std::vector<Enemy*> enemyList;
 
 private:
 
@@ -50,7 +51,6 @@ private:
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
-	std::vector<Enemy*> enemyList;
 	int enemySet = 146;
 	bool enemyesIn = false;
 

@@ -61,7 +61,6 @@ public:
 
     int blockedGid = 145; //Gid of the tiles that block the path - Important adjust this value to your map
     bool foundDestination = false;
-	bool foundDestinationAStar = false;
 
 	EntityType type;
 

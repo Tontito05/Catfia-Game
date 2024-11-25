@@ -346,6 +346,29 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;
+		case ColliderType::ENEMY:
+			LOG("Collision ENEMY");
+
+			if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R))
+			{
+				isDead = true;
+				state = States::DYING;
+			}
+			else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)))
+			{
+				for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
+				{
+					if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+					{
+						Engine::GetInstance().scene->enemyList[i]->isDead = true;
+						pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+
+					}
+				}
+				ResetDash();
+			}
+
+			break;
 		case ColliderType::WALL:
 			ResetDash();
 			LOG("Collision WALL");

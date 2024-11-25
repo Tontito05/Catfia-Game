@@ -27,6 +27,7 @@ public:
 public:
 
 	bool isPicked = false;
+	PhysBody* pbody;
 
 private:
 
@@ -36,5 +37,5 @@ private:
 	pugi::xml_node parameters;
 
 	//L08 TODO 4: Add a physics to an item
-	PhysBody* pbody;
+
 };
