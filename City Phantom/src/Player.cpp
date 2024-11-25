@@ -94,7 +94,7 @@ bool Player::Update(float dt)
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.4 * 16;
+				velocity.x = -0.4 * 8;
 
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
@@ -107,10 +107,11 @@ bool Player::Update(float dt)
 				state = States::WALKING_L;
 
 			}
+		
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.4 * 16;
+				velocity.x = 0.4 * 8;
 
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
@@ -124,6 +125,13 @@ bool Player::Update(float dt)
 				state = States::WALKING_R;
 
 			}
+			/*else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+
+
+				state = States::IDLE_R;
+
+			}*/
+			
 
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
@@ -239,6 +247,11 @@ bool Player::Update(float dt)
 			
 		}
 
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+
+			state = States::IDLE_R;
+		}
 	}
 
 
