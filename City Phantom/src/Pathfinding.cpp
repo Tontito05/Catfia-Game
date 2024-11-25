@@ -6,13 +6,14 @@
 #include "Scene.h"
 #include "Log.h"
 
-Pathfinding::Pathfinding() {
+Pathfinding::Pathfinding(EntityType type_) {
     
      //Loads texture to draw the path
     pathTex = Engine::GetInstance().textures.get()->Load("Assets/Maps/MapMetadata.png");
     tileX = Engine::GetInstance().textures.get()->Load("Assets/Maps/x.png");
     map = Engine::GetInstance().map.get();
     layerNav = map->GetNavigationLayer();
+    type = type_;
 
     // Initialize the costSoFar with all elements set to 0
     costSoFar = std::vector<std::vector<int>>(map->GetWidth(), std::vector<int>(map->GetHeight(), 0));
@@ -146,7 +147,15 @@ bool Pathfinding::IsWalkable(int x, int y) {
     if (layerNav != nullptr) {
         if (x >= 0 && y >= 0 && x < map->GetWidth() && y < map->GetHeight()) {
             int gid = layerNav->Get(x, y);
-            if (gid != blockedGid) isWalkable = true;
+            if (type == EntityType::FYING_ENEMY)
+            {
+                if (gid != 145) isWalkable = true;
+            }
+            if (type == EntityType::WALKING_ENEMY)
+            {
+                if (gid == 148) isWalkable = true;
+            }
+
         }
     }
 
@@ -268,12 +277,10 @@ void Pathfinding::PropagateAStar(ASTAR_HEURISTICS heuristic) {
     Vector2D playerPos = Engine::GetInstance().scene.get()->GetPlayerPosition();
     Vector2D playerPosTile = Engine::GetInstance().map.get()->WorldToMap((int)playerPos.getX(), (int)playerPos.getY());
 
-    bool foundDestination = false;
     if (frontierAStar.size() > 0) {
         Vector2D frontierTile = frontierAStar.top().second;
 
         if (frontierTile == playerPosTile) {
-            foundDestination = true;
 
             //When the destination is reach, call the function ComputePath
             ComputePath(frontierTile.getX(), frontierTile.getY());
@@ -374,6 +381,7 @@ void Pathfinding::ComputePath(int x, int y)
         // Find the position of the current tile in the visited list
         index = Find(visited, currentTile);
     }
+    foundDestinationAStar = true;
 }
 
 int Pathfinding::Find(std::vector<Vector2D> vector,Vector2D elem)

@@ -75,8 +75,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::ITEM:
 		entity = new Item();
 		break;
-	case EntityType::ENEMY:
-		entity = new Enemy();
+	case EntityType::FYING_ENEMY:
+		entity = new Enemy(EntityType::FYING_ENEMY);
+		break;
+	case EntityType::WALKING_ENEMY:
+		entity = new Enemy(EntityType::WALKING_ENEMY);
 		break;
 	default:
 		break;
@@ -182,7 +185,7 @@ void EntityManager::SetAnimation(Entity* entity) {
 
 	
 
-	if (entity->type == EntityType::ENEMY) {
+	if (entity->type == EntityType::FYING_ENEMY) {
 
 		Enemy* enemy = dynamic_cast<Enemy*>(entity);
 

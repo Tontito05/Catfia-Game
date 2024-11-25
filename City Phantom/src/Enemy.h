@@ -4,6 +4,7 @@
 #include "SDL2/SDL.h"
 #include "Animation.h"
 #include "Pathfinding.h"
+#include "Box2D/Box2D.h"
 
 struct SDL_Texture;
 
@@ -11,7 +12,8 @@ class Enemy : public Entity
 {
 public:
 
-	Enemy();
+	Enemy(EntityType type_);
+
 	virtual ~Enemy();
 
 	bool Awake();
@@ -31,6 +33,8 @@ public:
 	void SetPosition(Vector2D pos);
 
 	Vector2D GetPosition();
+
+	b2Vec2 FollowPlayer();
 
 	void ResetPath();
 

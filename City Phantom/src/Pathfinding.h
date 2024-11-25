@@ -5,6 +5,7 @@
 #include "Vector2D.h"
 #include "SDL2/SDL.h"
 #include "Map.h"
+#include "Entity.h"
 
 enum ASTAR_HEURISTICS {
     MANHATTAN = 0,
@@ -17,7 +18,7 @@ class Pathfinding
 
 public:
 
-	Pathfinding();
+	Pathfinding(EntityType type_);
 
 	~Pathfinding();
 
@@ -60,6 +61,9 @@ public:
 
     int blockedGid = 145; //Gid of the tiles that block the path - Important adjust this value to your map
     bool foundDestination = false;
+	bool foundDestinationAStar = false;
+
+	EntityType type;
 
 };
 

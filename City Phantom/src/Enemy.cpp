@@ -10,7 +10,7 @@
 #include "Vector2D.h"
 #include "Map.h"
 
-Enemy::Enemy() : Entity(EntityType::ENEMY)
+Enemy::Enemy(EntityType type_) : Entity(type_)
 {
 	name = "enemy";
 }
@@ -46,66 +46,139 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	// Set the gravity of the body
+
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
 
 	// Initialize pathfinding
-	pathfinding = new Pathfinding();
+	pathfinding = new Pathfinding(type);
 	ResetPath();
 
 	return true;
 }
 
-bool Enemy::Update(float dt)
-{
-	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
-	// L13: TODO 3:	Add the key inputs to propagate the A* algorithm with different heuristics (Manhattan, Euclidean, Squared)
+b2Vec2 Enemy::FollowPlayer() {
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		SetPosition(OGposition);
+	b2Vec2 direction = { 0, 0 };
+
+	if (!pathfinding->pathTiles.empty()) {
+		Vector2D Tile = pathfinding->map->MapToWorld(pathfinding->pathTiles.back().getX(), pathfinding->pathTiles.back().getY());
+		Vector2D pos = GetPosition();
+		direction = { pos.getX() - Tile.getX(), pos.getY() - Tile.getY() };
+		direction.Normalize();
 	}
 
-		if (SightDistance <= 5)
+	return direction;
+}
+
+
+bool Enemy::Update(float dt)
+{
+	//GENERALS
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		SetPosition(OGposition);
+
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_REPEAT)
+	{
+		pathfinding->DrawPath();
+	}
+	if (SightDistance <= 5)
+	{
+		pathfinding->PropagateAStar(MANHATTAN);
+		SightDistance++;
+	}
+	else
+	{
+		Vector2D pos = GetPosition();
+		Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
+		pathfinding->ResetPath(tilePos);
+		SightDistance = 0;
+	}
+
+	Vector2D PosInMap = Engine::GetInstance().map->WorldToMap(position.getX(), position.getY());
+	b2Vec2 velocity;
+
+	switch (type)
+	{
+	case EntityType::FYING_ENEMY:
+
+		velocity = b2Vec2(0, -0.315);
+		if (pathfinding->foundDestinationAStar != true)
 		{
-			pathfinding->PropagateAStar(MANHATTAN);
-			SightDistance++;
+			if ((pathfinding->IsWalkable(PosInMap.getX() + 2, PosInMap.getY()) == true)
+				&& (stat == States::WALKING_R))
+			{
+				velocity.x = 0.4 * 16;
+			}
+			else if ((pathfinding->IsWalkable(PosInMap.getX() + 2, PosInMap.getY()) == false)
+				&& (stat == States::WALKING_R))
+			{
+				stat = States::WALKING_L;
+			}
+
+			if ((pathfinding->IsWalkable(PosInMap.getX()-1, PosInMap.getY()) == true)
+				&& (stat == States::WALKING_L))
+			{
+				velocity.x = -0.4 * 16;
+			}
+			else if ((pathfinding->IsWalkable(PosInMap.getX()-1, PosInMap.getY()) == false)
+				&& (stat == States::WALKING_L))
+			{
+				stat = States::WALKING_R;
+			}
 		}
 		else
 		{
-			Vector2D pos = GetPosition();
-			Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
-			pathfinding->ResetPath(tilePos);
-			SightDistance = 0;
-		}
-
-		Vector2D PosInMap = Engine::GetInstance().map->WorldToMap(position.getX(),position.getY());
-
-		if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
-			&& (pathfinding->foundDestination != true)
-			&& (stat == States::WALKING_R))
-		{
-			velocity.x = 0.4 * 16;
-		}
-		else if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == false)
-				&& (pathfinding->foundDestination != true)
-				&& (stat == States::WALKING_R))
-		{
-			stat = States::WALKING_L;
-		}
-
-		if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == true)
-			&& (pathfinding->foundDestination != true)
-			&& (stat == States::WALKING_L))
-		{
-			velocity.x = -0.4 * 16;
-		}
-		else if ((pathfinding->IsWalkable(PosInMap.getX() , PosInMap.getY()) == false)
-			&& (pathfinding->foundDestination != true)
-			&& (stat == States::WALKING_L))
-		{
-			stat = States::WALKING_R;
+			velocity = FollowPlayer();
 		}
 
 		pbody->body->SetLinearVelocity(velocity);
+
+
+		break;
+
+	case EntityType::WALKING_ENEMY://______________________________________________________________________________________________
+
+		velocity = b2Vec2(0, -GRAVITY_Y);
+
+		if (pathfinding->foundDestinationAStar == true)
+		{
+			if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
+				&& (stat == States::WALKING_R))
+			{
+				velocity.x = 0.4 * 16;
+			}
+			else if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == false)
+				&& (stat == States::WALKING_R))
+			{
+				stat = States::WALKING_L;
+			}
+
+			if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == true)
+				&& (stat == States::WALKING_L))
+			{
+				velocity.x = -0.4 * 16;
+			}
+			else if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == false)
+				&& (stat == States::WALKING_L))
+			{
+				stat = States::WALKING_R;
+			}
+		}
+		else
+		{
+		
+		}
+
+
+		pbody->body->SetLinearVelocity(velocity);
+		break;
+	default:
+		break;
+	}
+
+
+	//POST GENERALS
 
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -114,9 +187,6 @@ bool Enemy::Update(float dt)
 
 	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
-
-	// Draw pathfinding 
-	pathfinding->DrawPath();
 
 	return true;
 }
