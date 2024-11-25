@@ -42,15 +42,6 @@ bool Scene::Awake()
 
 	// Create a enemy using the entity manager 
 	//the num of enemyes in tyhe level
-	for (int i = 0; i < 3; i++)
-	{
-		for (pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy"))
-		{
-			Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::FYING_ENEMY);
-			enemy->SetParameters(enemyNode);
-			enemyList.push_back(enemy);
-		}
-	}
 
 
 	return ret;
@@ -91,12 +82,31 @@ void Scene::CreateEnemyes()
 				if (x >= 0 && y >= 0 && x < map->GetWidth() && y < map->GetHeight()) {
 
 					int gid = layerNav->Get(x, y);
-					if (gid == enemySet)
+					if (gid == enemyGround)
 					{
-						enemyList[enemyCounter]->SetPosition(map->MapToWorld(x, y));
-						enemyList[enemyCounter]->ResetPath();
-						enemyList[enemyCounter]->OGposition = map->MapToWorld(x, y);
-						enemyCounter++;
+							pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+							
+								Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::WALKING_ENEMY);
+								enemy->SetParameters(enemyNode);
+								enemy->Start();
+								enemy->OGposition = Vector2D(map->MapToWorld(x, y));
+								enemy->SetPosition(enemy->OGposition);
+								enemyList.push_back(enemy);
+								enemyCounter++;
+							
+					}
+					else if (gid == enemySky)
+					{
+						pugi::xml_node enemyNode = configParameters.child("entities").child("enemies").child("enemy");
+						
+							Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity(EntityType::FYING_ENEMY);
+							enemy->SetParameters(enemyNode);
+							enemy->Start();
+							enemy->OGposition = Vector2D(map->MapToWorld(x, y));
+							enemy->SetPosition(enemy->OGposition);
+							enemyList.push_back(enemy);
+							enemyCounter++;
+							
 					}
 				}
 			}

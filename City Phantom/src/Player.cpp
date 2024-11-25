@@ -94,7 +94,7 @@ bool Player::Update(float dt)
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.4 * 8;
+				velocity.x = -0.6 * 8;
 
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
@@ -111,7 +111,7 @@ bool Player::Update(float dt)
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.4 * 8;
+				velocity.x = 0.6 * 8;
 
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
@@ -349,26 +349,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
 
-			if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R))
+			for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
 			{
-				isDead = true;
-				state = States::DYING;
-			}
-			else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)))
-			{
-				for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
+				if (physB == Engine::GetInstance().scene->enemyList[i]->pbody)
 				{
-					if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+					if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
-						Engine::GetInstance().scene->enemyList[i]->isDead = true;
-						pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+						isDead = true;
+						state = States::DYING;
+					}
+					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
+					{
 
+						Engine::GetInstance().scene->enemyList[i]->isDead = true;
+						ResetDash();
 					}
 				}
-				ResetDash();
 			}
 
 			break;
+
 		case ColliderType::WALL:
 			ResetDash();
 			LOG("Collision WALL");

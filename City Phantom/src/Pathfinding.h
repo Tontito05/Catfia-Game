@@ -18,6 +18,7 @@ class Pathfinding
 
 public:
 
+    Pathfinding();
 	Pathfinding(EntityType type_);
 
 	~Pathfinding();

@@ -32,7 +32,6 @@ enum class ColliderType {
 	ENEMY
 	// ..
 };
-
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {

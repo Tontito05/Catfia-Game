@@ -51,7 +51,8 @@ private:
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
-	int enemySet = 146;
+	int enemySky = 146;
+	int enemyGround = 147;
 	bool enemyesIn = false;
 
 };

@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Pathfinding.h"
 #include "Box2D/Box2D.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -38,7 +39,7 @@ public:
 
 	void resetEnemy();
 
-	void Collision(PhysBody* physB);
+	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	void ResetPath();
 
@@ -59,11 +60,12 @@ public:
 private:
 
 	States stat = States::WALKING_R;
-
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
 	pugi::xml_node parameters;
 	Pathfinding* pathfinding;
+	int DestDistance;
+	Timer aggroTimer;
 
 };
