@@ -138,6 +138,7 @@ bool Player::Update(float dt)
 				// Apply an initial upward force
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				Jumping = true;
+				
 
 			}
 
@@ -154,6 +155,7 @@ bool Player::Update(float dt)
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
+					JumpingLeft = true;
 
 				}
 
@@ -164,6 +166,7 @@ bool Player::Update(float dt)
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
+					JumpingRight = true;
 
 				}
 
@@ -248,7 +251,7 @@ bool Player::Update(float dt)
 		}
 
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT&&Jumping==false) {
 
 			state = States::IDLE_R;
 		}
@@ -354,6 +357,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			if (Godmode == false)
 			{
 				isDead = true;
+				state = States::DYING;
 			}
 
 			break;

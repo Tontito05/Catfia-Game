@@ -169,7 +169,11 @@ void EntityManager::SetAnimation(Entity* entity) {
 
 
 
+		if (player->Jumping == true&&player->JumpingLeft==false&&player->JumpingRight==false) {
 
+			player->currentAnimation = &player->jumpingright;
+
+		}
 		
 
 

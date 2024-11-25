@@ -59,6 +59,8 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 2; // The force to apply when jumping
 	bool Jumping = false; // Flag to check if the player is currently jumping
+	bool JumpingRight = false;
+	bool JumpingLeft = false; 
 
 	States state;
 	b2Vec2 TerminalVelocity = b2Vec2(0, 10);
