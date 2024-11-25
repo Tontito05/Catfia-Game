@@ -20,7 +20,7 @@ public:
 
 	bool Update(float dt);
 
-	void EnemyAnimations();
+	
 
 	bool CleanUp();
 
@@ -38,6 +38,12 @@ public:
 
 	int SightDistance = 0;
 	Vector2D OGposition;
+	States state;
+	Animation* currentAnimation = nullptr;
+	Animation idle;
+	Animation walkingright;
+	Animation walkingleft;
+	Animation dying;
 
 private:
 
@@ -47,9 +53,7 @@ private:
 	const char* texturePath;
 	int texW, texH;
 	pugi::xml_node parameters;
-	Animation* currentAnimation = nullptr;
-	Animation idle;
-	Animation dying;
+
 	PhysBody* pbody;
 	Pathfinding* pathfinding;
 };

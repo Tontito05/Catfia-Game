@@ -33,7 +33,10 @@ bool Enemy::Start() {
 	texH = parameters.attribute("h").as_int();
 
 	//Load animations
-	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	
+	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
+	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
+	dying.LoadAnimations(parameters.child("animations").child("dying"));
 	currentAnimation = &idle;
 	
 	//Add a physics to an item - initialize the physics body

@@ -170,9 +170,43 @@ void EntityManager::SetAnimation(Entity* entity) {
 
 
 
+		
+
+
 	}
 
 
+	
+
+	if (entity->type == EntityType::ENEMY) {
+
+		Enemy* enemy = dynamic_cast<Enemy*>(entity);
+
+
+		switch (enemy->state)
+		{
+		case States::IDLE_L:
+			enemy->currentAnimation = &enemy->walkingleft;
+			break;
+		case States::IDLE_R:
+			enemy->currentAnimation = &enemy->walkingright;
+			break;
+		case States::WALKING_L:
+			enemy->currentAnimation = &enemy->walkingleft;
+			break;
+		case States::WALKING_R:
+			enemy->currentAnimation = &enemy->walkingright;
+			break;
+		case States::DYING:
+			enemy->currentAnimation = &enemy->dying;
+			break;
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
+
+	}
 
 }
 
