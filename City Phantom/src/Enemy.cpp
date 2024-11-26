@@ -54,6 +54,7 @@ bool Enemy::Start() {
 
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
+	pbody->body->SetFixedRotation(true);
 
 	// Set the gravity of the body
 

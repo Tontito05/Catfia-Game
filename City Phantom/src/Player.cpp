@@ -46,7 +46,7 @@ bool Player::Start() {
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
 	pbody->body->GetFixtureList()[0].SetFriction(0);
-	pbody->body->SetFixedRotation(0);
+	pbody->body->SetFixedRotation(true);
 	
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
