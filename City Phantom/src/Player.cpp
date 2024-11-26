@@ -59,11 +59,10 @@ bool Player::Start() {
 	return true;
 }
 
-
 bool Player::Update(float dt)
 {
 
-	// L08 TODO 5: Add physics to the player - updated player position using physics
+	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 	//God Mode Controll
@@ -85,7 +84,6 @@ bool Player::Update(float dt)
 	{
 		inMenu = false;
 	}
-
 
 	if (inMenu == false && isDead == false)
 	{
@@ -196,6 +194,7 @@ bool Player::Update(float dt)
 					{
 						ResetDash();
 					}
+
 					state = States::DASH_L;
 				}
 				//Left Dash
@@ -355,14 +354,20 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				{
 					if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
-						isDead = true;
-						state = States::DYING;
+						checkLife();
 					}
 					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
 
 						Engine::GetInstance().scene->enemyList[i]->isDead = true;
-						ResetDash();
+						if (state == States::DASH_L)
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, 0), true);
+						}
+						else
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, 0), true);
+						}
 					}
 				}
 			}
@@ -379,8 +384,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			
 			if (Godmode == false)
 			{
-				isDead = true;
-				state = States::DYING;
+				checkLife();
 			}
 
 			break;
@@ -420,7 +424,7 @@ void Player::ResetDash()
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
-
+	attacking = false;
 }
 
 void Player::ResetPlayer()
@@ -445,4 +449,17 @@ Vector2D Player::GetPosition() {
 	b2Vec2 bodyPos = pbody->body->GetTransform().p;
 	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
 	return pos;
+}
+
+void Player::checkLife()
+{
+	if (life <= 0)
+	{
+		isDead = true;
+		state = States::DYING;
+	}
+	else
+	{
+		life--;
+	}
 }

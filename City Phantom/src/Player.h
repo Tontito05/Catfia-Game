@@ -71,6 +71,10 @@ public:
 	float DashForce = 3;
 	float DashSlower = 0;
 	float JumpMinus = 1;
+	bool attacking = false;
+	int enemyKillImpact = 1;
+
+	int life = 3;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
