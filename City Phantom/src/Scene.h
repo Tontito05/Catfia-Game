@@ -38,6 +38,8 @@ public:
 	// Return the player position
 	Vector2D GetPlayerPosition();
 
+	float Slower(float ogPos, float goalPos, float time);
+
 	void CreateEnemyes();
 	MapLayer* layerNav;
 	Map* map;

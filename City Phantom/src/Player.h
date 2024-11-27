@@ -38,6 +38,8 @@ public:
 
 	}
 
+	void checkLife();
+
 	void SetPosition(Vector2D pos);
 	Vector2D GetPosition();
 
