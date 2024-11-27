@@ -86,6 +86,7 @@ public:
 	Animation walkingleft;
 	Animation walkingright;
 	Animation dying;
+	Animation dash;
 
 	bool Godmode = false;
 

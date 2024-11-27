@@ -41,6 +41,8 @@ bool Player::Start() {
 	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
+	dash.LoadAnimations(parameters.child("animations").child("dash"));
+
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body

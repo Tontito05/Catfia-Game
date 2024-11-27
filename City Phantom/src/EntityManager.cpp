@@ -144,10 +144,10 @@ void EntityManager::SetAnimation(Entity* entity) {
 			player->currentAnimation = &player->walkingright;
 			break;
 		case States::DASH_L:
-			player->currentAnimation = &player->walkingleft;
+			player->currentAnimation = &player->dash;
 			break;
 		case States::DASH_R:
-			player->currentAnimation = &player->walkingright;
+			player->currentAnimation = &player->dash;
 			break;
 		case States::JUMPING_L:
 			player->currentAnimation = &player->jumpingleft;
@@ -165,6 +165,8 @@ void EntityManager::SetAnimation(Entity* entity) {
 		case States::DYING:
 			player->currentAnimation = &player->dying;
 			break;
+
+		
 		default:
 			LOG("Unknown state. No animation set.");
 			break;
