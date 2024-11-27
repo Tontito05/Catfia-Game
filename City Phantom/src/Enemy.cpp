@@ -38,6 +38,9 @@ bool Enemy::Start() {
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
+
+	walkingright2.LoadAnimations(parameters.child("animations").child("walkingright2"));
+	dying2.LoadAnimations(parameters.child("animations").child("dying2"));
 	currentAnimation = &idle;
 	
 	//Add a physics to an item - initialize the physics body

@@ -54,6 +54,11 @@ public:
 	Animation walkingleft;
 	Animation dying;
 
+	Animation walkingright2;
+	
+	Animation dying2;
+
+
 	bool isDead = false;
 	PhysBody* pbody;
 

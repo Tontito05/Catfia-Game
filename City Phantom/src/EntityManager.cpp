@@ -172,18 +172,18 @@ void EntityManager::SetAnimation(Entity* entity) {
 
 
 
-		if (player->Jumping == true&&player->JumpingLeft==false&&player->JumpingRight==false) {
+		if (player->Jumping == true && player->JumpingLeft == false && player->JumpingRight == false) {
 
 			player->currentAnimation = &player->jumpingright;
 
 		}
-		
+
 
 
 	}
 
 
-	
+
 
 	if (entity->type == EntityType::FYING_ENEMY) {
 
@@ -211,6 +211,41 @@ void EntityManager::SetAnimation(Entity* entity) {
 			LOG("Unknown state. No animation set.");
 			break;
 		}
+
+
+	}
+
+
+	if (entity->type == EntityType::WALKING_ENEMY) {
+
+		Enemy* enemy = dynamic_cast<Enemy*>(entity);
+
+
+		switch (enemy->state)
+		{
+		case States::IDLE_L:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::IDLE_R:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::WALKING_L:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::WALKING_R:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+		case States::DYING:
+			enemy->currentAnimation = &enemy->dying2;
+			break;
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
 
 
 	}
