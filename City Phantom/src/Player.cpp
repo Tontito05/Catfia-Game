@@ -42,6 +42,7 @@ bool Player::Start() {
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
 	dash.LoadAnimations(parameters.child("animations").child("dash"));
+	attack.LoadAnimations(parameters.child("animations").child("attack"));
 
 	currentAnimation = &idle;
 

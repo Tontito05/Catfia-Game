@@ -96,6 +96,7 @@ enum class States {
 	JUMPING_R,
 	FALLING_L,
 	FALLING_R,
-	DYING
+	DYING,
+	ATTACKING
 
 };
