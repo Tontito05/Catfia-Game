@@ -29,7 +29,7 @@ bool Player::Start() {
 
 	//L03: TODO 2: Initialize Player parameters
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
-	menu = Engine::GetInstance().textures.get()->Load("Assets/Textures/Controlls.png");
+	menu = Engine::GetInstance().textures.get()->Load("Assets/Textures/controllsotherversion.png");
 	position.setX(parameters.attribute("x").as_int());
 	position.setY(parameters.attribute("y").as_int());
 	texW = parameters.attribute("w").as_int();
