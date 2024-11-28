@@ -28,10 +28,10 @@ enum class ColliderType {
 	PLATFORM,
 	WALL,
 	DEATH,
-	UNKNOWN
+	UNKNOWN,
+	ENEMY
 	// ..
 };
-
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {

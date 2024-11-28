@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "SDL2/SDL.h"
+#include "Vector2D.h"
 #include "SDL2/SDL_rect.h"
 
 #define NUM_MOUSE_BUTTONS 5
@@ -59,8 +60,8 @@ public:
 	bool GetWindowEvent(EventWindow ev);
 
 	// Get mouse / axis position
-	void GetMousePosition(int &x, int &y);
-	void GetMouseMotion(int& x, int& y);
+	Vector2D GetMousePosition();
+	Vector2D GetMouseMotion();
 
 private:
 	bool windowEvents[WE_COUNT];

@@ -75,6 +75,12 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::ITEM:
 		entity = new Item();
 		break;
+	case EntityType::FYING_ENEMY:
+		entity = new Enemy(EntityType::FYING_ENEMY);
+		break;
+	case EntityType::WALKING_ENEMY:
+		entity = new Enemy(EntityType::WALKING_ENEMY);
+		break;
 	default:
 		break;
 	}
@@ -109,6 +115,146 @@ bool EntityManager::Update(float dt)
 	{
 		if (entity->active == false) continue;
 		ret = entity->Update(dt);
+		SetAnimation( entity);
 	}
+	
 	return ret;
+
 }
+
+void EntityManager::SetAnimation(Entity* entity) {
+
+
+	if (entity->type == EntityType::PLAYER) {
+
+		Player* player = dynamic_cast<Player*>(entity);
+
+		switch (player->state)
+		{
+		case States::IDLE_L:
+			player->currentAnimation = &player->idle;
+			break;
+		case States::IDLE_R:
+			player->currentAnimation = &player->idle;
+			break;
+		case States::WALKING_L:
+			player->currentAnimation = &player->walkingleft;
+			break;
+		case States::WALKING_R:
+			player->currentAnimation = &player->walkingright;
+			break;
+		case States::DASH_L:
+			player->currentAnimation = &player->dash;
+			break;
+		case States::DASH_R:
+			player->currentAnimation = &player->dash;
+			break;
+		case States::JUMPING_L:
+			player->currentAnimation = &player->jumpingleft;
+			break;
+		case States::JUMPING_R:
+			player->currentAnimation = &player->jumpingright;
+			break;
+		case States::FALLING_L:
+			player->currentAnimation = &player->jumpingleft;
+			break;
+		case States::FALLING_R:
+			player->currentAnimation = &player->jumpingright;
+			break;
+
+		case States::DYING:
+			player->currentAnimation = &player->dying;
+			break;
+
+		case States::ATTACKING:
+			player->currentAnimation = &player->attack;
+			break;
+
+
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
+
+
+		if (player->Jumping == true && player->JumpingLeft == false && player->JumpingRight == false) {
+
+			player->currentAnimation = &player->jumpingright;
+
+		}
+
+
+
+	}
+
+
+
+
+	if (entity->type == EntityType::FYING_ENEMY) {
+
+		Enemy* enemy = dynamic_cast<Enemy*>(entity);
+
+
+		switch (enemy->state)
+		{
+		case States::IDLE_L:
+			enemy->currentAnimation = &enemy->walkingleft;
+			break;
+		case States::IDLE_R:
+			enemy->currentAnimation = &enemy->walkingright;
+			break;
+		case States::WALKING_L:
+			enemy->currentAnimation = &enemy->walkingleft;
+			break;
+		case States::WALKING_R:
+			enemy->currentAnimation = &enemy->walkingright;
+			break;
+		case States::DYING:
+			enemy->currentAnimation = &enemy->dying;
+			break;
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
+
+	}
+
+
+	if (entity->type == EntityType::WALKING_ENEMY) {
+
+		Enemy* enemy = dynamic_cast<Enemy*>(entity);
+
+
+		switch (enemy->state)
+		{
+		case States::IDLE_L:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::IDLE_R:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::WALKING_L:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+
+		case States::WALKING_R:
+			enemy->currentAnimation = &enemy->walkingright2;
+			break;
+		case States::DYING:
+			enemy->currentAnimation = &enemy->dying2;
+			break;
+		default:
+			LOG("Unknown state. No animation set.");
+			break;
+		}
+
+
+
+	}
+
+}
+

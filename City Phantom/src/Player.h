@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "Vector2D.h"
 #include "SDL2/SDL.h"
 #include "Box2D/Box2D.h"
 #include "Animation.h"
@@ -37,6 +38,11 @@ public:
 
 	}
 
+	void checkLife();
+
+	void SetPosition(Vector2D pos);
+	Vector2D GetPosition();
+
 public:
 
 	//Declare player parameters
@@ -55,6 +61,8 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 2; // The force to apply when jumping
 	bool Jumping = false; // Flag to check if the player is currently jumping
+	bool JumpingRight = false;
+	bool JumpingLeft = false; 
 
 	States state;
 	b2Vec2 TerminalVelocity = b2Vec2(0, 10);
@@ -65,8 +73,10 @@ public:
 	float DashForce = 3;
 	float DashSlower = 0;
 	float JumpMinus = 1;
+	bool attacking = false;
+	int enemyKillImpact = 1;
 
-	bool isDead = false;
+	int life = 3;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
@@ -76,6 +86,8 @@ public:
 	Animation walkingleft;
 	Animation walkingright;
 	Animation dying;
+	Animation dash;
+	Animation attack;
 
 	bool Godmode = false;
 

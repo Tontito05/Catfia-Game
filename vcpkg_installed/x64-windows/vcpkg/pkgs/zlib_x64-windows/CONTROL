@@ -1,7 +1,0 @@
-Package: zlib
-Version: 1.3.1
-Depends: vcpkg-cmake
-Architecture: x64-windows
-Multi-Arch: same
-Abi: 1009c3f3356b8ca6b24ad9c0a81db3bdbdc9c727411d8017eeb294437213b9d6
-Description: A compression library

@@ -41,12 +41,15 @@ bool Player::Start() {
 	walkingleft.LoadAnimations(parameters.child("animations").child("walkingleft"));
 	walkingright.LoadAnimations(parameters.child("animations").child("walkingright"));
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
+	dash.LoadAnimations(parameters.child("animations").child("dash"));
+	attack.LoadAnimations(parameters.child("animations").child("attack"));
+
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
 	pbody->body->GetFixtureList()[0].SetFriction(0);
-	pbody->body->SetFixedRotation(0);
+	pbody->body->SetFixedRotation(true);
 	
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -59,11 +62,10 @@ bool Player::Start() {
 	return true;
 }
 
-
 bool Player::Update(float dt)
 {
 
-	// L08 TODO 5: Add physics to the player - updated player position using physics
+	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 	//God Mode Controll
@@ -86,7 +88,6 @@ bool Player::Update(float dt)
 		inMenu = false;
 	}
 
-
 	if (inMenu == false && isDead == false)
 	{
 		if (Godmode == false)
@@ -94,7 +95,7 @@ bool Player::Update(float dt)
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.4 * 16;
+				velocity.x = -0.6 * 8;
 
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
@@ -107,10 +108,11 @@ bool Player::Update(float dt)
 				state = States::WALKING_L;
 
 			}
+		
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.4 * 16;
+				velocity.x = 0.6 * 8;
 
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
@@ -124,12 +126,20 @@ bool Player::Update(float dt)
 				state = States::WALKING_R;
 
 			}
+			/*else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT) {
+
+
+				state = States::IDLE_R;
+
+			}*/
+			
 
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 				// Apply an initial upward force
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				Jumping = true;
+				
 
 			}
 
@@ -146,6 +156,7 @@ bool Player::Update(float dt)
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
+					JumpingLeft = true;
 
 				}
 
@@ -156,6 +167,7 @@ bool Player::Update(float dt)
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
+					JumpingRight = true;
 
 				}
 
@@ -185,6 +197,7 @@ bool Player::Update(float dt)
 					{
 						ResetDash();
 					}
+
 					state = States::DASH_L;
 				}
 				//Left Dash
@@ -239,6 +252,11 @@ bool Player::Update(float dt)
 			
 		}
 
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT&&Jumping==false) {
+
+			state = States::IDLE_R;
+		}
 	}
 
 
@@ -252,7 +270,7 @@ bool Player::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 	
-	if (pbody->body->GetLinearVelocity().y < 0 && Jumping==true&& state == States::JUMPING_L) {
+	/*if (pbody->body->GetLinearVelocity().y < 0 && Jumping == true && state == States::JUMPING_L) {
 		// Use jump animation
 		currentAnimation = &jumpingleft;
 
@@ -269,7 +287,7 @@ bool Player::Update(float dt)
 	/*else if (pbody->body->GetLinearVelocity().y > 5) {
 
 		currentAnimation = &jumpingright;
-	}*/
+	}
 
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT&&state == States::WALKING_L) {
 		currentAnimation = &walkingleft;
@@ -284,7 +302,7 @@ bool Player::Update(float dt)
 	}
 	else {
 		currentAnimation = &idle;  // Only set to idle if no other state is active
-	}
+	}*/
 
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
@@ -298,6 +316,10 @@ bool Player::Update(float dt)
 
 	return true;
 }
+
+
+
+
 
 bool Player::CleanUp()
 {
@@ -326,6 +348,35 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;
+		case ColliderType::ENEMY:
+			LOG("Collision ENEMY");
+
+			for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
+			{
+				if (physB == Engine::GetInstance().scene->enemyList[i]->pbody)
+				{
+					if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
+					{
+						checkLife();
+					}
+					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
+					{
+
+						Engine::GetInstance().scene->enemyList[i]->isDead = true;
+						if (state == States::DASH_L)
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, 0), true);
+						}
+						else
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, 0), true);
+						}
+					}
+				}
+			}
+
+			break;
+
 		case ColliderType::WALL:
 			ResetDash();
 			LOG("Collision WALL");
@@ -336,7 +387,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			
 			if (Godmode == false)
 			{
-				isDead = true;
+				checkLife();
 			}
 
 			break;
@@ -376,7 +427,7 @@ void Player::ResetDash()
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
-
+	attacking = false;
 }
 
 void Player::ResetPlayer()
@@ -388,4 +439,30 @@ void Player::ResetPlayer()
 	Awake();
 	Start();
 	isDead = false;
+}
+
+void Player::SetPosition(Vector2D pos) {
+	pos.setX(pos.getX() + texW / 2);
+	pos.setY(pos.getY() + texH / 2);
+	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
+	pbody->body->SetTransform(bodyPos, 0);
+}
+
+Vector2D Player::GetPosition() {
+	b2Vec2 bodyPos = pbody->body->GetTransform().p;
+	Vector2D pos = Vector2D(METERS_TO_PIXELS(bodyPos.x), METERS_TO_PIXELS(bodyPos.y));
+	return pos;
+}
+
+void Player::checkLife()
+{
+	if (life <= 0)
+	{
+		isDead = true;
+		state = States::DYING;
+	}
+	else
+	{
+		life--;
+	}
 }
