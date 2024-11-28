@@ -73,4 +73,7 @@ private:
 	int DestDistance;
 	Timer aggroTimer;
 
+
+	
+
 };
