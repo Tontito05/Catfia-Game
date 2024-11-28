@@ -211,6 +211,11 @@ PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType typ
 	return pbody;
 }
 
+b2World* Physics::GetWorld()
+{
+	return world;
+}
+
 // 
 bool Physics::PostUpdate()
 {

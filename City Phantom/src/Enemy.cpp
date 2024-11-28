@@ -58,6 +58,13 @@ bool Enemy::Start() {
 	//Assign collider type
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(true);
+	pbody->listener = this;
+
+
+	b2Filter filter;
+	filter.categoryBits = Engine::GetInstance().physics->ENEMY_LAYER;
+
+	pbody->body->GetFixtureList()[0].SetFilterData(filter);
 
 	// Set the gravity of the body
 
@@ -72,43 +79,35 @@ bool Enemy::Start() {
 
 void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	
 
-	if (physB->ctype == ColliderType::PLAYER) {
+	if (physB->ctype == ColliderType::PLATFORM || physB->ctype == ColliderType::DEATH) {
 
-	}
-	else if (physB->ctype == ColliderType::DEATH) {
-		isDead = true;
-	}
-	else if (physB->ctype == ColliderType::WALL) {
 
-	}
-	else if (physB->ctype == ColliderType::PLATFORM) {
-		if (isDead == true)
-		{
+        if (pbody->body->GetFixtureList() != nullptr && pbody->body->GetFixtureList() != nullptr && isDead == true) {
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-			pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+			
+			b2Filter filter;
+
+			// CatBits tipo de layer, maskBits con que layers colisiona
+			filter.categoryBits =0;
+			filter.maskBits =0;
+
+			//Ponidendo nuevo filtro
+			pbody->body->GetFixtureList()[0].SetFilterData(filter);
+
+			pbody->body->SetGravityScale(0);
 		}
 	}
-	else if (physB->ctype == ColliderType::ITEM) {
 
-	}
-	else if (physB->ctype == ColliderType::ENEMY) {
-
-	}
-	else if (physB->ctype == ColliderType::UNKNOWN) {
-
-
-	}
 }
 
 bool Enemy::Update(float dt)
 {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
-			SetPosition(OGposition);
-			pathfinding->foundDestination = false;
-			resetEnemy();
+
+
+				resetEnemy();
 
 			}
 
@@ -150,11 +149,11 @@ bool Enemy::Update(float dt)
 				{
 					if (pathfinding->pathTiles.size() > 0) {
 
-						Vector2D TileOG = pathfinding->pathTiles.front();
+						Vector2D TileOG = pathfinding->pathTiles.back();
 						Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 						Vector2D pos = Tile - position;
 						pos.normalized();
-						float velocityReducer = 0.01f;
+						float velocityReducer = 0.05f;
 						velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
 						if (pos.getX() >= 0)
 						{
@@ -237,6 +236,7 @@ bool Enemy::Update(float dt)
 			state = States::DYING;
 		}
 
+		
 
 		//POST GENERALS
 
@@ -278,6 +278,12 @@ void Enemy::resetEnemy() {
 
 	isDead = false;
 	state = States::IDLE_L;
+	CleanUp();
+	pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+	Awake();
+	Start();
+	SetPosition(OGposition);
+	pathfinding->foundDestination = false;
 }
 
 void Enemy::ResetPath() {

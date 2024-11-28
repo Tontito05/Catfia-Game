@@ -50,6 +50,11 @@ bool Player::Start() {
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
 	pbody->body->GetFixtureList()[0].SetFriction(0);
 	pbody->body->SetFixedRotation(true);
+
+	b2Filter filter;
+	filter.categoryBits = Engine::GetInstance().physics->PLAYER_LAYER;
+
+	pbody->body->GetFixtureList()[0].SetFilterData(filter);
 	
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
@@ -365,11 +370,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 						Engine::GetInstance().scene->enemyList[i]->isDead = true;
 						if (state == States::DASH_L)
 						{
-							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, 0), true);
+							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+							{
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -0.1), true);
+							}
+							else if(Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
+							{
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -1), true);
+							}
+							
 						}
 						else
 						{
-							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, 0), true);
+							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+							{
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -0.1), true);
+							}
+							else if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
+							{
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -1), true);
+							}
 						}
 					}
 				}

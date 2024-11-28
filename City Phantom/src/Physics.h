@@ -60,6 +60,10 @@ class Physics : public Module, public b2ContactListener // TODO
 {
 public:
 
+	// Layers
+	const uint16_t PLAYER_LAYER = 0x0001;
+	const uint16_t ENEMY_LAYER = 0x0002;
+
 	// Constructors & Destructors
 	Physics();
 	~Physics();
@@ -75,6 +79,8 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radious, bodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType type);
 	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType type);
+
+	b2World* GetWorld();
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
