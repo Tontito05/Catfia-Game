@@ -88,6 +88,7 @@ public:
 	Animation dying;
 	Animation dash;
 	Animation attack;
+	Animation damage;
 
 	bool Godmode = false;
 

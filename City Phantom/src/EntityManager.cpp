@@ -165,7 +165,9 @@ void EntityManager::SetAnimation(Entity* entity) {
 			player->currentAnimation = &player->dying;
 			break;
 
-	
+		case States::DAMAGE:
+			player->currentAnimation = &player->damage;
+			break;
 		default:
 			LOG("Unknown state. No animation set.");
 			break;

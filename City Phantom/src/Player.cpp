@@ -43,6 +43,7 @@ bool Player::Start() {
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
 	dash.LoadAnimations(parameters.child("animations").child("dash"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
+	damage.LoadAnimations(parameters.child("animations").child("damage"));
 
 	currentAnimation = &idle;
 
