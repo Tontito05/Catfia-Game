@@ -62,6 +62,8 @@ bool Player::Start() {
 
 	// L08 TODO 7: Assign collider type
 	pbody->ctype = ColliderType::PLAYER;
+	damageTimer.RsetTimer();
+	damaged == false;
 
 	
 
@@ -143,12 +145,18 @@ bool Player::Update(float dt)
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 				// Apply an initial upward force
+
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				Jumping = true;
-				
-
 			}
-
+			
+			//when the player bounces beacouse of damage
+			if (damaged == true)
+			{
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				Jumping = true;
+				damaged = false;
+			}
 
 			// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
 			if (Jumping == true)
@@ -259,10 +267,12 @@ bool Player::Update(float dt)
 		}
 
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT&&Jumping==false) {
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT&&Jumping==false && state != States::DAMAGE) {
 
 			state = States::IDLE_R;
 		}
+
 	}
 
 
@@ -310,6 +320,18 @@ bool Player::Update(float dt)
 		currentAnimation = &idle;  // Only set to idle if no other state is active
 	}*/
 
+	if (damageTimer.active == true)
+	{
+		if (damageTimer.ReadMSec() < 200)
+		{
+			currentAnimation = &damage;
+		}
+		else
+		{
+			damageTimer.RsetTimer();
+		}
+	}
+
 		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 
@@ -319,7 +341,7 @@ bool Player::Update(float dt)
 			Engine::GetInstance().render.get()->DrawTexture(menu,(- Engine::GetInstance().render.get()->camera.x / 2)+20, (- Engine::GetInstance().render.get()->camera.y / 2)+20);
 	}
 
-
+	LOG("Life: %d", life);
 	return true;
 }
 
@@ -363,6 +385,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				{
 					if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
+						damageTimer.Start();
+						state = States::DAMAGE;
 						checkLife();
 					}
 					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
@@ -389,7 +413,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 							}
 							else if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -1), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -20), true);
 							}
 						}
 					}
@@ -406,13 +430,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
 			
+
 			if (Godmode == false)
 			{
+				damageTimer.Start();
+				state = States::DAMAGE;
 				checkLife();
-				Jumping = false;
-				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
-				JumpMinus = 1;
-				CanDash = true;
+				damaged = true;
 			}
 
 
@@ -464,7 +488,9 @@ void Player::ResetPlayer()
 	Engine::GetInstance().render.get()->camera.y = 0;
 	Awake();
 	Start();
+	state = States::IDLE_R;
 	life = 3;
+	damaged = false;
 	isDead = false;
 }
 
@@ -491,5 +517,6 @@ void Player::checkLife()
 	else
 	{
 		life--;
+		state = States::DAMAGE;
 	}
 }

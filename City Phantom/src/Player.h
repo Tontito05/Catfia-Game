@@ -5,6 +5,7 @@
 #include "SDL2/SDL.h"
 #include "Box2D/Box2D.h"
 #include "Animation.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -77,6 +78,8 @@ public:
 	int enemyKillImpact = 1;
 
 	int life = 3;
+	Timer damageTimer;
+	bool damaged = false;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;

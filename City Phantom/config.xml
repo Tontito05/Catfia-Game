@@ -69,7 +69,7 @@
 				<frame x="192" y="96" w="32" h="32"/>
 				<frame x="224" y="96" w="32" h="32"/>
 			</dying>
-			<damage loop="false" speed ="0.1">
+			<damage loop="true" speed ="0.15">
 				<frame x="0" y="352" w="32" h="32"/>
 				<frame x="32" y="352" w="32" h="32"/>
 				<frame x="64" y="352" w="32" h="32"/>
