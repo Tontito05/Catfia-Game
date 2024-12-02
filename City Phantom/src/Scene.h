@@ -35,6 +35,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadState();
+
+	void SaveState();
+
 	// Return the player position
 	Vector2D GetPlayerPosition();
 
