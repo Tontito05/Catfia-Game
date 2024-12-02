@@ -174,6 +174,10 @@ void EntityManager::SetAnimation(Entity* entity) {
 		}
 
 
+		if (player->state != States::DASH_L && player->state != States::DASH_R) {
+			player->dash.Reset();
+		}
+
 
 		if (player->Jumping == true && player->JumpingLeft == false && player->JumpingRight == false) {
 

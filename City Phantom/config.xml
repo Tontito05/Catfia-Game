@@ -1,144 +1,138 @@
-<!-- Config file for the engine -->
+<?xml version="1.0"?>
 <config>
-  <engine>
-    <title>My platformer game</title>
-    <maxFrameDuration value="16"/>
-  </engine>
-
-  <render>
-    <vsync value="false"/>
-  </render>
-
-  <window>
-    <resolution width="1280" height="720" scale="1"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="true"/>
-    <fullscreen_window value="false"/>
-  </window>
-
-<scene>
-	<map path="Assets/Maps/" name="Map.tmx"/>
-	<entities>
-	<player x="150" y="300" w="32" h ="32" texture="Assets/Textures/spritesheet.png">
-		<animations>
-				<idle loop="true" speed ="0.05">
-					<frame x="0" y="0" w="32" h="32"/>
-					<frame x="32" y="0" w="32" h="32"/>
-
-				</idle>
-				<jumpingright loop="true" speed ="0.1">
-					<frame x="0" y="64" w="32" h="32"/>
-					<frame x="32" y="64" w="32" h="32"/>
-					<frame x="64" y="64" w="32" h="32"/>
-					<frame x="96" y="64" w="32" h="32"/>
-					<frame x="128" y="64" w="32" h="32"/>
-					<frame x="160" y="64" w="32" h="32"/>
-					<frame x="192" y="64" w="32" h="32"/>
-					<frame x="224" y="64" w="32" h="32"/>
-				</jumpingright>
-			<jumpingleft loop="true" speed ="0.1">
-				<frame x="0" y="128" w="32" h="32"/>
-				<frame x="32" y="128" w="32" h="32"/>
-				<frame x="64" y="128" w="32" h="32"/>
-				<frame x="96" y="128" w="32" h="32"/>
-				<frame x="128" y="128" w="32" h="32"/>
-				<frame x="160" y="128" w="32" h="32"/>
-				<frame x="192" y="128" w="32" h="32"/>
-				<frame x="224" y="128" w="32" h="32"/>
-			</jumpingleft>
-				<walkingright loop="true" speed ="0.1">
-					<frame x="0" y="32" w="32" h="32"/>
-					<frame x="32" y="32" w="32" h="32"/>
-					<frame x="64" y="32" w="32" h="32"/>
-					<frame x="96" y="32" w="32" h="32"/>
-				</walkingright>
-			<walkingleft loop="true" speed ="0.1">
-				<frame x="0" y="160" w="32" h="32"/>
-				<frame x="32" y="160" w="32" h="32"/>
-				<frame x="64" y="160" w="32" h="32"/>
-				<frame x="96" y="160" w="32" h="32"/>
-			</walkingleft>
-			<dying loop="false" speed ="0.1">
-				<frame x="0" y="96" w="32" h="32"/>
-				<frame x="32" y="96" w="32" h="32"/>
-				<frame x="64" y="96" w="32" h="32"/>
-				<frame x="96" y="96" w="32" h="32"/>
-				<frame x="128" y="96" w="32" h="32"/>
-				<frame x="160" y="96" w="32" h="32"/>
-				<frame x="192" y="96" w="32" h="32"/>
-				<frame x="224" y="96" w="32" h="32"/>
-			</dying>
-			<damage loop="true" speed ="0.15">
-				<frame x="0" y="352" w="32" h="32"/>
-				<frame x="32" y="352" w="32" h="32"/>
-				<frame x="64" y="352" w="32" h="32"/>
-			</damage>
-			<dash loop="true" speed ="0.25">
-				<frame x="0" y="384" w="48" h="32"/>
-				<frame x="48" y="384" w="48" h="32"/>
-				<frame x="96" y="384" w="48" h="32"/>
-				<frame x="144" y="384" w="48" h="32"/>
-				<frame x="192" y="384" w="48" h="32"/>
-				<frame x="240" y="384" w="48" h="32"/>
-				<frame x="288" y="384" w="48" h="32"/>			
-			</dash>
-			
-		</animations>
-		</player>
-		<items>
-			<item name="coin" x="200" y="672" w="32" h="32" texture="Assets/Textures/goldCoin.png" gravity="true">
+	<engine>
+		<title>My platformer game</title>
+		<maxFrameDuration value="16" />
+	</engine>
+	<render>
+		<vsync value="false" />
+	</render>
+	<window>
+		<resolution width="1920" height="720" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="true" />
+		<fullscreen_window value="false" />
+	</window>
+	<scene>
+		<map path="Assets/Maps/" name="Map.tmx" />
+		<entities>
+			<player x="112" y="308" w="32" h="32" texture="Assets/Textures/spritesheet.png">
 				<animations>
-					<idle loop="true" speed ="0.5">
-						<frame x="0" y="0" w="32" h="32"/>
+					<idle loop="true" speed="0.05">
+						<frame x="0" y="0" w="32" h="32" />
+						<frame x="32" y="0" w="32" h="32" />
 					</idle>
-				</animations>
-			</item>
-		</items>
-		<enemies>
-			<enemy name="badguy" x="448" y="350" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-				<animations>
-					<walkingright loop="true" speed ="0.2">
-						<frame x="0" y="192" w="32" h="32"/>
-						<frame x="32" y="192" w="32" h="32"/>
-						<frame x="64" y="192" w="32" h="32"/>
-						<frame x="96" y="192" w="32" h="32"/>
+					<jumpingright loop="true" speed="0.1">
+						<frame x="0" y="64" w="32" h="32" />
+						<frame x="32" y="64" w="32" h="32" />
+						<frame x="64" y="64" w="32" h="32" />
+						<frame x="96" y="64" w="32" h="32" />
+						<frame x="128" y="64" w="32" h="32" />
+						<frame x="160" y="64" w="32" h="32" />
+						<frame x="192" y="64" w="32" h="32" />
+						<frame x="224" y="64" w="32" h="32" />
+					</jumpingright>
+					<jumpingleft loop="true" speed="0.1">
+						<frame x="0" y="128" w="32" h="32" />
+						<frame x="32" y="128" w="32" h="32" />
+						<frame x="64" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="128" y="128" w="32" h="32" />
+						<frame x="160" y="128" w="32" h="32" />
+						<frame x="192" y="128" w="32" h="32" />
+						<frame x="224" y="128" w="32" h="32" />
+					</jumpingleft>
+					<walkingright loop="true" speed="0.1">
+						<frame x="0" y="32" w="32" h="32" />
+						<frame x="32" y="32" w="32" h="32" />
+						<frame x="64" y="32" w="32" h="32" />
+						<frame x="96" y="32" w="32" h="32" />
 					</walkingright>
-					<walkingleft loop="true" speed ="0.2">
-						<frame x="0" y="224" w="32" h="32"/>
-						<frame x="32" y="224" w="32" h="32"/>
-						<frame x="64" y="224" w="32" h="32"/>
-						<frame x="96" y="224" w="32" h="32"/>
+					<walkingleft loop="true" speed="0.1">
+						<frame x="0" y="160" w="32" h="32" />
+						<frame x="32" y="160" w="32" h="32" />
+						<frame x="64" y="160" w="32" h="32" />
+						<frame x="96" y="160" w="32" h="32" />
 					</walkingleft>
-					<dying loop="false" speed ="0.2">
-						<frame x="0" y="256" w="32" h="32"/>
-						<frame x="32" y="256" w="32" h="32"/>
-						<frame x="64" y="256" w="32" h="32"/>
-						<frame x="96" y="256" w="32" h="32"/>
+					<dying loop="false" speed="0.1">
+						<frame x="0" y="96" w="32" h="32" />
+						<frame x="32" y="96" w="32" h="32" />
+						<frame x="64" y="96" w="32" h="32" />
+						<frame x="96" y="96" w="32" h="32" />
+						<frame x="128" y="96" w="32" h="32" />
+						<frame x="160" y="96" w="32" h="32" />
+						<frame x="192" y="96" w="32" h="32" />
+						<frame x="224" y="96" w="32" h="32" />
 					</dying>
-						<walkingright2 loop="true" speed ="0.2">
-							<frame x="0" y="288" w="32" h="32"/>
-							<frame x="32" y="288" w="32" h="32"/>
-							<frame x="64" y="288" w="32" h="32"/>
-							<frame x="96" y="288" w="32" h="32"/>
-							<frame x="128" y="288" w="32" h="32"/>
-							<frame x="160" y="288" w="32" h="32"/>
-							<frame x="194" y="288" w="32" h="32"/>
-							<frame x="226" y="288" w="32" h="32"/>
-							<frame x="258" y="288" w="32" h="32"/>
-						</walkingright2>
-						<dying2 loop="false" speed ="0.2">
-							<frame x="0" y="320" w="48" h="32"/>
-							<frame x="48" y="320" w="48" h="32"/>
-							<frame x="96" y="320" w="48" h="32"/>
-							<frame x="144" y="320" w="48" h="32"/>
-							<frame x="192" y="320" w="48" h="32"/>
-							<frame x="240" y="320" w="48" h="32"/>
-						</dying2>
+					<damage loop="true" speed="0.15">
+						<frame x="0" y="352" w="32" h="32" />
+						<frame x="32" y="352" w="32" h="32" />
+						<frame x="64" y="352" w="32" h="32" />
+					</damage>
+					<dash loop="true" speed="0.25">
+						<frame x="0" y="384" w="48" h="32" />
+						<frame x="48" y="384" w="48" h="32" />
+						<frame x="96" y="384" w="48" h="32" />
+						<frame x="144" y="384" w="48" h="32" />
+						<frame x="192" y="384" w="48" h="32" />
+						<frame x="240" y="384" w="48" h="32" />
+						<frame x="288" y="384" w="48" h="32" />
+					</dash>
 				</animations>
-			</enemy>
-		</enemies>
-	</entities>
-</scene>
-
+			</player>
+			<items>
+				<item name="coin" x="200" y="672" w="32" h="32" texture="Assets/Textures/goldCoin.png" gravity="true">
+					<animations>
+						<idle loop="true" speed="0.5">
+							<frame x="0" y="0" w="32" h="32" />
+						</idle>
+					</animations>
+				</item>
+			</items>
+			<enemies>
+				<enemy name="badguy" x="448" y="350" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+						<walkingright2 loop="true" speed="0.2">
+							<frame x="0" y="288" w="32" h="32" />
+							<frame x="32" y="288" w="32" h="32" />
+							<frame x="64" y="288" w="32" h="32" />
+							<frame x="96" y="288" w="32" h="32" />
+							<frame x="128" y="288" w="32" h="32" />
+							<frame x="160" y="288" w="32" h="32" />
+							<frame x="194" y="288" w="32" h="32" />
+							<frame x="226" y="288" w="32" h="32" />
+							<frame x="258" y="288" w="32" h="32" />
+						</walkingright2>
+						<dying2 loop="false" speed="0.1">
+							<frame x="0" y="320" w="48" h="32" />
+							<frame x="48" y="320" w="48" h="32" />
+							<frame x="96" y="320" w="48" h="32" />
+							<frame x="144" y="320" w="48" h="32" />
+							<frame x="192" y="320" w="48" h="32" />
+							<frame x="240" y="320" w="48" h="32" />
+						</dying2>
+					</animations>
+				</enemy>
+			</enemies>
+		</entities>
+	</scene>
 </config>

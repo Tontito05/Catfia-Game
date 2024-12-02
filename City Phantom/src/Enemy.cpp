@@ -46,12 +46,12 @@ bool Enemy::Start() {
 	//Add a physics to an item - initialize the physics body
 	if (type == EntityType::FYING_ENEMY)
 	{
-		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 3, texW / 3, bodyType::DYNAMIC);
+		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH/1.5, texW/1.5, bodyType::DYNAMIC);
 		DestDistance = 10;
 	}
 	else if (type == EntityType::WALKING_ENEMY)
 	{
-		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, texW / 1.5, bodyType::DYNAMIC);
+		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH, texW, bodyType::DYNAMIC);
 		DestDistance = 5;
 	}	
 
@@ -96,6 +96,27 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 			pbody->body->GetFixtureList()[0].SetFilterData(filter);
 
 			pbody->body->SetGravityScale(0);
+		}
+	}
+	else if (physB->ctype == ColliderType::PLAYER ) {
+
+
+		if (type == EntityType::WALKING_ENEMY)
+		{
+			//isDead = true;
+			if (pbody->body->GetFixtureList() != nullptr && pbody->body->GetFixtureList() != nullptr && isDead == true) {
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+
+				b2Filter filter;
+
+				// CatBits tipo de layer, maskBits con que layers colisiona
+				filter.categoryBits = 0;
+				filter.maskBits = 0;
+
+				//Ponidendo nuevo filtro
+				pbody->body->GetFixtureList()[0].SetFilterData(filter);
+				pbody->body->SetGravityScale(0);
+			}
 		}
 	}
 }
@@ -208,7 +229,7 @@ bool Enemy::Update(float dt)
 						Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 						Vector2D pos = Tile - position;
 						pos.normalized();
-						float velocityReducer = 0.01f;
+						float velocityReducer = 0.1f;
 						velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
 						if (pos.getX() >= 0)
 						{

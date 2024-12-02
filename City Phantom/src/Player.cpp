@@ -391,29 +391,29 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					}
 					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
-
+						CanDash = true;
 						Engine::GetInstance().scene->enemyList[i]->isDead = true;
 						if (state == States::DASH_L)
 						{
 							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -0.1), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -1), true);
 							}
 							else if(Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -1), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(enemyKillImpact, -5), true);
 							}
 							
 						}
-						else
+						else if (state == States::DASH_R)
 						{
 							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -0.1), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -1), true);
 							}
 							else if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -1), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -5), true);
 
 							}
 						}
@@ -473,7 +473,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 
 void Player::ResetDash()
 {
-	DashForce = 3;
+	DashForce = 5;
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;

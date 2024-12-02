@@ -139,17 +139,10 @@ bool Scene::Update(float dt)
 	{
 		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WinHeight / 2;
 	}
-	if (player->position.getX() > WinWidth / (camSpeed * 2) &&
+	if (player->position.getX() > (WinWidth-230) / (camSpeed * 2) &&
 		player->position.getX() < mapLimitX - WinWidth / (camSpeed*2))
 	{
-		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed + WinWidth / 2), 0.1f);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
-
-		LOG("%d", Engine::GetInstance().window.get()->width);
-		LOG("%d", Engine::GetInstance().window.get()->height);
-
+		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed) + WinWidth / 2, 0.2f);
 	}
 	
 
