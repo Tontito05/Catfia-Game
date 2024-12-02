@@ -66,7 +66,7 @@ public:
 	bool JumpingLeft = false; 
 
 	States state;
-	b2Vec2 TerminalVelocity = b2Vec2(0, 10);
+	b2Vec2 TerminalVelocity = b2Vec2(0, 2);
 
 	bool isDashingL = false;
 	bool isDashingR = false;

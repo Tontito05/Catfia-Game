@@ -51,6 +51,7 @@ bool Player::Start() {
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
 	pbody->body->GetFixtureList()[0].SetFriction(0);
 	pbody->body->SetFixedRotation(true);
+	//copilot can you set a mass for the player with b2massdata
 
 	b2Filter filter;
 	filter.categoryBits = Engine::GetInstance().physics->PLAYER_LAYER;
@@ -103,7 +104,7 @@ bool Player::Update(float dt)
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.6 * 8;
+				velocity.x = -1 * 8;
 
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
@@ -120,7 +121,7 @@ bool Player::Update(float dt)
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 0.6 * 8;
+				velocity.x = 1 * 8;
 
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
@@ -167,7 +168,7 @@ bool Player::Update(float dt)
 				//Move Left
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.1, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
 					JumpingLeft = true;
@@ -177,7 +178,7 @@ bool Player::Update(float dt)
 				// Move right
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.1, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
@@ -231,7 +232,7 @@ bool Player::Update(float dt)
 				}
 			
 
-			if (pbody->body->GetLinearVelocity().y > 10)
+			if (pbody->body->GetLinearVelocity().y > 20)
 			{
 				velocity.y = TerminalVelocity.y;
 			}
@@ -392,6 +393,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
 						CanDash = true;
+						Jumping = false;
+						ResetDash();
 						Engine::GetInstance().scene->enemyList[i]->isDead = true;
 						if (state == States::DASH_L)
 						{
