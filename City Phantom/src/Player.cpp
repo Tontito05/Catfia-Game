@@ -378,7 +378,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
-
+			ResetDash();
 			for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
 			{
 				if (physB == Engine::GetInstance().scene->enemyList[i]->pbody)
@@ -413,7 +413,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 							}
 							else if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
 							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -20), true);
+								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-enemyKillImpact, -1), true);
+
 							}
 						}
 					}
@@ -429,7 +430,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			
 
 			if (Godmode == false)
 			{
@@ -478,6 +478,7 @@ void Player::ResetDash()
 	isDashingL = false;
 	isDashingR = false;
 	attacking = false;
+	pbody->body->SetLinearVelocity({ 0,0 });
 }
 
 void Player::ResetPlayer()

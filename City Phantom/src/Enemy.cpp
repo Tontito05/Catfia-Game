@@ -98,7 +98,6 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 			pbody->body->SetGravityScale(0);
 		}
 	}
-
 }
 
 bool Enemy::Update(float dt)
@@ -153,7 +152,7 @@ bool Enemy::Update(float dt)
 						Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 						Vector2D pos = Tile - position;
 						pos.normalized();
-						float velocityReducer = 0.05f;
+						float velocityReducer = 0.01f;
 						velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
 						if (pos.getX() >= 0)
 						{
