@@ -124,7 +124,6 @@ bool EntityManager::Update(float dt)
 
 void EntityManager::SetAnimation(Entity* entity) {
 
-
 	if (entity->type == EntityType::PLAYER) {
 
 		Player* player = dynamic_cast<Player*>(entity);

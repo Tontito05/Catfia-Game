@@ -408,7 +408,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			if (Godmode == false)
 			{
 				checkLife();
+				Jumping = false;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, JumpMinus), true);
+				JumpMinus = 1;
+				CanDash = true;
 			}
+
 
 			break;
 		}
@@ -458,6 +463,7 @@ void Player::ResetPlayer()
 	Engine::GetInstance().render.get()->camera.y = 0;
 	Awake();
 	Start();
+	life = 3;
 	isDead = false;
 }
 
