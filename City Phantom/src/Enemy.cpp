@@ -44,15 +44,17 @@ bool Enemy::Start() {
 	currentAnimation = &idle;
 	
 	//Add a physics to an item - initialize the physics body
+
+	//Diferent enemyes diferent initializatons
 	if (type == EntityType::FYING_ENEMY)
 	{
-		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH/1.5, texW/1.5, bodyType::DYNAMIC);
+		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH/1.2, texW/1.2, bodyType::DYNAMIC);
 		DestDistance = 10;
 	}
 	else if (type == EntityType::WALKING_ENEMY)
 	{
 		pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH, texW, bodyType::DYNAMIC);
-		DestDistance = 5;
+		DestDistance = 7;
 	}	
 
 	//Assign collider type
@@ -60,14 +62,12 @@ bool Enemy::Start() {
 	pbody->body->SetFixedRotation(true);
 	pbody->listener = this;
 
-
+	//Assign a layer only for the enemyes
 	b2Filter filter;
 	filter.categoryBits = Engine::GetInstance().physics->ENEMY_LAYER;
-
 	pbody->body->GetFixtureList()[0].SetFilterData(filter);
 
 	// Set the gravity of the body
-
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
 
 	// Initialize pathfinding
@@ -82,7 +82,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 	if (physB->ctype == ColliderType::PLATFORM || physB->ctype == ColliderType::DEATH) {
 
-
+		//if it collides with a platform or a death collider, it will change the layer and it will set them on a {0,0} velocity, on a death state basically
         if (pbody->body->GetFixtureList() != nullptr && pbody->body->GetFixtureList() != nullptr && isDead == true) {
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 			
@@ -98,49 +98,27 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 			pbody->body->SetGravityScale(0);
 		}
 	}
-	else if (physB->ctype == ColliderType::PLAYER ) {
-
-
-		if (type == EntityType::WALKING_ENEMY)
-		{
-			//isDead = true;
-			if (pbody->body->GetFixtureList() != nullptr && pbody->body->GetFixtureList() != nullptr && isDead == true) {
-				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-
-				b2Filter filter;
-
-				// CatBits tipo de layer, maskBits con que layers colisiona
-				filter.categoryBits = 0;
-				filter.maskBits = 0;
-
-				//Ponidendo nuevo filtro
-				pbody->body->GetFixtureList()[0].SetFilterData(filter);
-				pbody->body->SetGravityScale(0);
-			}
-		}
-	}
 }
 
 bool Enemy::Update(float dt)
 {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
-
-
 				resetEnemy();
-
 			}
 
-			//GENERALS
-
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_REPEAT)
+			//GENERALS FOR BOTH ENEMYES
+			if (Engine::GetInstance().physics->debug == true)
 			{
 				pathfinding->DrawPath();
 			}
 			if (SightDistance <= DestDistance)
 			{
+				if (pathfinding->pathTiles.empty() == true)
+				{
+					pathfinding->PropagateAStar(SQUARED);
+				}
 
-				pathfinding->PropagateAStar(MANHATTAN);
 
 				SightDistance++;
 			}
@@ -152,6 +130,7 @@ bool Enemy::Update(float dt)
 				SightDistance = 0;
 			}
 
+		//Check if the enemy is dead
 		if (isDead == false)
 		{
 
@@ -159,20 +138,24 @@ bool Enemy::Update(float dt)
 			Vector2D PosInMap = Engine::GetInstance().map->WorldToMap(position.getX(), position.getY());
 			b2Vec2 velocity;
 
+			//Check the enemy type
 			switch (type)
 			{
 			case EntityType::FYING_ENEMY:
 
+				//I don't really know why but the flying enemies slowly go down, so I added a little velocity to counteract that
+				//i tryed to get it to work with the gravity scale to 0, but then it just floats in the air
 				velocity = b2Vec2(0, -0.315);
 
-				if (pathfinding->foundDestination == true)
-				{
 					if (pathfinding->pathTiles.size() > 0) {
 
+						//We get the next tile in the path and create a vetor that goes there and apoly a velocity to the enemy
 						Vector2D TileOG = pathfinding->pathTiles.back();
 						Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 						Vector2D pos = Tile - position;
 						pos.normalized();
+
+						//The velocity is reduced to make the enemy move slower
 						float velocityReducer = 0.01f;
 						velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
 						if (pos.getX() >= 0)
@@ -184,7 +167,7 @@ bool Enemy::Update(float dt)
 							state = States::WALKING_L;
 						}
 					}
-				}
+				
 
 
 				pbody->body->SetLinearVelocity(velocity);
@@ -196,6 +179,7 @@ bool Enemy::Update(float dt)
 
 				velocity = b2Vec2(0, -GRAVITY_Y);
 
+				//Movement of the enemy
 				if (pathfinding->foundDestination != true)
 				{
 					if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
@@ -248,9 +232,9 @@ bool Enemy::Update(float dt)
 				break;
 			}
 
-
-
 		}
+
+		
 		else
 		{
 			state = States::DYING;

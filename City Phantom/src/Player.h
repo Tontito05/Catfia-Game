@@ -66,20 +66,23 @@ public:
 	bool JumpingLeft = false; 
 
 	States state;
-	b2Vec2 TerminalVelocity = b2Vec2(0, 10);
+	float TerminalVelocity = 0;
 
 	bool isDashingL = false;
 	bool isDashingR = false;
 	bool CanDash = true;
-	float DashForce = 5;
+	float DashForce = 4;
 	float DashSlower = 0;
 	float JumpMinus = 1;
 	bool attacking = false;
-	int enemyKillImpact = 1;
+	bool falling = false;
+	bool fallingSlower = false;
 
 	int life = 3;
 	Timer damageTimer;
 	bool damaged = false;
+
+	bool KillReset = false;
 
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
@@ -92,6 +95,8 @@ public:
 	Animation dash;
 	Animation attack;
 	Animation damage;
+
+	int counter = 0;
 
 	bool Godmode = false;
 
