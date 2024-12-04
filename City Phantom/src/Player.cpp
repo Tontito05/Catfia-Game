@@ -142,6 +142,20 @@ bool Player::Update(float dt)
 
 			}*/
 			
+			//Reset the dash and jump when killing an enemie
+			if (KillReset == true)
+			{
+				CanDash = true;
+				//pbody->body->SetLinearVelocity({ 0,0 });
+				//pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				Jumping = false;
+				falling = true;
+				ResetDash();
+
+				//Stop the reset
+
+				KillReset = false;
+			}
 
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
@@ -198,7 +212,9 @@ bool Player::Update(float dt)
 				}
 
 			}
-			if (falling == true)
+
+			//Set a terminal velocity 
+			if (falling == true && Jumping==false)
 			{
 				velocity.y = Engine::GetInstance().scene->Slower(TerminalVelocity, 7, 0.01);
 				if (TerminalVelocity <= 7)
@@ -207,6 +223,7 @@ bool Player::Update(float dt)
 				}
 
 			}
+
 				if (isDashingR == true)
 				{
 					//The parameter that creates the slowing sensation of the dash
@@ -402,9 +419,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					}
 					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
 					{
-						CanDash = true;
-						Jumping = false;
-						ResetDash();
+
+						KillReset = true;
 						Engine::GetInstance().scene->enemyList[i]->isDead = true;
 						if (state == States::DASH_L)
 						{
@@ -498,7 +514,10 @@ void Player::ResetDash()
 	isDashingL = false;
 	isDashingR = false;
 	attacking = false;
-	pbody->body->SetLinearVelocity({ 0,0 });
+	if (KillReset == false)
+	{
+		pbody->body->SetLinearVelocity({ 0,0 });
+	}
 }
 
 void Player::ResetPlayer()
