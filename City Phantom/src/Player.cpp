@@ -198,7 +198,15 @@ bool Player::Update(float dt)
 				}
 
 			}
+			if (falling == true)
+			{
+				velocity.y = Engine::GetInstance().scene->Slower(TerminalVelocity, 7, 0.01);
+				if (TerminalVelocity <= 7)
+				{
+					TerminalVelocity += velocity.y;
+				}
 
+			}
 				if (isDashingR == true)
 				{
 					//The parameter that creates the slowing sensation of the dash
@@ -232,10 +240,9 @@ bool Player::Update(float dt)
 				}
 			
 
-			if (pbody->body->GetLinearVelocity().y > 20)
-			{
-				velocity.y = TerminalVelocity.y;
-			}
+
+
+
 			pbody->body->SetLinearVelocity(velocity);
 		}
 		else // GOD MODE 
@@ -275,6 +282,7 @@ bool Player::Update(float dt)
 		}
 
 	}
+
 
 
 	//Reset
@@ -369,6 +377,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			Jumping = false;
 			JumpMinus = 1;
 			CanDash = true;
+			falling = false;
+			TerminalVelocity = 0;
 
 			break;
 		case ColliderType::ITEM:
@@ -433,7 +443,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-
+			falling = false;
+			TerminalVelocity = 0;
 			if (Godmode == false)
 			{
 				damageTimer.Start();
@@ -455,6 +466,12 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		case ColliderType::PLATFORM:
 			LOG("End Collision PLATFORM");
 			CanDash = true;
+
+			if (Jumping == false)
+			{
+				falling = true;
+			}
+
 			break;
 		case ColliderType::ITEM:
 			LOG("End Collision ITEM");

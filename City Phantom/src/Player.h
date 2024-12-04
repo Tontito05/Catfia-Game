@@ -29,6 +29,8 @@ public:
 
 	void ResetPlayer();
 
+	void SlowDescent();
+
 	// L08 TODO 6: Define OnCollision function for the player. 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -66,7 +68,7 @@ public:
 	bool JumpingLeft = false; 
 
 	States state;
-	b2Vec2 TerminalVelocity = b2Vec2(0, 2);
+	float TerminalVelocity = 0;
 
 	bool isDashingL = false;
 	bool isDashingR = false;
@@ -76,6 +78,8 @@ public:
 	float JumpMinus = 1;
 	bool attacking = false;
 	int enemyKillImpact = 1;
+	bool falling = false;
+	bool fallingSlower = false;
 
 	int life = 3;
 	Timer damageTimer;
