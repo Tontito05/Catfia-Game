@@ -209,12 +209,12 @@ void Scene::SaveState() {
 	if (!enemiesNode) {
 		enemiesNode = sceneNode.child("entities").append_child("enemies");
 	}
-	enemiesNode.remove_children();  // Clear existing enemies before saving new positions
+	
 
 	for (auto& enemy : enemyList) {
 		pugi::xml_node enemyNode = enemiesNode.append_child("enemy");
-		enemyNode.append_child("position").append_attribute("x").set_value(enemy->GetPosition().getX());
-		enemyNode.append_child("position").append_attribute("y").set_value(enemy->GetPosition().getY());
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(enemy->GetPosition().getX());
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(enemy->GetPosition().getY());
 
 		//enemyNode.append_attribute("alive") = enemy->IsAlive();
 		if (enemy->IsAlive() == false) {

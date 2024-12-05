@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="Map.tmx" />
 		<entities>
-			<player x="492" y="212" w="32" h="32" texture="Assets/Textures/spritesheet.png">
+			<player x="132" y="308" w="32" h="32" texture="Assets/Textures/spritesheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
@@ -93,6 +93,26 @@
 			<enemies>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="304" y="1135" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="626" y="410" />
@@ -101,43 +121,43 @@
 					<position x="464" y="844" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="656" y="559"/>
+					<position x="656" y="559" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="816" y="207"/>
+					<position x="816" y="207" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1200" y="943"/>
+					<position x="1200" y="943" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1328" y="143"/>
+					<position x="1328" y="143" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1360" y="684"/>
+					<position x="1360" y="684" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1552" y="108"/>
+					<position x="1552" y="108" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1648" y="591"/>
+					<position x="1648" y="591" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1969" y="975"/>
+					<position x="1969" y="975" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="1968" y="1100"/>
+					<position x="1968" y="1100" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="2416" y="1135" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="2576" y="751"/>
+					<position x="2576" y="751" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="2576" y="1042"/>
+					<position x="2576" y="1042" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="2768" y="1135"/>
+					<position x="2768" y="1135" />
 				</enemy>
 				<animations>
 					<walkingright loop="true" speed="0.2">
@@ -178,6 +198,54 @@
 						<frame x="240" y="320" w="48" h="32" />
 					</dying2>
 				</animations>
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
 			</enemies>
 		</entities>
 	</scene>
