@@ -9,7 +9,6 @@
 	</render>
 	<window>
 		<resolution width="1920" height="720" scale="1" />
-
 		<fullscreen value="false" />
 		<borderless value="false" />
 		<resizable value="true" />
@@ -18,8 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="Map.tmx" />
 		<entities>
-			<player x="112" y="308" w="32" h="32" texture="Assets/Textures/spritesheet.png">
-
+			<player x="492" y="212" w="32" h="32" texture="Assets/Textures/spritesheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
@@ -68,7 +66,6 @@
 						<frame x="224" y="96" w="32" h="32" />
 					</dying>
 					<damage loop="true" speed="0.15">
-
 						<frame x="0" y="352" w="32" h="32" />
 						<frame x="32" y="352" w="32" h="32" />
 						<frame x="64" y="352" w="32" h="32" />
@@ -94,46 +91,69 @@
 				</item>
 			</items>
 			<enemies>
-				<enemy name="badguy" x="448" y="350" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<animations>
-						<walkingright loop="true" speed="0.2">
-							<frame x="0" y="192" w="32" h="32" />
-							<frame x="32" y="192" w="32" h="32" />
-							<frame x="64" y="192" w="32" h="32" />
-							<frame x="96" y="192" w="32" h="32" />
-						</walkingright>
-						<walkingleft loop="true" speed="0.2">
-							<frame x="0" y="224" w="32" h="32" />
-							<frame x="32" y="224" w="32" h="32" />
-							<frame x="64" y="224" w="32" h="32" />
-							<frame x="96" y="224" w="32" h="32" />
-						</walkingleft>
-						<dying loop="false" speed="0.2">
-							<frame x="0" y="256" w="32" h="32" />
-							<frame x="32" y="256" w="32" h="32" />
-							<frame x="64" y="256" w="32" h="32" />
-							<frame x="96" y="256" w="32" h="32" />
-						</dying>
-						<walkingright2 loop="true" speed="0.2">
-							<frame x="0" y="288" w="32" h="32" />
-							<frame x="32" y="288" w="32" h="32" />
-							<frame x="64" y="288" w="32" h="32" />
-							<frame x="96" y="288" w="32" h="32" />
-							<frame x="128" y="288" w="32" h="32" />
-							<frame x="160" y="288" w="32" h="32" />
-							<frame x="194" y="288" w="32" h="32" />
-							<frame x="226" y="288" w="32" h="32" />
-							<frame x="258" y="288" w="32" h="32" />
-						</walkingright2>
-						<dying2 loop="false" speed="0.1">
-							<frame x="0" y="320" w="48" h="32" />
-							<frame x="48" y="320" w="48" h="32" />
-							<frame x="96" y="320" w="48" h="32" />
-							<frame x="144" y="320" w="48" h="32" />
-							<frame x="192" y="320" w="48" h="32" />
-							<frame x="240" y="320" w="48" h="32" />
-						</dying2>
-					</animations>
+				<enemy>
+					<position x="304" />
+					<position y="1135" />
+				</enemy>
+				<enemy>
+					<position x="626" />
+					<position y="410" />
+				</enemy>
+				<enemy>
+					<position x="464" />
+					<position y="844" />
+				</enemy>
+				<enemy>
+					<position x="656" />
+					<position y="559" />
+				</enemy>
+				<enemy>
+					<position x="816" />
+					<position y="207" />
+				</enemy>
+				<enemy>
+					<position x="1200" />
+					<position y="943" />
+				</enemy>
+				<enemy>
+					<position x="1328" />
+					<position y="143" />
+				</enemy>
+				<enemy>
+					<position x="1360" />
+					<position y="684" />
+				</enemy>
+				<enemy>
+					<position x="1552" />
+					<position y="108" />
+				</enemy>
+				<enemy>
+					<position x="1648" />
+					<position y="591" />
+				</enemy>
+				<enemy>
+					<position x="1969" />
+					<position y="975" />
+				</enemy>
+				<enemy>
+					<position x="1968" />
+					<position y="1100" />
+				</enemy>
+				<enemy>
+					<position x="2416" />
+					<position y="1135" />
+				</enemy>
+				<enemy>
+					<position x="2576" />
+					<position y="751" />
+				</enemy>
+				<enemy>
+					<position x="2576" />
+					<position y="1042" />
+				</enemy>
+				<enemy>
+					<position x="2768" />
+					<position y="1135" />
 				</enemy>
 			</enemies>
 		</entities>

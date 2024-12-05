@@ -184,42 +184,7 @@ Vector2D Scene::GetPlayerPosition()
 	return player->GetPosition();
 }
 
-void Scene::LoadState() {
 
-	pugi::xml_document loadFile;
-	pugi::xml_parse_result result = loadFile.load_file("config.xml");
-
-	if (result == NULL)
-	{
-		LOG("Could not load file. Pugi error: %s", result.description());
-		return;
-	}
-
-	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
-
-	//Read XML and restore information
-
-	//Player position
-	Vector2D playerPos = Vector2D(sceneNode.child("entities").child("player").attribute("x").as_int(),
-		sceneNode.child("entities").child("player").attribute("y").as_int());
-	player->SetPosition(playerPos);
-
-	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
-	if (enemiesNode) {
-		for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
-			float enemyX = enemyNode.child("position").attribute("x").as_float();
-			float enemyY = enemyNode.child("position").attribute("y").as_float();
-
-			// Find the enemy by its ID and set the position
-			for (auto& enemy : enemyList) {
-				enemy->SetPosition(Vector2D(enemyX, enemyY));
-				break;
-
-			}
-		}
-
-	}
-}
 
 void Scene::SaveState() {
 
@@ -250,9 +215,61 @@ void Scene::SaveState() {
 		pugi::xml_node enemyNode = enemiesNode.append_child("enemy");
 		enemyNode.append_child("position").append_attribute("x").set_value(enemy->GetPosition().getX());
 		enemyNode.append_child("position").append_attribute("y").set_value(enemy->GetPosition().getY());
+
+		//enemyNode.append_attribute("alive") = enemy->IsAlive();
+		if (enemy->IsAlive() == false) {
+
+			enemyNode.append_attribute("alive") = false;
+
+		}
+
 	}
 
 	//Saves the modifications to the XML 
 	loadFile.save_file("config.xml");
 
+}
+
+void Scene::LoadState() {
+
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load file. Pugi error: %s", result.description());
+		return;
+	}
+
+	pugi::xml_node sceneNode = loadFile.child("config").child("scene");
+
+	//Read XML and restore information
+
+	//Player position
+	Vector2D playerPos = Vector2D(sceneNode.child("entities").child("player").attribute("x").as_int(),
+		sceneNode.child("entities").child("player").attribute("y").as_int());
+	player->SetPosition(playerPos);
+
+	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
+	if (enemiesNode) {
+		for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
+			float enemyX = enemyNode.child("position").attribute("x").as_float();
+			float enemyY = enemyNode.child("position").attribute("y").as_float();
+
+			bool isAlive = enemyNode.attribute("alive").as_bool(true);
+
+			// Find the enemy by its ID and set the position
+			for (auto& enemy : enemyList) {
+				enemy->SetPosition(Vector2D(enemyX, enemyY));
+
+				if (isAlive) {
+					enemy->state = States::IDLE_R;;  // Enemy is alive
+				}
+				
+				break;
+
+			}
+		}
+
+	}
 }
