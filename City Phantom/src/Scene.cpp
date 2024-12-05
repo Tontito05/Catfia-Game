@@ -53,7 +53,13 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
+
 	Engine::GetInstance().map->Load("Assets/Maps/", "Map.tmx");
+
+	//Engine::GetInstance().map->Load("Assets/Maps/", "SathisfyingMap.tmx");
+	WWidth = Engine::GetInstance().window.get()->width;
+	WHeight = Engine::GetInstance().window.get()->height;
+
 	return true;
 }
 
@@ -127,29 +133,20 @@ bool Scene::Update(float dt)
 {
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 2;
-	float WinWidth = Engine::GetInstance().window.get()->width;
-	float WinHeight = Engine::GetInstance().window.get()->height;
 	
 	//Camera movement
 	int mapLimitX = 3328;
 	int mapLimitY = 1184;
 
-	if (player->position.getY() > WinHeight / (camSpeed*2) &&
-		player->position.getY() < mapLimitY - WinHeight / (camSpeed*2))
+	if (player->position.getY() > WHeight / (camSpeed*2) &&
+		player->position.getY() < mapLimitY - WHeight / (camSpeed*2))
 	{
-		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WinHeight / 2;
+		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WHeight / 2;
 	}
-	if (player->position.getX() > WinWidth / (camSpeed * 2) &&
-		player->position.getX() < mapLimitX - WinWidth / (camSpeed*2))
+	if (player->position.getX() > WWidth / (camSpeed * 2) &&
+		player->position.getX() < mapLimitX - WWidth / (camSpeed*2))
 	{
-		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed + WinWidth / 2), 0.1f);
-	}
-
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
-
-		LOG("%d", Engine::GetInstance().window.get()->width);
-		LOG("%d", Engine::GetInstance().window.get()->height);
-
+		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed) + WWidth / 2, 0.2f);
 	}
 	
 

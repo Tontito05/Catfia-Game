@@ -60,7 +60,7 @@ void Pathfinding::DrawPath() {
 
     Vector2D point;
 
-    // Draw visited
+     //Draw visited
     for (const auto& pathTile : visited) {
         Vector2D pathTileWorld = Engine::GetInstance().map.get()->MapToWorld(pathTile.getX(), pathTile.getY());
         SDL_Rect rect = { 32,0,32,32 };
@@ -105,9 +105,9 @@ void Pathfinding::DrawPath() {
         frontierDijkstraCopy.pop();
     }
 
-    // ---------------- Draw frontier AStar
+    //// ---------------- Draw frontier AStar
 
-    // Create a copy of the queue to iterate over
+    //// Create a copy of the queue to iterate over
     std::priority_queue<std::pair<int, Vector2D>, std::vector<std::pair<int, Vector2D>>, std::greater<std::pair<int, Vector2D>> > frontierAStarCopy = frontierAStar;
 
     // Iterate over the elements of the frontier copy
@@ -119,7 +119,7 @@ void Pathfinding::DrawPath() {
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
         SDL_Rect rect = { 0,0,32,32 };
-        Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
+        //Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
         //Remove the front element from the queue
         frontierAStarCopy.pop();
     }

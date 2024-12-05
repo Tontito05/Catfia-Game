@@ -61,4 +61,7 @@ private:
 	int enemyGround = 147;
 	bool enemyesIn = false;
 
+	int WWidth;
+	int WHeight;
+
 };

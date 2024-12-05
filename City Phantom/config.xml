@@ -8,7 +8,8 @@
 		<vsync value="false" />
 	</render>
 	<window>
-		<resolution width="1280" height="720" scale="1" />
+		<resolution width="1920" height="720" scale="1" />
+
 		<fullscreen value="false" />
 		<borderless value="false" />
 		<resizable value="true" />
@@ -17,7 +18,8 @@
 	<scene>
 		<map path="Assets/Maps/" name="Map.tmx" />
 		<entities>
-			<player x="219" y="308" w="32" h="32" texture="Assets/Textures/spritesheet.png">
+			<player x="112" y="308" w="32" h="32" texture="Assets/Textures/spritesheet.png">
+
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
@@ -65,12 +67,13 @@
 						<frame x="192" y="96" w="32" h="32" />
 						<frame x="224" y="96" w="32" h="32" />
 					</dying>
-					<damage loop="false" speed="0.1">
+					<damage loop="true" speed="0.15">
+
 						<frame x="0" y="352" w="32" h="32" />
 						<frame x="32" y="352" w="32" h="32" />
 						<frame x="64" y="352" w="32" h="32" />
 					</damage>
-					<dash loop="true" speed="0.25">
+					<dash loop="false" speed="0.25">
 						<frame x="0" y="384" w="48" h="32" />
 						<frame x="48" y="384" w="48" h="32" />
 						<frame x="96" y="384" w="48" h="32" />
@@ -91,69 +94,46 @@
 				</item>
 			</items>
 			<enemies>
-				<enemy>
-					<position x="293" />
-					<position y="1140" />
-				</enemy>
-				<enemy>
-					<position x="365" />
-					<position y="178" />
-				</enemy>
-				<enemy>
-					<position x="464" />
-					<position y="835" />
-				</enemy>
-				<enemy>
-					<position x="699" />
-					<position y="564" />
-				</enemy>
-				<enemy>
-					<position x="906" />
-					<position y="212" />
-				</enemy>
-				<enemy>
-					<position x="1180" />
-					<position y="948" />
-				</enemy>
-				<enemy>
-					<position x="1242" />
-					<position y="148" />
-				</enemy>
-				<enemy>
-					<position x="1360" />
-					<position y="675" />
-				</enemy>
-				<enemy>
-					<position x="1552" />
-					<position y="99" />
-				</enemy>
-				<enemy>
-					<position x="1637" />
-					<position y="596" />
-				</enemy>
-				<enemy>
-					<position x="2036" />
-					<position y="980" />
-				</enemy>
-				<enemy>
-					<position x="1968" />
-					<position y="1091" />
-				</enemy>
-				<enemy>
-					<position x="2351" />
-					<position y="1140" />
-				</enemy>
-				<enemy>
-					<position x="2619" />
-					<position y="756" />
-				</enemy>
-				<enemy>
-					<position x="2576" />
-					<position y="1049" />
-				</enemy>
-				<enemy>
-					<position x="2781" />
-					<position y="1140" />
+				<enemy name="badguy" x="448" y="350" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+						<walkingright2 loop="true" speed="0.2">
+							<frame x="0" y="288" w="32" h="32" />
+							<frame x="32" y="288" w="32" h="32" />
+							<frame x="64" y="288" w="32" h="32" />
+							<frame x="96" y="288" w="32" h="32" />
+							<frame x="128" y="288" w="32" h="32" />
+							<frame x="160" y="288" w="32" h="32" />
+							<frame x="194" y="288" w="32" h="32" />
+							<frame x="226" y="288" w="32" h="32" />
+							<frame x="258" y="288" w="32" h="32" />
+						</walkingright2>
+						<dying2 loop="false" speed="0.1">
+							<frame x="0" y="320" w="48" h="32" />
+							<frame x="48" y="320" w="48" h="32" />
+							<frame x="96" y="320" w="48" h="32" />
+							<frame x="144" y="320" w="48" h="32" />
+							<frame x="192" y="320" w="48" h="32" />
+							<frame x="240" y="320" w="48" h="32" />
+						</dying2>
+					</animations>
 				</enemy>
 			</enemies>
 		</entities>
