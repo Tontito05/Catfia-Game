@@ -207,9 +207,21 @@ void Scene::LoadState() {
 		sceneNode.child("entities").child("player").attribute("y").as_int());
 	player->SetPosition(playerPos);
 
-	//enemies
-	// ...
+	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
+	if (enemiesNode) {
+		for (pugi::xml_node enemyNode = enemiesNode.child("enemy"); enemyNode; enemyNode = enemyNode.next_sibling("enemy")) {
+			float enemyX = enemyNode.child("position").attribute("x").as_float();
+			float enemyY = enemyNode.child("position").attribute("y").as_float();
 
+			// Find the enemy by its ID and set the position
+			for (auto& enemy : enemyList) {
+				enemy->SetPosition(Vector2D(enemyX, enemyY));
+				break;
+
+			}
+		}
+
+	}
 }
 
 void Scene::SaveState() {
@@ -231,8 +243,17 @@ void Scene::SaveState() {
 	sceneNode.child("entities").child("player").attribute("x").set_value(player->GetPosition().getX());
 	sceneNode.child("entities").child("player").attribute("y").set_value(player->GetPosition().getY());
 
-	//enemies
-	// ...
+	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
+	if (!enemiesNode) {
+		enemiesNode = sceneNode.child("entities").append_child("enemies");
+	}
+	enemiesNode.remove_children();  // Clear existing enemies before saving new positions
+
+	for (auto& enemy : enemyList) {
+		pugi::xml_node enemyNode = enemiesNode.append_child("enemy");
+		enemyNode.append_child("position").append_attribute("x").set_value(enemy->GetPosition().getX());
+		enemyNode.append_child("position").append_attribute("y").set_value(enemy->GetPosition().getY());
+	}
 
 	//Saves the modifications to the XML 
 	loadFile.save_file("config.xml");
