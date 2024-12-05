@@ -43,6 +43,19 @@ public:
 
 	void ResetPath();
 
+	bool IsAlive() {
+
+		if (state != States::DYING) {
+
+			return true;
+		}
+	}
+
+	void SetAlive() {
+
+		state = States::IDLE_R;
+	}
+
 public:
 
 	int SightDistance = 0;
