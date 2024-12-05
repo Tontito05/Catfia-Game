@@ -107,33 +107,25 @@ bool Enemy::Update(float dt)
 				resetEnemy();
 			}
 
-			//GENERALS FOR BOTH ENEMYES
-			if (Engine::GetInstance().physics->debug == true)
-			{
-				pathfinding->DrawPath();
-			}
-			if (SightDistance <= DestDistance)
-			{
-				if (pathfinding->pathTiles.empty() == true)
-				{
-					pathfinding->PropagateAStar(SQUARED);
-				}
-
-
-				SightDistance++;
-			}
-			else
-			{
-				Vector2D pos = GetPosition();
-				Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
-				pathfinding->ResetPath(tilePos);
-				SightDistance = 0;
-			}
 
 		//Check if the enemy is dead
 		if (isDead == false)
 		{
+			//GENERALS FOR BOTH ENEMYES
 
+			while (SightDistance <= DestDistance)
+			{
+				if (pathfinding->pathTiles.empty())
+				{
+
+					pathfinding->PropagateAStar(MANHATTAN);
+				}
+				SightDistance++;
+				if (Engine::GetInstance().physics->debug == true && SightDistance == DestDistance)
+				{
+					pathfinding->DrawPath();
+				}
+			}
 
 			Vector2D PosInMap = Engine::GetInstance().map->WorldToMap(position.getX(), position.getY());
 			b2Vec2 velocity;
@@ -153,11 +145,10 @@ bool Enemy::Update(float dt)
 						Vector2D TileOG = pathfinding->pathTiles.back();
 						Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 						Vector2D pos = Tile - position;
-						pos.normalized();
+						pos = pos.normalized();
 
 						//The velocity is reduced to make the enemy move slower
-						float velocityReducer = 0.01f;
-						velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
+						velocity = b2Vec2(pos.getX(), pos.getY());
 						if (pos.getX() >= 0)
 						{
 							state = States::WALKING_R;
@@ -167,9 +158,12 @@ bool Enemy::Update(float dt)
 							state = States::WALKING_L;
 						}
 					}
-				
-
-
+					//Reset the path
+					if (SightDistance > DestDistance)
+					{
+						ResetPath();
+						SightDistance = 0;
+					}
 				pbody->body->SetLinearVelocity(velocity);
 
 
@@ -185,7 +179,7 @@ bool Enemy::Update(float dt)
 					if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
 						&& (stat == States::WALKING_R))
 					{
-						velocity.x = 0.4 * 16;
+						velocity.x = 0.2 * 16;
 					}
 					else if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == false)
 						&& (stat == States::WALKING_R))
@@ -196,7 +190,7 @@ bool Enemy::Update(float dt)
 					if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == true)
 						&& (stat == States::WALKING_L))
 					{
-						velocity.x = -0.4 * 16;
+						velocity.x = -0.2 * 16;
 					}
 					else if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == false)
 						&& (stat == States::WALKING_L))
@@ -224,6 +218,12 @@ bool Enemy::Update(float dt)
 							state = States::WALKING_L;
 						}
 					}
+				}
+				//Reset the path
+				if (SightDistance > DestDistance)
+				{
+					ResetPath();
+					SightDistance = 0;
 				}
 				pbody->body->SetLinearVelocity(velocity);
 

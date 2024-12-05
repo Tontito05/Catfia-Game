@@ -198,7 +198,7 @@ bool Player::Update(float dt)
 				//Move Left
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.05, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.75, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
 					JumpingLeft = true;
@@ -208,7 +208,7 @@ bool Player::Update(float dt)
 				// Move right
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.05, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.75, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
