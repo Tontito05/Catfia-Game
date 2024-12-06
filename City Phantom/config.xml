@@ -118,15 +118,15 @@
 							<frame x="96" y="224" w="32" h="32" />
 						</walkingleft>
 						<walkingleft2 loop="true" speed="0.2">
-							<frame x="0" y="608" w="32" h="32" />
-							<frame x="32" y="608" w="32" h="32" />
-							<frame x="64" y="608" w="32" h="32" />
-							<frame x="96" y="608" w="32" h="32" />
-							<frame x="128" y="608" w="32" h="32" />
-							<frame x="160" y="608" w="32" h="32" />
-							<frame x="194" y="608" w="32" h="32" />
-							<frame x="226" y="608" w="32" h="32" />
-							<frame x="258" y="608" w="32" h="32" />
+							<frame x="0" y="576" w="32" h="32" />
+							<frame x="32" y="576" w="32" h="32" />
+							<frame x="64" y="576" w="32" h="32" />
+							<frame x="96" y="576" w="32" h="32" />
+							<frame x="128" y="576" w="32" h="32" />
+							<frame x="160" y="576" w="32" h="32" />
+							<frame x="194" y="576" w="32" h="32" />
+							<frame x="226" y="576" w="32" h="32" />
+							<frame x="258" y="576" w="32" h="32" />
 						</walkingleft2>
 						<dying loop="false" speed="0.2">
 							<frame x="0" y="256" w="32" h="32" />
