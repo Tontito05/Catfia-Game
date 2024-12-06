@@ -85,6 +85,9 @@ public:
 	//Life and damage management
 	int life = 3;
 	Timer damageTimer;
+	int dashPlayer;
+	int damagePlayer;
+	int jumpPlayer;
 	Timer walksoundTimer;
 	bool damaged = false;
 

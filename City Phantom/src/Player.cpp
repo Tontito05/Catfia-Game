@@ -47,7 +47,7 @@ bool Player::Start() {
 	currentAnimation = &idle;
 
 	// L08 TODO 5: Add physics to the player - initialize physics body
-	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW/1.5,texH/1.5, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX(), (int)position.getY(), texW / 1.5, texH / 1.5, bodyType::DYNAMIC);
 
 	//Set the rotation of the player
 	pbody->body->GetFixtureList()[0].SetFriction(0);
@@ -58,7 +58,7 @@ bool Player::Start() {
 	b2Filter filter;
 	filter.categoryBits = Engine::GetInstance().physics->PLAYER_LAYER;
 	pbody->body->GetFixtureList()[0].SetFilterData(filter);
-	
+
 	// L08 TODO 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
 	pbody->listener = this;
 
@@ -68,6 +68,9 @@ bool Player::Start() {
 	damaged == false;
 
 	walkingplayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/walking_sfx.ogg");
+	dashPlayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/dash_sfx.ogg");
+	damagePlayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/damage_sfx.ogg");
+	jumpPlayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/jump_sfx.ogg");
 
 	return true;
 }
@@ -89,7 +92,7 @@ bool Player::Update(float dt)
 	}
 
 	//God Mode Controll
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode==false)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == false)
 	{
 		Godmode = true;
 	}
@@ -128,41 +131,49 @@ bool Player::Update(float dt)
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				velocity.x = -0.8 * 4;
-				if (!Fxplayed)
+				if (!Fxplayed && !Jumping)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
 				}
-			
-			
+
+
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Left force
+
+					Engine::GetInstance().audio.get()->PlayFx(dashPlayer, 0);
+
+
 					pbody->body->SetLinearVelocity({ 0,0 });
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, 0), true);
+
 
 					// booleans for dashing
 					isDashingL = true;
 					CanDash = false;
 				}
 				state = States::WALKING_L;
-				
+
 			}
-		
+
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocity.x = 0.8 * 8;
-				if (!Fxplayed)
+				if (!Fxplayed && !Jumping)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
 				}
 				//Set the dash so the player can use it on the RIGHT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Right force
+
+					Engine::GetInstance().audio.get()->PlayFx(dashPlayer, 0);
+
 					pbody->body->SetLinearVelocity({ 0,0 });
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, 0), true);
 
@@ -174,7 +185,7 @@ bool Player::Update(float dt)
 				state = States::WALKING_R;
 
 			}
-			
+
 			//Reset the dash and jump when killing a flying enemie --> its a mechanic i implemented to make the game more fun
 			//and mavey at some point i will use it for a puzzle
 			if (KillReset == true)
@@ -196,11 +207,14 @@ bool Player::Update(float dt)
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 				// Apply an initial upward force
+
+				Engine::GetInstance().audio.get()->PlayFx(jumpPlayer, 0);
+
 				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				Jumping = true;
 			}
-			
+
 			//when the player bounces beacouse of damage
 			if (damaged == true)
 			{
@@ -253,7 +267,7 @@ bool Player::Update(float dt)
 
 			//Set a terminal velocity --> so that the player doesnt fall at an infinite speed, beacouse the gravity on y is det to 20
 			//Why?? --> its the gravity most used in games
-			if (falling == true && Jumping==false)
+			if (falling == true && Jumping == false)
 			{
 				//The terminal velocity is the variable we edit, not the max velocity of falling, that one is 7
 				velocity.y = Engine::GetInstance().scene->Slower(TerminalVelocity, 7, 0.01);
@@ -267,38 +281,38 @@ bool Player::Update(float dt)
 			//Dash --> its complicated, but it works, it applyes an impulse to the player, that is lowly being reversed by another variable
 			//to the point that hits 0 and the dash stops
 
-				if (isDashingR == true)
+			if (isDashingR == true)
+			{
+				//The parameter that creates the slowing sensation of the dash
+				DashSlower -= 0.01f;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				velocity.y = -0.5;
+				//where we look if the dash has finished or not
+				DashForce += DashSlower;
+				if (DashForce <= 0)
 				{
-					//The parameter that creates the slowing sensation of the dash
-					DashSlower -= 0.01f;
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
-					velocity = pbody->body->GetLinearVelocity();
-					velocity.y = -0.5;
-					//where we look if the dash has finished or not
-					DashForce += DashSlower;
-					if (DashForce <= 0)
-					{
-						ResetDash();
-					}
+					ResetDash();
+				}
 
-					state = States::DASH_L;
-				}
-				//Left Dash
-				else if (isDashingL == true)
+				state = States::DASH_L;
+			}
+			//Left Dash
+			else if (isDashingL == true)
+			{
+				//Same as on top
+				DashSlower += 0.01f;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
+				velocity = pbody->body->GetLinearVelocity();
+				velocity.y = -0.5;
+				DashForce -= DashSlower;
+				if (DashForce <= 0)
 				{
-					//Same as on top
-					DashSlower += 0.01f;
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashSlower, 0), true);
-					velocity = pbody->body->GetLinearVelocity();
-					velocity.y = -0.5;
-					DashForce -= DashSlower;
-					if (DashForce <= 0)
-					{
-						ResetDash();
-					}
-					state = States::DASH_R;
+					ResetDash();
 				}
-			
+				state = States::DASH_R;
+			}
+
 
 			pbody->body->SetLinearVelocity(velocity);
 		}
@@ -328,12 +342,12 @@ bool Player::Update(float dt)
 			}
 
 			pbody->body->SetLinearVelocity(velocityGodMode);
-			
+
 		}
 
 
 		//if not doing all this actions, just idle
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT&&Jumping==false && state != States::DAMAGE) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) != KEY_REPEAT && Jumping == false && state != States::DAMAGE) {
 
 			state = States::IDLE_R;
 		}
@@ -350,7 +364,7 @@ bool Player::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
-	
+
 	//A way to tell the sistem that it needs time to do the animation, when the time has passed the animation ends.
 	//its also used for other things like damage taking
 	if (damageTimer.active == true)
@@ -365,15 +379,15 @@ bool Player::Update(float dt)
 		}
 	}
 
-		Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
-		currentAnimation->Update();
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+	currentAnimation->Update();
 
 	//Menu Controll
 	if (inMenu == true)
 	{
-			Engine::GetInstance().render.get()->DrawTexture(menu,(- Engine::GetInstance().render.get()->camera.x / 2)+20, (- Engine::GetInstance().render.get()->camera.y / 2)+20);
+		Engine::GetInstance().render.get()->DrawTexture(menu, (-Engine::GetInstance().render.get()->camera.x / 2) + 20, (-Engine::GetInstance().render.get()->camera.y / 2) + 20);
 	}
-	
+
 	return true;
 }
 
@@ -387,157 +401,161 @@ bool Player::CleanUp()
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-		switch (physB->ctype)
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		//reset the jump flag when touching the ground
+
+		//reset the jump and dash when touching the ground
+		Jumping = false;
+		JumpingReset = false;
+		JumpMinus = 1;
+		CanDash = true;
+
+		//also set that the player isnt falling enymore
+		falling = false;
+		TerminalVelocity = 0;
+
+		break;
+	case ColliderType::ITEM:
+		LOG("Collision ITEM");
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	case ColliderType::ENEMY:
+		LOG("Collision ENEMY");
+
+		Engine::GetInstance().audio.get()->PlayFx(damagePlayer, 0);
+
+		// this is my way of the player to interact with the enemyes.
+		for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
 		{
-		case ColliderType::PLATFORM:
-			LOG("Collision PLATFORM");
-			//reset the jump flag when touching the ground
+			//get the enemy that the player is touching
+			if (physB == Engine::GetInstance().scene->enemyList[i]->pbody)
+			{
+				//check if the player takes damage
+				if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
+				{
+					damageTimer.Start();
+					state = States::DAMAGE;
+					checkLife();
+				}
+				//check if the player kills the enemy
+				else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
+				{
+					//Reset the dash and jump if it kills the flying enemy
+					if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+					{
+						KillReset = true;
+					}
 
-			//reset the jump and dash when touching the ground
-			Jumping = false;
-			JumpingReset = false;
-			JumpMinus = 1;
-			CanDash = true;
 
-			//also set that the player isnt falling enymore
+					//Chek the way of the dash and apply the force to the enemy
+					//the enemy kill it here
+					if (state == States::DASH_L)
+					{
+						if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, -DashForce), true);
+							counter++;
+						}
+						if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
+						{
+							counter++;
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, -DashForce), true);
+						}
+
+					}
+					else if (state == States::DASH_R)
+					{
+						if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, -DashForce), true);
+							counter++;
+						}
+						if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
+						{
+							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, -DashForce), true);
+							counter++;
+
+						}
+					}
+					ResetDash();
+
+					Engine::GetInstance().scene->enemyList[i]->isDead = true;
+				}
+			}
+		}
+
+		break;
+
+	case ColliderType::WALL:
+		//we reset the dash if we hit a wall
+		ResetDash();
+
+		LOG("Collision WALL");
+
+		break;
+	case ColliderType::DEATH:
+		LOG("Collision DEATH");
+
+		//check if godmode is on
+		if (Godmode == false)
+		{
+			//Apply damage and states
+
+			Engine::GetInstance().audio.get()->PlayFx(damagePlayer, 0);
+
+			//beacouse of the spikes the player bounces back so its not falling anymore
 			falling = false;
 			TerminalVelocity = 0;
 
-			break;
-		case ColliderType::ITEM:
-			LOG("Collision ITEM");
-			break;
-		case ColliderType::UNKNOWN:
-			LOG("Collision UNKNOWN");
-			break;
-		case ColliderType::ENEMY:
-			LOG("Collision ENEMY");
-
-			// this is my way of the player to interact with the enemyes.
-			for (int i = 0; i < Engine::GetInstance().scene->enemyList.size(); i++)
-			{
-				//get the enemy that the player is touching
-				if (physB == Engine::GetInstance().scene->enemyList[i]->pbody)
-				{
-					//check if the player takes damage
-					if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
-					{
-						damageTimer.Start();
-						state = States::DAMAGE;
-						checkLife();
-					}
-					//check if the player kills the enemy
-					else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->enemyList[i]->isDead == false))
-					{
-						//Reset the dash and jump if it kills the flying enemy
-						if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
-						{
-							KillReset = true;
-						}
-
-
-						//Chek the way of the dash and apply the force to the enemy
-						//the enemy kill it here
-						if (state == States::DASH_L)
-						{
-							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
-							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, -DashForce), true);
-								counter++;
-							}
-							if(Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
-							{
-								counter++;
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, -DashForce), true);
-							}
-							
-						}
-						else if (state == States::DASH_R)
-						{
-							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::FYING_ENEMY)
-							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, -DashForce), true);
-								counter++;
-							}
-							if (Engine::GetInstance().scene->enemyList[i]->type == EntityType::WALKING_ENEMY)
-							{
-								Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-DashForce, -DashForce), true);
-								counter++;
-
-							}
-						}
-						ResetDash();
-
-						Engine::GetInstance().scene->enemyList[i]->isDead = true;
-					}
-				}
-			}
-
-			break;
-
-		case ColliderType::WALL:
-			//we reset the dash if we hit a wall
-			ResetDash();
-
-			LOG("Collision WALL");
-			
-			break;
-		case ColliderType::DEATH:
-			LOG("Collision DEATH");
-
-			//check if godmode is on
-			if (Godmode == false)
-			{
-				//Apply damage and states
-
-				//beacouse of the spikes the player bounces back so its not falling anymore
-				falling = false;
-				TerminalVelocity = 0;
-
-				//We start the damage timer so the player can do the damage animation
-				damageTimer.Start();
-				state = States::DAMAGE;
-				checkLife();
-				damaged = true;
-			}
-
-
-			break;
+			//We start the damage timer so the player can do the damage animation
+			damageTimer.Start();
+			state = States::DAMAGE;
+			checkLife();
+			damaged = true;
 		}
+
+
+		break;
+	}
 }
 
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
 
-		switch (physB->ctype)
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		LOG("End Collision PLATFORM");
+
+		//When we exit a collision we are falling (if we are not jumping) and we can dash
+		CanDash = true;
+		if (Jumping == false)
 		{
-		case ColliderType::PLATFORM:
-			LOG("End Collision PLATFORM");
-
-			//When we exit a collision we are falling (if we are not jumping) and we can dash
-			CanDash = true;
-			if (Jumping == false)
-			{
-				falling = true;
-			}
-
-			break;
-		case ColliderType::ITEM:
-			LOG("End Collision ITEM");
-			break;
-		case ColliderType::UNKNOWN:
-			LOG("End Collision UNKNOWN");
-			break;
-		case ColliderType::WALL:
-			LOG("End Collision WALL");
-			
-			break;
-		case ColliderType::DEATH:
-			LOG("End Collision DEATH");
-			break;
-		default:
-			break;
+			falling = true;
 		}
+
+		break;
+	case ColliderType::ITEM:
+		LOG("End Collision ITEM");
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("End Collision UNKNOWN");
+		break;
+	case ColliderType::WALL:
+		LOG("End Collision WALL");
+
+		break;
+	case ColliderType::DEATH:
+		LOG("End Collision DEATH");
+		break;
+	default:
+		break;
+	}
 }
 
 //Reset the parameters of the dash and if its a kill reset we dont reset the velocity of the player
@@ -596,4 +614,3 @@ void Player::checkLife()
 		state = States::DAMAGE;
 	}
 }
-
