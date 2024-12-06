@@ -56,6 +56,8 @@ bool Scene::Start()
 
 	Engine::GetInstance().map->Load("Assets/Maps/", "Map.tmx");
 
+	Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/background-music.wav", 0.0f);
+
 	//Engine::GetInstance().map->Load("Assets/Maps/", "SathisfyingMap.tmx");
 	WWidth = Engine::GetInstance().window.get()->width;
 	WHeight = Engine::GetInstance().window.get()->height;
