@@ -82,7 +82,8 @@ public:
 	Vector2D position;       
 	bool renderable = true;
 
-
+	//Fx and audios
+	
 
 };
 enum class States {

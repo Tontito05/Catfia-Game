@@ -41,6 +41,8 @@ public:
 
 	void checkLife();
 
+	bool Fxplayed = false;
+
 	void SetPosition(Vector2D pos);
 	Vector2D GetPosition();
 
@@ -52,6 +54,9 @@ public:
 	SDL_Texture* menu = NULL;
 	bool inMenu = false;
 	Vector2D menusize = { 606,332 };
+
+
+	float fxTimer = 0.0f;
 
 	int texW, texH;
 
@@ -80,6 +85,7 @@ public:
 	//Life and damage management
 	int life = 3;
 	Timer damageTimer;
+	Timer walksoundTimer;
 	bool damaged = false;
 
 	//Flag to activate the other booleans and states for the player when it kills an enemy
@@ -97,6 +103,11 @@ public:
 	Animation dash;
 	Animation attack;
 	Animation damage;
+
+
+
+	//fx
+	int walkingplayer;
 
 	//For debbugguing pourposes
 	int counter = 0;

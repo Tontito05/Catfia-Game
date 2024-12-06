@@ -67,7 +67,7 @@ bool Player::Start() {
 	damageTimer.RsetTimer();
 	damaged == false;
 
-	
+	walkingplayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/walking_sfx.ogg");
 
 	return true;
 }
@@ -79,6 +79,14 @@ bool Player::Update(float dt)
 
 	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
+
+
+	fxTimer += dt;
+	if (walksoundTimer.ReadMSec() > 300) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
+	{
+		Fxplayed = false; // Reseteamos el flag para poder reproducir el sonido la próxima vez que el jugador camine
+		walksoundTimer.RsetTimer(); // Reiniciar el temporizador del sonido de caminar
+	}
 
 	//God Mode Controll
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode==false)
@@ -119,8 +127,15 @@ bool Player::Update(float dt)
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.8 * 8;
-
+				velocity.x = -0.8 * 4;
+				if (!Fxplayed)
+				{
+					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
+					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
+					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+				}
+			
+			
 				//Set the dash so the player can use it on the LEFT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Left force
@@ -132,14 +147,19 @@ bool Player::Update(float dt)
 					CanDash = false;
 				}
 				state = States::WALKING_L;
-
+				
 			}
 		
 
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocity.x = 0.8 * 8;
-
+				if (!Fxplayed)
+				{
+					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
+					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
+					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+				}
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash==true) {
 					// Apply an initial Right force
@@ -353,7 +373,7 @@ bool Player::Update(float dt)
 	{
 			Engine::GetInstance().render.get()->DrawTexture(menu,(- Engine::GetInstance().render.get()->camera.x / 2)+20, (- Engine::GetInstance().render.get()->camera.y / 2)+20);
 	}
-
+	
 	return true;
 }
 
@@ -576,3 +596,4 @@ void Player::checkLife()
 		state = States::DAMAGE;
 	}
 }
+

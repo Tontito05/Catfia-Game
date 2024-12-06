@@ -138,6 +138,7 @@ void EntityManager::SetAnimation(Entity* entity) {
 			break;
 		case States::WALKING_L:
 			player->currentAnimation = &player->walkingleft;
+
 			break;
 		case States::WALKING_R:
 			player->currentAnimation = &player->walkingright;
