@@ -40,6 +40,7 @@ bool Enemy::Start() {
 	dying.LoadAnimations(parameters.child("animations").child("dying"));
 
 	walkingright2.LoadAnimations(parameters.child("animations").child("walkingright2"));
+	walkingleft2.LoadAnimations(parameters.child("animations").child("walkingleft2"));
 	dying2.LoadAnimations(parameters.child("animations").child("dying2"));
 	currentAnimation = &idle;
 
@@ -242,6 +243,8 @@ bool Enemy::Update(float dt)
 	else
 	{
 		state = States::DYING;
+		
+		
 	}
 
 

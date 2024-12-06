@@ -466,7 +466,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 							counter++;
 							Engine::GetInstance().scene->enemyList[i]->pbody->body->ApplyLinearImpulseToCenter(b2Vec2(DashForce, -DashForce), true);
 						}
-
+						Engine::GetInstance().audio.get()->PlayFx(damagePlayer, 0);
 					}
 					else if (state == States::DASH_R)
 					{
@@ -481,9 +481,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 							counter++;
 
 						}
+						Engine::GetInstance().audio.get()->PlayFx(damagePlayer, 0);
 					}
 					ResetDash();
-
+					
 					Engine::GetInstance().scene->enemyList[i]->isDead = true;
 				}
 			}

@@ -69,10 +69,11 @@ public:
 	int enemyMovementSfx;
 	int enemydamage;
 	Animation walkingright2;
+	Animation walkingleft2;
 	
 	Animation dying2;
 
-
+	bool damageFx = false;
 	bool isDead = false;
 	PhysBody* pbody;
 
