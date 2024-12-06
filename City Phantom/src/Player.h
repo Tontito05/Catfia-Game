@@ -62,28 +62,30 @@ public:
 	PhysBody* pbody;
 	float jumpForce = 2; // The force to apply when jumping
 	bool Jumping = false; // Flag to check if the player is currently jumping
-	bool JumpingRight = false;
+	bool JumpingReset = false;//A flag to indicate that the player guets an impulse when an enemy is killed
+	bool JumpingRight = false;// A way to tell where the player is going when jumping
 	bool JumpingLeft = false; 
 
-	States state;
-	float TerminalVelocity = 0;
+	States state;//the states of the player
+	float TerminalVelocity = 0;//The variable that we controll to make the player fal slowly
 
-	bool isDashingL = false;
+	bool isDashingL = false;//Directions of the dash
 	bool isDashingR = false;
-	bool CanDash = true;
-	float DashForce = 4;
-	float DashSlower = 0;
-	float JumpMinus = 1;
-	bool attacking = false;
-	bool falling = false;
-	bool fallingSlower = false;
+	bool CanDash = true;//To tell if the player can or not dash
+	float DashForce = 4;//The force aplyed to the player on the dash
+	float DashSlower = 0;//The Force that goes againts the player on the dah (aka air friction)
+	float JumpMinus = 1;//The variable that modifies the player jump depending on the time pressing the space
+	bool falling = false; //A flag to indicate the terminal velocity
 
+	//Life and damage management
 	int life = 3;
 	Timer damageTimer;
 	bool damaged = false;
 
+	//Flag to activate the other booleans and states for the player when it kills an enemy
 	bool KillReset = false;
 
+	//Animations
 	pugi::xml_node parameters;
 	Animation* currentAnimation = nullptr;
 	Animation idle;
@@ -96,8 +98,10 @@ public:
 	Animation attack;
 	Animation damage;
 
+	//For debbugguing pourposes
 	int counter = 0;
 
+	//Godmode bool
 	bool Godmode = false;
 
 

@@ -164,7 +164,8 @@ bool Player::Update(float dt)
 				//set a jump when it kills the flying enemye
 				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-				Jumping = true;
+				Jumping = false;
+				JumpingReset = true;
 				falling = true;
 				ResetDash();
 
@@ -175,7 +176,7 @@ bool Player::Update(float dt)
 			//Jump
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && Jumping == false) {
 				// Apply an initial upward force
-
+				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				Jumping = true;
 			}
@@ -190,9 +191,9 @@ bool Player::Update(float dt)
 			}
 
 			// If the player is jumpling, we don't want to apply gravity, we use the current velocity prduced by the jump
-			if (Jumping == true)
+			if (Jumping == true || JumpingReset == true)
 			{
-
+				falling = false;
 				velocity = pbody->body->GetLinearVelocity();
 				//We insert this here so the player camn move during the jump, so we dont limit the movement
 				//Move Left
@@ -374,6 +375,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 			//reset the jump and dash when touching the ground
 			Jumping = false;
+			JumpingReset = false;
 			JumpMinus = 1;
 			CanDash = true;
 
@@ -412,6 +414,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 						{
 							KillReset = true;
 						}
+
 
 						//Chek the way of the dash and apply the force to the enemy
 						//the enemy kill it here
@@ -455,6 +458,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::WALL:
 			//we reset the dash if we hit a wall
 			ResetDash();
+
 			LOG("Collision WALL");
 			
 			break;
@@ -523,7 +527,6 @@ void Player::ResetDash()
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
-	attacking = false;
 	if (KillReset == false)
 	{
 		pbody->body->SetLinearVelocity({ 0,0 });
