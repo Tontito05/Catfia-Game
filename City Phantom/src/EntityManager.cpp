@@ -207,7 +207,7 @@ void EntityManager::SetAnimation(Entity* entity) {
 			enemy->currentAnimation = &enemy->walkingright;
 			break;
 		case States::WALKING_L:
-			enemy->currentAnimation = &enemy->walkingleft;
+			enemy->currentAnimation = &enemy->walkingright;
 			break;
 		case States::WALKING_R:
 			enemy->currentAnimation = &enemy->walkingright;

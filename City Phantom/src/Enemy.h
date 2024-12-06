@@ -67,6 +67,7 @@ public:
 	Animation walkingleft;
 	Animation dying;
 	int enemyMovementSfx;
+	int enemydamage;
 	Animation walkingright2;
 	
 	Animation dying2;

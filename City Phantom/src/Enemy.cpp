@@ -44,6 +44,7 @@ bool Enemy::Start() {
 	currentAnimation = &idle;
 
 	enemyMovementSfx = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/enemy_sfx.ogg");
+	enemydamage = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/damage_sfx.ogg");
 	//Add a physics to an item - initialize the physics body
 
 	//Diferent enemyes diferent initializatons
@@ -175,7 +176,7 @@ bool Enemy::Update(float dt)
 		case EntityType::WALKING_ENEMY://______________________________________________________________________________________________
 
 			velocity = b2Vec2(0, -GRAVITY_Y);
-
+			
 			//Movement of the enemy
 			if (pathfinding->foundDestination != true)
 			{

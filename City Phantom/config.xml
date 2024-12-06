@@ -100,6 +100,70 @@
 							<frame x="64" y="192" w="32" h="32" />
 							<frame x="96" y="192" w="32" h="32" />
 						</walkingright>
+						<walkingright2 loop="true" speed="0.2">
+							<frame x="0" y="288" w="32" h="32" />
+							<frame x="32" y="288" w="32" h="32" />
+							<frame x="64" y="288" w="32" h="32" />
+							<frame x="96" y="288" w="32" h="32" />
+							<frame x="128" y="288" w="32" h="32" />
+							<frame x="160" y="288" w="32" h="32" />
+							<frame x="194" y="288" w="32" h="32" />
+							<frame x="226" y="288" w="32" h="32" />
+							<frame x="258" y="288" w="32" h="32" />
+						</walkingright2>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+						<dying2 loop="false" speed="0.1">
+							<frame x="0" y="320" w="48" h="32" />
+							<frame x="48" y="320" w="48" h="32" />
+							<frame x="96" y="320" w="48" h="32" />
+							<frame x="144" y="320" w="48" h="32" />
+							<frame x="192" y="320" w="48" h="32" />
+							<frame x="240" y="320" w="48" h="32" />
+						</dying2>
+					</animations>
+				</enemy>
+				<enemy name="walkingenemy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
+					<position x="626" y="188" />
+					<walkingright2 loop="true" speed="0.2">
+						<frame x="0" y="288" w="32" h="32" />
+						<frame x="32" y="288" w="32" h="32" />
+						<frame x="64" y="288" w="32" h="32" />
+						<frame x="96" y="288" w="32" h="32" />
+						<frame x="128" y="288" w="32" h="32" />
+						<frame x="160" y="288" w="32" h="32" />
+						<frame x="194" y="288" w="32" h="32" />
+						<frame x="226" y="288" w="32" h="32" />
+						<frame x="258" y="288" w="32" h="32" />
+					</walkingright2>
+					<dying2 loop="false" speed="0.1">
+						<frame x="0" y="320" w="48" h="32" />
+						<frame x="48" y="320" w="48" h="32" />
+						<frame x="96" y="320" w="48" h="32" />
+						<frame x="144" y="320" w="48" h="32" />
+						<frame x="192" y="320" w="48" h="32" />
+						<frame x="240" y="320" w="48" h="32" />
+					</dying2>
+				</enemy>
+				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
+					<position x="464" y="844" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
 						<walkingleft loop="true" speed="0.2">
 							<frame x="0" y="224" w="32" h="32" />
 							<frame x="32" y="224" w="32" h="32" />
@@ -115,49 +179,283 @@
 					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="626" y="410" />
-				</enemy>
-				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
-					<position x="464" y="844" />
-				</enemy>
-				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="656" y="559" />
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="816" y="207" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1200" y="943" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1328" y="143" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1360" y="684" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1552" y="108" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1648" y="591" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1969" y="975" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="1968" y="1100" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="2416" y="1135" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="2576" y="751" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="2576" y="1042" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<enemy name="badguy" w="32" h="32" texture="Assets/Textures/spritesheet.png" gravity="true">
 					<position x="2768" y="1135" />
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="192" w="32" h="32" />
+							<frame x="32" y="192" w="32" h="32" />
+							<frame x="64" y="192" w="32" h="32" />
+							<frame x="96" y="192" w="32" h="32" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+						</walkingleft>
+						<dying loop="false" speed="0.2">
+							<frame x="0" y="256" w="32" h="32" />
+							<frame x="32" y="256" w="32" h="32" />
+							<frame x="64" y="256" w="32" h="32" />
+							<frame x="96" y="256" w="32" h="32" />
+						</dying>
+					</animations>
 				</enemy>
 				<animations>
 					<walkingright loop="true" speed="0.2">
@@ -199,85 +497,7 @@
 					</dying2>
 				</animations>
 				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
-				<enemy />
+			
 			</enemies>
 		</entities>
 	</scene>
