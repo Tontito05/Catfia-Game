@@ -169,3 +169,18 @@ bool Audio::PlayFx(int id, int repeat)
 
 	return ret;
 }
+
+void Audio::Volume(int id, int volume)
+{
+	if (!active)
+		return;
+
+	if (id > 0 && id <= fx.size())
+	{
+		auto fxIt = fx.begin();
+		std::advance(fxIt, id - 1);
+		Mix_VolumeChunk(*fxIt, volume);
+	}
+
+
+}

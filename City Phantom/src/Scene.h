@@ -57,8 +57,8 @@ private:
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
-	int enemySky = 146;
-	int enemyGround = 147;
+	int enemySky = 236;
+	int enemyGround = 237;
 	bool enemyesIn = false;
 
 	int WWidth;

@@ -88,8 +88,9 @@ public:
 	int dashPlayer;
 	int damagePlayer;
 	int jumpPlayer;
-	Timer walksoundTimer;
 	bool damaged = false;
+
+	Timer walksoundTimer;
 
 	//Flag to activate the other booleans and states for the player when it kills an enemy
 	bool KillReset = false;

@@ -85,7 +85,7 @@ bool Player::Update(float dt)
 
 
 	fxTimer += dt;
-	if (walksoundTimer.ReadMSec() > 300) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
+	if (walksoundTimer.ReadMSec() > 200) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
 	{
 		Fxplayed = false; // Reseteamos el flag para poder reproducir el sonido la próxima vez que el jugador camine
 		walksoundTimer.RsetTimer(); // Reiniciar el temporizador del sonido de caminar
@@ -127,11 +127,25 @@ bool Player::Update(float dt)
 		//Check godmode
 		if (Godmode == false)
 		{
+			//Make the volume of the footstep sound change so that it is more realistic
+			if ((int)walksoundTimer.ReadMSec() % 3 == 0)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 30);
+			}
+			else if ((int)walksoundTimer.ReadMSec() % 3 == 1)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 50);
+			}
+			else if ((int)walksoundTimer.ReadMSec() % 3 == 2)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 10);
+			}
+
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.8 * 4;
-				if (!Fxplayed && !Jumping)
+				velocity.x = -0.8 * 8;
+				if (!Fxplayed && !Jumping && !falling)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
@@ -162,12 +176,13 @@ bool Player::Update(float dt)
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocity.x = 0.8 * 8;
-				if (!Fxplayed && !Jumping)
+				if (!Fxplayed && !Jumping && !falling)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
 				}
+
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Right force
@@ -233,7 +248,7 @@ bool Player::Update(float dt)
 				//Move Left
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.75, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.50, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
 					JumpingLeft = true;
@@ -243,7 +258,7 @@ bool Player::Update(float dt)
 				// Move right
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.75, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.50, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
