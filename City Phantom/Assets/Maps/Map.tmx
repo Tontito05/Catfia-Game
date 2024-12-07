@@ -11713,7 +11713,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="12" name="Navigation" width="104" height="37">
+ <layer id="12" name="Navigation" width="104" height="37" opacity="0.29">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="true"/>

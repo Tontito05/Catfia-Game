@@ -54,11 +54,9 @@ bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
 
-	Engine::GetInstance().map->Load("Assets/Maps/", "Map.tmx");
+	Engine::GetInstance().map->Load("Assets/Maps/", "Map_.tmx");
 
 	Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/background-music.wav", 0.0f);
-
-	//Engine::GetInstance().map->Load("Assets/Maps/", "SathisfyingMap.tmx");
 	WWidth = Engine::GetInstance().window.get()->width;
 	WHeight = Engine::GetInstance().window.get()->height;
 
@@ -137,16 +135,15 @@ bool Scene::Update(float dt)
 	float camSpeed = 2;
 	
 	//Camera movement
-	int mapLimitX = 3328;
-	int mapLimitY = 1184;
+	Vector2D mapLimit = map->MapToWorld(map->GetWidth(),map->GetHeight());
 
 	if (player->position.getY() > WHeight / (camSpeed*2) &&
-		player->position.getY() < mapLimitY - WHeight / (camSpeed*2))
+		player->position.getY() < mapLimit.getY() - WHeight / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WHeight / 2;
 	}
 	if (player->position.getX() > WWidth / (camSpeed * 2) &&
-		player->position.getX() < mapLimitX - WWidth / (camSpeed*2))
+		player->position.getX() < mapLimit.getX() - WWidth / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed) + WWidth / 2, 0.2f);
 	}

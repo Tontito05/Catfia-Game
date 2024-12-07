@@ -78,8 +78,6 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 
-	LOG("%d", counter);
-
 	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
@@ -248,7 +246,7 @@ bool Player::Update(float dt)
 				//Move Left
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.50, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.4, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
 					JumpingLeft = true;
@@ -258,7 +256,7 @@ bool Player::Update(float dt)
 				// Move right
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.50, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.4, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
@@ -274,7 +272,7 @@ bool Player::Update(float dt)
 				}
 				else
 				{
-					JumpMinus -= 0.1;
+					JumpMinus -= 0.075;
 
 				}
 
@@ -305,7 +303,8 @@ bool Player::Update(float dt)
 				velocity.y = -0.5;
 				//where we look if the dash has finished or not
 				DashForce += DashSlower;
-				if (DashForce <= 0)
+				LOG("%f", velocity.x);
+				if (DashForce <= 0 || (velocity.x <= -1 && velocity.x >= 1))
 				{
 					ResetDash();
 				}
@@ -321,7 +320,7 @@ bool Player::Update(float dt)
 				velocity = pbody->body->GetLinearVelocity();
 				velocity.y = -0.5;
 				DashForce -= DashSlower;
-				if (DashForce <= 0)
+				if (DashForce <= 0 || velocity.x ==0)
 				{
 					ResetDash();
 				}
@@ -509,6 +508,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::WALL:
 		//we reset the dash if we hit a wall
+
 		ResetDash();
 
 		LOG("Collision WALL");
@@ -581,7 +581,7 @@ void Player::ResetDash()
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
-	if (KillReset == false)
+	if (KillReset == false && Jumping == false)
 	{
 		pbody->body->SetLinearVelocity({ 0,0 });
 	}

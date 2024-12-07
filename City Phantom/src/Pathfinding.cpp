@@ -151,7 +151,7 @@ bool Pathfinding::IsWalkable(int x, int y) {
 			}
             else if (type == EntityType::WALKING_ENEMY)
             {
-                if (gid == 238) isWalkable = true;
+                if (gid == 238 || gid == 237 || gid == 236) isWalkable = true;
             }
         }
     }

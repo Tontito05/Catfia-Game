@@ -65,7 +65,7 @@ public:
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
-	float jumpForce = 2; // The force to apply when jumping
+	float jumpForce = 1.75; // The force to apply when jumping
 	bool Jumping = false; // Flag to check if the player is currently jumping
 	bool JumpingReset = false;//A flag to indicate that the player guets an impulse when an enemy is killed
 	bool JumpingRight = false;// A way to tell where the player is going when jumping

@@ -153,7 +153,7 @@ bool Enemy::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(enemyMovementSfx, 0);
 
 				//The velocity is reduced to make the enemy move slower
-				velocity = b2Vec2(pos.getX(), pos.getY());
+				velocity = b2Vec2(pos.getX()*0.2, pos.getY()*0.2);
 				if (pos.getX() >= 0)
 				{
 					state = States::WALKING_R;
@@ -204,24 +204,23 @@ bool Enemy::Update(float dt)
 				}
 
 			}
-			if (pathfinding->foundDestination == true)
-			{
-				if (pathfinding->pathTiles.size() > 0) {
+			if (pathfinding->pathTiles.size() > 0) {
 
-					Vector2D TileOG = pathfinding->pathTiles.front();
-					Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
-					Vector2D pos = Tile - position;
-					pos.normalized();
-					float velocityReducer = 0.1f;
-					velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
-					if (pos.getX() >= 0)
-					{
-						state = States::WALKING_R;
-					}
-					else
-					{
-						state = States::WALKING_L;
-					}
+				//We get the next tile in the path and create a vetor that goes there and apoly a velocity to the enemy
+				Vector2D TileOG = pathfinding->pathTiles.back();
+				Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
+				Vector2D pos = Tile - position;
+				pos = pos.normalized();
+
+				//The velocity is reduced to make the enemy move slower
+				velocity = b2Vec2(pos.getX()*2, 0);
+				if (pos.getX() >= 0)
+				{
+					state = States::WALKING_R;
+				}
+				else
+				{
+					state = States::WALKING_L;
 				}
 			}
 			//Reset the path
