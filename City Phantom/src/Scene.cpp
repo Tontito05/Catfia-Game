@@ -148,7 +148,7 @@ bool Scene::Update(float dt)
 		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed) + WWidth / 2, 0.2f);
 	}
 
-	int buildingEndgeX = map->MapToWorld(55, 47).getX();
+	int buildingEndgeX = map->MapToWorld(54, 47).getX();
 	int buildingEndgeY = map->MapToWorld(48, 48).getY();
 
 	if ((player->position.getX() > buildingEndgeX || player->position.getY() > buildingEndgeY)) {

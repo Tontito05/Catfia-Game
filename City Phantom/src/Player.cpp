@@ -54,7 +54,7 @@ bool Player::Start() {
 	pbody->body->SetFixedRotation(true);
 
 	//Set a layer for the player so that when enemies die they can't push the player
-	//IMPORTANT --> Adria helped me with this, i undesrtand how it works but i whanna give him  credit for it
+	//IMPORTANT --> Adria helped me with this, I undesrtand how it works but i whanna give him  credit for it
 	b2Filter filter;
 	filter.categoryBits = Engine::GetInstance().physics->PLAYER_LAYER;
 	pbody->body->GetFixtureList()[0].SetFilterData(filter);
@@ -154,6 +154,7 @@ bool Player::Update(float dt)
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+					state = States::WALKING_L;
 				}
 
 
@@ -172,7 +173,7 @@ bool Player::Update(float dt)
 					isDashingL = true;
 					CanDash = false;
 				}
-				state = States::WALKING_L;
+
 
 			}
 
@@ -185,6 +186,7 @@ bool Player::Update(float dt)
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+					state = States::WALKING_R;
 				}
 
 				//Set the dash so the player can use it on the RIGHT
@@ -200,8 +202,6 @@ bool Player::Update(float dt)
 					isDashingR = true;
 					CanDash = false;
 				}
-
-				state = States::WALKING_R;
 
 			}
 
@@ -238,8 +238,11 @@ bool Player::Update(float dt)
 			if (damaged == true)
 			{
 				//basically the same as the enemy reset
+				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-				Jumping = true;
+				Jumping = false;
+				JumpingReset = true;
+				falling = true;
 				damaged = false;
 			}
 
@@ -250,6 +253,7 @@ bool Player::Update(float dt)
 				velocity = pbody->body->GetLinearVelocity();
 				//We insert this here so the player camn move during the jump, so we dont limit the movement
 				//Move Left
+
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.3, 0), true);
@@ -258,9 +262,8 @@ bool Player::Update(float dt)
 					JumpingLeft = true;
 
 				}
-
 				// Move right
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
+				else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.3, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
@@ -281,7 +284,6 @@ bool Player::Update(float dt)
 					JumpMinus -= 0.075;
 
 				}
-
 			}
 
 			//Set a terminal velocity --> so that the player doesnt fall at an infinite speed, beacouse the gravity on y is det to 20

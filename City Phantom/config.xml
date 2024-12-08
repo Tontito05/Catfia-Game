@@ -22,62 +22,63 @@
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
 						<frame x="32" y="0" w="32" h="32" />
+						<frame x="64" y="0" w="32" h="32" />
+						<frame x="96" y="0" w="32" h="32" />
 					</idle>
+
 					<jumpingright loop="true" speed="0.1">
-						<frame x="0" y="64" w="32" h="32" />
-						<frame x="32" y="64" w="32" h="32" />
-						<frame x="64" y="64" w="32" h="32" />
-						<frame x="96" y="64" w="32" h="32" />
-						<frame x="128" y="64" w="32" h="32" />
-						<frame x="160" y="64" w="32" h="32" />
-						<frame x="192" y="64" w="32" h="32" />
-						<frame x="224" y="64" w="32" h="32" />
-					</jumpingright>
-					<jumpingleft loop="true" speed="0.1">
-						<frame x="0" y="128" w="32" h="32" />
-						<frame x="32" y="128" w="32" h="32" />
-						<frame x="64" y="128" w="32" h="32" />
-						<frame x="96" y="128" w="32" h="32" />
-						<frame x="128" y="128" w="32" h="32" />
-						<frame x="160" y="128" w="32" h="32" />
-						<frame x="192" y="128" w="32" h="32" />
-						<frame x="224" y="128" w="32" h="32" />
-					</jumpingleft>
-					<walkingright loop="true" speed="0.1">
 						<frame x="0" y="32" w="32" h="32" />
 						<frame x="32" y="32" w="32" h="32" />
 						<frame x="64" y="32" w="32" h="32" />
 						<frame x="96" y="32" w="32" h="32" />
-					</walkingright>
-					<walkingleft loop="true" speed="0.1">
-						<frame x="0" y="160" w="32" h="32" />
-						<frame x="32" y="160" w="32" h="32" />
-						<frame x="64" y="160" w="32" h="32" />
-						<frame x="96" y="160" w="32" h="32" />
-					</walkingleft>
-					<dying loop="false" speed="0.1">
+					</jumpingright>
+
+					<jumpingleft loop="true" speed="0.2">
+						<frame x="0" y="64" w="32" h="32" />
+						<frame x="32" y="64" w="32" h="32" />
+						<frame x="64" y="64" w="32" h="32" />
+						<frame x="96" y="64" w="32" h="32" />
+					</jumpingleft>
+
+					<walkingright loop="true" speed="0.1">
 						<frame x="0" y="96" w="32" h="32" />
 						<frame x="32" y="96" w="32" h="32" />
 						<frame x="64" y="96" w="32" h="32" />
 						<frame x="96" y="96" w="32" h="32" />
 						<frame x="128" y="96" w="32" h="32" />
 						<frame x="160" y="96" w="32" h="32" />
-						<frame x="192" y="96" w="32" h="32" />
-						<frame x="224" y="96" w="32" h="32" />
+					</walkingright>
+
+					<walkingleft loop="true" speed="0.1">
+						<frame x="0" y="128" w="32" h="32" />
+						<frame x="32" y="128" w="32" h="32" />
+						<frame x="64" y="128" w="32" h="32" />
+						<frame x="96" y="128" w="32" h="32" />
+						<frame x="128" y="128" w="32" h="32" />
+						<frame x="160" y="128" w="32" h="32" />
+					</walkingleft>
+
+					<dying loop="false" speed="0.1">
+						<frame x="0" y="160" w="32" h="32" />
+						<frame x="32" y="160" w="32" h="32" />
+						<frame x="64" y="160" w="32" h="32" />
+						<frame x="96" y="160" w="32" h="32" />
+						<frame x="128" y="160" w="32" h="32" />
+						<frame x="160" y="160" w="32" h="32" />
 					</dying>
+
 					<damage loop="true" speed="0.15">
-						<frame x="0" y="352" w="32" h="32" />
-						<frame x="32" y="352" w="32" h="32" />
-						<frame x="64" y="352" w="32" h="32" />
+						<frame x="0" y="192" w="32" h="32" />
 					</damage>
+
 					<dash loop="false" speed="0.25">
-						<frame x="0" y="384" w="48" h="32" />
-						<frame x="48" y="384" w="48" h="32" />
-						<frame x="96" y="384" w="48" h="32" />
-						<frame x="144" y="384" w="48" h="32" />
-						<frame x="192" y="384" w="48" h="32" />
-						<frame x="240" y="384" w="48" h="32" />
-						<frame x="288" y="384" w="48" h="32" />
+						<frame x="0" y="224" w="48" h="32" />
+						<frame x="48" y="224" w="48" h="32" />
+						<frame x="96" y="224" w="48" h="32" />
+						<frame x="144" y="224" w="48" h="32" />
+						<frame x="192" y="224" w="48" h="32" />
+						<frame x="240" y="224" w="48" h="32" />
+						<frame x="288" y="224" w="48" h="32" />
 					</dash>
 				</animations>
 			</player>
@@ -95,52 +96,52 @@
 					<position x="304" y="1135" />
 					<animations>
 						<walkingright loop="true" speed="0.2">
-							<frame x="0" y="192" w="32" h="32" />
-							<frame x="32" y="192" w="32" h="32" />
-							<frame x="64" y="192" w="32" h="32" />
-							<frame x="96" y="192" w="32" h="32" />
+							<frame x="0" y="384" w="32" h="32" />
+							<frame x="32" y="384" w="32" h="32" />
+							<frame x="64" y="384" w="32" h="32" />
+							<frame x="96" y="384" w="32" h="32" />
 						</walkingright>
 						<walkingright2 loop="true" speed="0.2">
-							<frame x="0" y="288" w="32" h="32" />
-							<frame x="32" y="288" w="32" h="32" />
-							<frame x="64" y="288" w="32" h="32" />
-							<frame x="96" y="288" w="32" h="32" />
-							<frame x="128" y="288" w="32" h="32" />
-							<frame x="160" y="288" w="32" h="32" />
-							<frame x="194" y="288" w="32" h="32" />
-							<frame x="226" y="288" w="32" h="32" />
-							<frame x="258" y="288" w="32" h="32" />
+							<frame x="0" y="480" w="32" h="32" />
+							<frame x="32" y="480" w="32" h="32" />
+							<frame x="64" y="480" w="32" h="32" />
+							<frame x="96" y="480" w="32" h="32" />
+							<frame x="128" y="480" w="32" h="32" />
+							<frame x="160" y="480" w="32" h="32" />
+							<frame x="194" y="480" w="32" h="32" />
+							<frame x="226" y="480" w="32" h="32" />
+							<frame x="258" y="480" w="32" h="32" />
 						</walkingright2>
 						<walkingleft loop="true" speed="0.2">
-							<frame x="0" y="224" w="32" h="32" />
-							<frame x="32" y="224" w="32" h="32" />
-							<frame x="64" y="224" w="32" h="32" />
-							<frame x="96" y="224" w="32" h="32" />
+							<frame x="0" y="416" w="32" h="32" />
+							<frame x="32" y="416" w="32" h="32" />
+							<frame x="64" y="416" w="32" h="32" />
+							<frame x="96" y="416" w="32" h="32" />
 						</walkingleft>
 						<walkingleft2 loop="true" speed="0.2">
-							<frame x="0" y="608" w="32" h="32" />
-							<frame x="32" y="608" w="32" h="32" />
-							<frame x="64" y="608" w="32" h="32" />
-							<frame x="96" y="608" w="32" h="32" />
-							<frame x="128" y="608" w="32" h="32" />
-							<frame x="160" y="608" w="32" h="32" />
-							<frame x="194" y="608" w="32" h="32" />
-							<frame x="226" y="608" w="32" h="32" />
-							<frame x="258" y="608" w="32" h="32" />
+							<frame x="0" y="512" w="32" h="32" />
+							<frame x="32" y="512" w="32" h="32" />
+							<frame x="64" y="512" w="32" h="32" />
+							<frame x="96" y="512" w="32" h="32" />
+							<frame x="128" y="512" w="32" h="32" />
+							<frame x="160" y="512" w="32" h="32" />
+							<frame x="194" y="512" w="32" h="32" />
+							<frame x="226" y="512" w="32" h="32" />
+							<frame x="258" y="512" w="32" h="32" />
 						</walkingleft2>
 						<dying loop="false" speed="0.2">
-							<frame x="0" y="256" w="32" h="32" />
-							<frame x="32" y="256" w="32" h="32" />
-							<frame x="64" y="256" w="32" h="32" />
-							<frame x="96" y="256" w="32" h="32" />
+							<frame x="0" y="448" w="32" h="32" />
+							<frame x="32" y="448" w="32" h="32" />
+							<frame x="64" y="448" w="32" h="32" />
+							<frame x="96" y="448" w="32" h="32" />
 						</dying>
 						<dying2 loop="false" speed="0.1">
-							<frame x="0" y="320" w="48" h="32" />
-							<frame x="48" y="320" w="48" h="32" />
-							<frame x="96" y="320" w="48" h="32" />
-							<frame x="144" y="320" w="48" h="32" />
-							<frame x="192" y="320" w="48" h="32" />
-							<frame x="240" y="320" w="48" h="32" />
+							<frame x="0" y="544" w="48" h="32" />
+							<frame x="48" y="544" w="48" h="32" />
+							<frame x="96" y="544" w="48" h="32" />
+							<frame x="144" y="544" w="48" h="32" />
+							<frame x="192" y="544" w="48" h="32" />
+							<frame x="240" y="544" w="48" h="32" />
 						</dying2>
 					</animations>
 				</enemy>
