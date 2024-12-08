@@ -60,7 +60,10 @@ public:
     // L13: A* Pathfinding variables
     std::priority_queue<std::pair<int, Vector2D>, std::vector<std::pair<int, Vector2D>>, std::greater<std::pair<int, Vector2D>> > frontierAStar;
 
-    int blockedGid = 235; //Gid of the tiles that block the path - Important adjust this value to your map
+    int blockedGid = 559;//Gid of the tiles that block the path - Important adjust this value to your map
+	int enemyGround = 561;
+	int enemySky = 560;
+	int EnemyWalkingSpace = 562;
     bool foundDestination = false;
 
 	EntityType type;

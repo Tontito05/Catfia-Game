@@ -49,6 +49,7 @@ public:
 	Map* map;
 	int enemyCounter = 0;
 	std::vector<Enemy*> enemyList;
+	bool in = false;
 
 private:
 
@@ -57,8 +58,8 @@ private:
 
 	//L03: TODO 3b: Declare a Player attribute
 	Player* player;
-	int enemySky = 236;
-	int enemyGround = 237;
+	int enemySky = 560;
+	int enemyGround = 561;
 	bool enemyesIn = false;
 
 	int WWidth;
