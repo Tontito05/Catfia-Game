@@ -292,7 +292,7 @@ bool Player::Update(float dt)
 			{
 				//The terminal velocity is the variable we edit, not the max velocity of falling, that one is 7
 				velocity.y = Engine::GetInstance().scene->Slower(TerminalVelocity, 7, 0.01);
-				if (TerminalVelocity <= 7)
+				if (TerminalVelocity <= 5)
 				{
 					TerminalVelocity += velocity.y;
 				}
@@ -380,7 +380,7 @@ bool Player::Update(float dt)
 	//Reset
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
-		ResetPlayer();
+		Engine::GetInstance().scene->LoadState();
 	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();

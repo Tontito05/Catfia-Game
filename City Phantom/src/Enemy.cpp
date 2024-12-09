@@ -185,7 +185,7 @@ bool Enemy::Update(float dt)
 				Vector2D pos = Tile - position;
 				pos = pos.normalized();
 				//The velocity is reduced to make the enemy move slower
-				velocity = b2Vec2(pos.getX()*2, 0);
+				velocity = b2Vec2(pos.getX()*2, 3);
 				if (pos.getX() >= 0)
 				{
 					state = States::WALKING_R;
