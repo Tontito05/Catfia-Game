@@ -340,6 +340,8 @@ bool Player::Update(float dt)
 		}
 		else // GOD MODE 
 		{
+			pbody->body->SetType(b2_kinematicBody);
+
 			b2Vec2 velocityGodMode = b2Vec2(0, 0);
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
