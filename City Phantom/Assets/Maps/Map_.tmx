@@ -30033,7 +30033,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="4" name="Navigation" width="100" height="100" visible="0">
+ <layer id="4" name="Navigation" width="100" height="100">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="true"/>
@@ -32617,7 +32617,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="564"/>
    <tile/>
    <tile/>
    <tile/>
@@ -32917,7 +32917,7 @@
    <tile gid="563"/>
    <tile/>
    <tile/>
-   <tile gid="560"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
