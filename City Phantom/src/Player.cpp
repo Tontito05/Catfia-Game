@@ -380,7 +380,9 @@ bool Player::Update(float dt)
 	//Reset
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
+		ResetPlayer();
 		Engine::GetInstance().scene->LoadState();
+
 	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
