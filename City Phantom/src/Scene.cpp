@@ -142,10 +142,6 @@ bool Scene::Update(float dt)
 	{
 		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WHeight / 2;
 	}
-	else
-	{
-		Engine::GetInstance().render.get()->camera.y = 0;
-	}
 	if (player->position.getX() > WWidth / (camSpeed * 2) &&
 		player->position.getX() < mapLimit.getX() - WWidth / (camSpeed * 2))
 	{
