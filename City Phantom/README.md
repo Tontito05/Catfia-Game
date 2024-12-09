@@ -24,6 +24,7 @@ F10 God Mode
 F11 cap FPS to 30
 
 Implemented features:
+A load and safe option
 The complex movement of the Player
 A dash mechanic used to kill enemies and traverse the map
 A reset dash mechanic when killing aerial enemies
