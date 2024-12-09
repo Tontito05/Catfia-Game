@@ -258,7 +258,7 @@ void Scene::LoadState() {
 
 	//Player position
 	Vector2D playerPos = Vector2D(sceneNode.child("entities").child("player").attribute("x").as_int(),
-		sceneNode.child("entities").child("player").attribute("y").as_int());
+		(sceneNode.child("entities").child("player").attribute("y").as_int())-32);
 	player->SetPosition(playerPos);
 
 	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
