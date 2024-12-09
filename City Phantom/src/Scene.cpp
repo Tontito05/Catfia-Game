@@ -153,8 +153,13 @@ bool Scene::Update(float dt)
 
 	if ((player->position.getX() > buildingEndgeX || player->position.getY() > buildingEndgeY)) {
 		
+		if (map->Building == false)
+		{
+			SaveState();
+		}
+
 		map->Building = true;
-		SaveState();
+
 	}
 	else
 	{

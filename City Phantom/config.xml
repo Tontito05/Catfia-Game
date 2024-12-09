@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="Map_.tmx" />
 		<entities>
-			<player x="79" y="84" w="32" h="32" texture="Assets/Textures/spritesheet.png">
+			<player x="1556" y="1566" w="32" h="32" texture="Assets/Textures/spritesheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
@@ -71764,6 +71764,32 @@
 				<enemy alive="false" />
 				<enemy alive="false" />
 				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
 				<enemy />
 				<enemy />
 				<enemy />
