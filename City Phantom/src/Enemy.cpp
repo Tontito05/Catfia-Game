@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Vector2D.h"
 #include "Map.h"
+#include "tracy/Tracy.hpp"
 
 Enemy::Enemy(EntityType type_) : Entity(type_)
 {
@@ -105,6 +106,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool Enemy::Update(float dt)
 {
+	ZoneScoped;
+
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
 		resetEnemy();

@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Item.h"
+#include "tracy/Tracy.hpp"
 
 Scene::Scene() : Module()
 {
@@ -131,6 +132,7 @@ float Scene::Slower(float ogPos, float goalPos, float time)
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	ZoneScoped;
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 2;
 	

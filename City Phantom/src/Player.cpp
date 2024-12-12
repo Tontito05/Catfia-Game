@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Physics.h"
 #include "Engine.h"
+#include "tracy/Tracy.hpp"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -79,6 +80,7 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+	ZoneScoped;
 
 	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);

@@ -34,6 +34,7 @@ bool Map::Start() {
 
 bool Map::Update(float dt)
 {
+    ZoneScoped;
     bool ret = true;
 
     //Move BG

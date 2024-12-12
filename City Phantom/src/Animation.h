@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL_Rect.h"
 #include "pugixml.hpp"
+#include "tracy/Tracy.hpp"
 #define MAX_FRAMES 400
 
 class Animation {
@@ -33,6 +34,7 @@ public:
 	}
 
 	void Update() {
+		ZoneScoped;
 		currentFrame += speed;
 		if (currentFrame >= totalFrames) {
 			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1;
