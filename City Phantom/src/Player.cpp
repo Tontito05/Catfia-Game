@@ -84,6 +84,7 @@ bool Player::Update(float dt)
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 
+
 	fxTimer += dt;
 	if (walksoundTimer.ReadMSec() > 200) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
 	{
@@ -95,10 +96,12 @@ bool Player::Update(float dt)
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == false)
 	{
 		Godmode = true;
+		pbody->body->SetType(b2_kinematicBody);
 	}
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == true)
 	{
 		Godmode = false;
+		pbody->body->SetType(b2_dynamicBody);
 	}
 
 	//Debug Controll for the levels (only one level so its just a reset at this point)
@@ -340,7 +343,6 @@ bool Player::Update(float dt)
 		}
 		else // GOD MODE 
 		{
-			pbody->body->SetType(b2_kinematicBody);
 
 			b2Vec2 velocityGodMode = b2Vec2(0, 0);
 			// Move left
