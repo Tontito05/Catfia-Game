@@ -41,9 +41,6 @@ bool Scene::Awake()
 		item->SetParameters(itemNode);
 	}
 
-	// Create a enemy using the entity manager 
-	//the num of enemyes in tyhe level
-
 
 	return ret;
 
