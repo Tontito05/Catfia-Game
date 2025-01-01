@@ -156,13 +156,13 @@
     <ClInclude Include="src\Enemy.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GuiControl.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="GuiControlButton.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiControl.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>

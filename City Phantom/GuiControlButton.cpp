@@ -58,7 +58,7 @@ bool GuiControlButton::Update(float dt)
 			break;
 		}
 
-		Engine::GetInstance().render->DrawText(text.c_str(), bounds.x, bounds.y, bounds.w, bounds.h);
+		//Engine::GetInstance().render->DrawText(text.c_str(), bounds.x, bounds.y, bounds.w, bounds.h);
 
 	}
 
