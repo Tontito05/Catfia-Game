@@ -44,10 +44,6 @@ bool Map::Update(float dt)
     Engine::GetInstance().render.get()->DrawTexture(BG3, Engine::GetInstance().render.get()->camera.x * (BGvelx + 0.03),- Engine::GetInstance().render.get()->camera.y * BGvely);
     Engine::GetInstance().render.get()->DrawTexture(BG4, Engine::GetInstance().render.get()->camera.x * (BGvelx + 0.05), -Engine::GetInstance().render.get()->camera.y * BGvely);
 
-    SDL_Rect cam = Engine::GetInstance().render.get()->camera;
-
-    Vector2D camPos = WorldToMap( cam.x, cam.y );
-    Vector2D camArea = WorldToMap(cam.w, cam.h);
 
     if (mapLoaded) {
 
@@ -60,8 +56,8 @@ bool Map::Update(float dt)
 
 				if (mapLayer->name != "Building")
 				{
-                    for (int i = camPos.getX() ; i < camArea.getX(); i++) {
-                        for (int j = camPos.getY(); j < camArea.getY(); j++) {
+                    for (int i = 0; i < mapData.width; i++) {
+                        for (int j = 0; j < mapData.height; j++) {
 
                             // L07 TODO 9: Complete the draw function
 
@@ -85,8 +81,8 @@ bool Map::Update(float dt)
 				}
                 else if (mapLayer->name == "Building" && Building == false)
                 {
-                    for (int i = camPos.getX(); i < camArea.getX(); i++) {
-                        for (int j = camPos.getY(); j < camArea.getY(); j++) {
+                    for (int i = 0; i < mapData.width; i++) {
+                        for (int j = 0; j < mapData.height; j++) {
 
                             // L07 TODO 9: Complete the draw function
 
