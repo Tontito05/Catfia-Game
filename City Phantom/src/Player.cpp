@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Physics.h"
 #include "Engine.h"
+#include "tracy/Tracy.hpp"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -54,7 +55,7 @@ bool Player::Start() {
 	pbody->body->SetFixedRotation(true);
 
 	//Set a layer for the player so that when enemies die they can't push the player
-	//IMPORTANT --> Adria helped me with this, i undesrtand how it works but i whanna give him  credit for it
+	//IMPORTANT --> Adria helped me with this, I undesrtand how it works but i whanna give him  credit for it
 	b2Filter filter;
 	filter.categoryBits = Engine::GetInstance().physics->PLAYER_LAYER;
 	pbody->body->GetFixtureList()[0].SetFilterData(filter);
@@ -72,20 +73,22 @@ bool Player::Start() {
 	damagePlayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/damage_sfx.ogg");
 	jumpPlayer = Engine::GetInstance().audio.get()->LoadFx("Assets/Audio/Fx/jump_sfx.ogg");
 
+	
+
 	return true;
 }
 
 bool Player::Update(float dt)
 {
-
-	LOG("%d", counter);
+	ZoneScoped;
 
 	// L08 TODO 5: Add physics to the  player - updated player position using physics
 	b2Vec2 velocity = b2Vec2(0, -GRAVITY_Y);
 
 
+
 	fxTimer += dt;
-	if (walksoundTimer.ReadMSec() > 300) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
+	if (walksoundTimer.ReadMSec() > 200) // El sonido durará 300 ms (ajusta este valor según tus necesidades)
 	{
 		Fxplayed = false; // Reseteamos el flag para poder reproducir el sonido la próxima vez que el jugador camine
 		walksoundTimer.RsetTimer(); // Reiniciar el temporizador del sonido de caminar
@@ -95,19 +98,25 @@ bool Player::Update(float dt)
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == false)
 	{
 		Godmode = true;
+		pbody->body->SetType(b2_kinematicBody);
 	}
 	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && Godmode == true)
 	{
 		Godmode = false;
+		pbody->body->SetType(b2_dynamicBody);
 	}
 
 	//Debug Controll for the levels (only one level so its just a reset at this point)
-	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
+		parameters.attribute("x").set_value(OGPosition.getX());
+		parameters.attribute("y").set_value(OGPosition.getY());
 		ResetPlayer();
 	}
-	else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{	
+		parameters.attribute("x").set_value(OGPosition.getX());
+		parameters.attribute("y").set_value(OGPosition.getY());
 		ResetPlayer();
 	}
 
@@ -127,15 +136,30 @@ bool Player::Update(float dt)
 		//Check godmode
 		if (Godmode == false)
 		{
+			//Make the volume of the footstep sound change so that it is more realistic
+			if ((int)walksoundTimer.ReadMSec() % 3 == 0)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 30);
+			}
+			else if ((int)walksoundTimer.ReadMSec() % 3 == 1)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 50);
+			}
+			else if ((int)walksoundTimer.ReadMSec() % 3 == 2)
+			{
+				Engine::GetInstance().audio.get()->Volume(walkingplayer, 10);
+			}
+
 
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -0.8 * 4;
-				if (!Fxplayed && !Jumping)
+				velocity.x = -0.8 * 8;
+				if (!Fxplayed && !Jumping && !falling)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+					state = States::WALKING_L;
 				}
 
 
@@ -154,7 +178,7 @@ bool Player::Update(float dt)
 					isDashingL = true;
 					CanDash = false;
 				}
-				state = States::WALKING_L;
+
 
 			}
 
@@ -162,12 +186,14 @@ bool Player::Update(float dt)
 			// Move right
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				velocity.x = 0.8 * 8;
-				if (!Fxplayed && !Jumping)
+				if (!Fxplayed && !Jumping && !falling)
 				{
 					Engine::GetInstance().audio.get()->PlayFx(walkingplayer); // Suponiendo que tienes un sistema de audio para reproducir sonidos
 					walksoundTimer.Start(); // Iniciar el temporizador para el sonido de caminar
 					Fxplayed = true; // Marcar que el sonido de caminar ya fue reproducido
+					state = States::WALKING_R;
 				}
+
 				//Set the dash so the player can use it on the RIGHT
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
 					// Apply an initial Right force
@@ -181,8 +207,6 @@ bool Player::Update(float dt)
 					isDashingR = true;
 					CanDash = false;
 				}
-
-				state = States::WALKING_R;
 
 			}
 
@@ -219,8 +243,11 @@ bool Player::Update(float dt)
 			if (damaged == true)
 			{
 				//basically the same as the enemy reset
+				pbody->body->SetLinearVelocity({ 0,0 });
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-				Jumping = true;
+				Jumping = false;
+				JumpingReset = true;
+				falling = true;
 				damaged = false;
 			}
 
@@ -231,19 +258,19 @@ bool Player::Update(float dt)
 				velocity = pbody->body->GetLinearVelocity();
 				//We insert this here so the player camn move during the jump, so we dont limit the movement
 				//Move Left
+
 				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pbody->body->GetLinearVelocity().x > -5 && isDashingR == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.75, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-0.3, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 					state = States::JUMPING_L;
 					JumpingLeft = true;
 
 				}
-
 				// Move right
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
+				else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pbody->body->GetLinearVelocity().x < 5 && isDashingL == false)
 				{
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.75, 0), true);
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0.3, 0), true);
 					velocity = pbody->body->GetLinearVelocity();
 
 					state = States::JUMPING_R;
@@ -259,10 +286,9 @@ bool Player::Update(float dt)
 				}
 				else
 				{
-					JumpMinus -= 0.1;
+					JumpMinus -= 0.075;
 
 				}
-
 			}
 
 			//Set a terminal velocity --> so that the player doesnt fall at an infinite speed, beacouse the gravity on y is det to 20
@@ -271,7 +297,7 @@ bool Player::Update(float dt)
 			{
 				//The terminal velocity is the variable we edit, not the max velocity of falling, that one is 7
 				velocity.y = Engine::GetInstance().scene->Slower(TerminalVelocity, 7, 0.01);
-				if (TerminalVelocity <= 7)
+				if (TerminalVelocity <= 5)
 				{
 					TerminalVelocity += velocity.y;
 				}
@@ -290,7 +316,8 @@ bool Player::Update(float dt)
 				velocity.y = -0.5;
 				//where we look if the dash has finished or not
 				DashForce += DashSlower;
-				if (DashForce <= 0)
+				LOG("%f", velocity.x);
+				if (DashForce <= 0 || (velocity.x <= -1 && velocity.x >= 1))
 				{
 					ResetDash();
 				}
@@ -306,7 +333,7 @@ bool Player::Update(float dt)
 				velocity = pbody->body->GetLinearVelocity();
 				velocity.y = -0.5;
 				DashForce -= DashSlower;
-				if (DashForce <= 0)
+				if (DashForce <= 0 || velocity.x ==0)
 				{
 					ResetDash();
 				}
@@ -318,6 +345,7 @@ bool Player::Update(float dt)
 		}
 		else // GOD MODE 
 		{
+
 			b2Vec2 velocityGodMode = b2Vec2(0, 0);
 			// Move left
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -359,6 +387,8 @@ bool Player::Update(float dt)
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
 		ResetPlayer();
+		Engine::GetInstance().scene->LoadState();
+
 	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
@@ -494,6 +524,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::WALL:
 		//we reset the dash if we hit a wall
+
 		ResetDash();
 
 		LOG("Collision WALL");
@@ -566,7 +597,7 @@ void Player::ResetDash()
 	DashSlower = 0;
 	isDashingL = false;
 	isDashingR = false;
-	if (KillReset == false)
+	if (KillReset == false && Jumping == false)
 	{
 		pbody->body->SetLinearVelocity({ 0,0 });
 	}

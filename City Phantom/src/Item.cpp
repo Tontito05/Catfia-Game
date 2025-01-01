@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "tracy/Tracy.hpp"
 
 Item::Item() : Entity(EntityType::ITEM)
 {
@@ -37,6 +38,7 @@ bool Item::Start() {
 
 bool Item::Update(float dt)
 {
+	ZoneScoped;
 	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 
 	b2Transform pbodyPos = pbody->body->GetTransform();

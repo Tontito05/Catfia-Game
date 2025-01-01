@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Window.h"
 #include "box2D/box2d.h"
+#include "tracy/Tracy.hpp"
 
 Physics::Physics() : Module()
 {
@@ -39,6 +40,7 @@ bool Physics::Start()
 // 
 bool Physics::PreUpdate()
 {
+	ZoneScoped;
 	bool ret = true;
 	float dt = Engine::GetInstance().Getdt() / 1000;
 
@@ -219,6 +221,7 @@ b2World* Physics::GetWorld()
 // 
 bool Physics::PostUpdate()
 {
+	ZoneScoped;
 	bool ret = true;
 
 	// Activate or deactivate debug mode

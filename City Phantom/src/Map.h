@@ -159,11 +159,12 @@ public:
     }
 
     MapLayer* GetNavigationLayer();
+    MapLayer* GetBuildingLayer();
 
 public: 
     std::string mapFileName;
     std::string mapPath;
-
+    bool Building = false;
 private:
     bool mapLoaded;
     // L06: DONE 1: Declare a variable data of the struct MapData
@@ -174,4 +175,5 @@ private:
     SDL_Texture* BG4;
     float BGvelx = -0.2;
     float BGvely = 0.41;
+
 };

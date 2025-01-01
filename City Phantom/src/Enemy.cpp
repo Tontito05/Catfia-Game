@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Vector2D.h"
 #include "Map.h"
+#include "tracy/Tracy.hpp"
 
 Enemy::Enemy(EntityType type_) : Entity(type_)
 {
@@ -105,6 +106,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool Enemy::Update(float dt)
 {
+	ZoneScoped;
+
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 
 		resetEnemy();
@@ -115,12 +118,10 @@ bool Enemy::Update(float dt)
 	if (isDead == false)
 	{
 		//GENERALS FOR BOTH ENEMYES
-
 		while (SightDistance <= DestDistance)
 		{
 			if (pathfinding->pathTiles.empty())
 			{
-
 				pathfinding->PropagateAStar(MANHATTAN);
 			}
 			SightDistance++;
@@ -149,11 +150,10 @@ bool Enemy::Update(float dt)
 				Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
 				Vector2D pos = Tile - position;
 				pos = pos.normalized();
-
 				Engine::GetInstance().audio.get()->PlayFx(enemyMovementSfx, 0);
 
 				//The velocity is reduced to make the enemy move slower
-				velocity = b2Vec2(pos.getX(), pos.getY());
+				velocity = b2Vec2(pos.getX()*0.2, pos.getY()*0.2);
 				if (pos.getX() >= 0)
 				{
 					state = States::WALKING_R;
@@ -162,6 +162,7 @@ bool Enemy::Update(float dt)
 				{
 					state = States::WALKING_L;
 				}
+
 			}
 			//Reset the path
 			if (SightDistance > DestDistance)
@@ -179,50 +180,24 @@ bool Enemy::Update(float dt)
 			velocity = b2Vec2(0, -GRAVITY_Y);
 			
 			//Movement of the enemy
-			if (pathfinding->foundDestination != true)
-			{
-				if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == true)
-					&& (stat == States::WALKING_R))
-				{
-					velocity.x = 0.2 * 16;
-				}
-				else if ((pathfinding->IsWalkable(PosInMap.getX() + 1, PosInMap.getY()) == false)
-					&& (stat == States::WALKING_R))
-				{
-					stat = States::WALKING_L;
-				}
+			if (pathfinding->pathTiles.size() > 0) {
 
-				if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == true)
-					&& (stat == States::WALKING_L))
+				//We get the next tile in the path and create a vetor that goes there and apoly a velocity to the enemy
+				Vector2D TileOG = pathfinding->pathTiles.back();
+				Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
+				Vector2D pos = Tile - position;
+				pos = pos.normalized();
+				//The velocity is reduced to make the enemy move slower
+				velocity = b2Vec2(pos.getX()*2, 3);
+				if (pos.getX() >= 0)
 				{
-					velocity.x = -0.2 * 16;
+					state = States::WALKING_R;
 				}
-				else if ((pathfinding->IsWalkable(PosInMap.getX(), PosInMap.getY()) == false)
-					&& (stat == States::WALKING_L))
+				else
 				{
-					stat = States::WALKING_R;
+					state = States::WALKING_L;
 				}
-
-			}
-			if (pathfinding->foundDestination == true)
-			{
-				if (pathfinding->pathTiles.size() > 0) {
-
-					Vector2D TileOG = pathfinding->pathTiles.front();
-					Vector2D Tile = Engine::GetInstance().map->MapToWorld(TileOG.getX(), TileOG.getY());
-					Vector2D pos = Tile - position;
-					pos.normalized();
-					float velocityReducer = 0.1f;
-					velocity = b2Vec2(pos.getX() * velocityReducer, pos.getY() * velocityReducer);
-					if (pos.getX() >= 0)
-					{
-						state = States::WALKING_R;
-					}
-					else
-					{
-						state = States::WALKING_L;
-					}
-				}
+				DestDistance = 20;
 			}
 			//Reset the path
 			if (SightDistance > DestDistance)

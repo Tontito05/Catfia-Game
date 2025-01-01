@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Item.h"
+#include "tracy/Tracy.hpp"
 
 Scene::Scene() : Module()
 {
@@ -40,9 +41,6 @@ bool Scene::Awake()
 		item->SetParameters(itemNode);
 	}
 
-	// Create a enemy using the entity manager 
-	//the num of enemyes in tyhe level
-
 
 	return ret;
 
@@ -54,11 +52,9 @@ bool Scene::Start()
 {
 	//L06 TODO 3: Call the function to load the map. 
 
-	Engine::GetInstance().map->Load("Assets/Maps/", "Map.tmx");
+	Engine::GetInstance().map->Load("Assets/Maps/", "Map_.tmx");
 
 	Engine::GetInstance().audio->PlayMusic("Assets/Audio/Music/background-music.wav", 0.0f);
-
-	//Engine::GetInstance().map->Load("Assets/Maps/", "SathisfyingMap.tmx");
 	WWidth = Engine::GetInstance().window.get()->width;
 	WHeight = Engine::GetInstance().window.get()->height;
 
@@ -133,24 +129,41 @@ float Scene::Slower(float ogPos, float goalPos, float time)
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	ZoneScoped;
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 2;
 	
 	//Camera movement
-	int mapLimitX = 3328;
-	int mapLimitY = 1184;
+	Vector2D mapLimit = map->MapToWorld(map->GetWidth(),map->GetHeight());
 
 	if (player->position.getY() > WHeight / (camSpeed*2) &&
-		player->position.getY() < mapLimitY - WHeight / (camSpeed*2))
+		player->position.getY() < mapLimit.getY() - WHeight / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.y = (-player->position.getY() * camSpeed) + WHeight / 2;
 	}
 	if (player->position.getX() > WWidth / (camSpeed * 2) &&
-		player->position.getX() < mapLimitX - WWidth / (camSpeed*2))
+		player->position.getX() < mapLimit.getX() - WWidth / (camSpeed * 2))
 	{
 		Engine::GetInstance().render.get()->camera.x = Slower(Engine::GetInstance().render.get()->camera.x, (- player->position.getX() * camSpeed) + WWidth / 2, 0.2f);
 	}
-	
+
+	int buildingEndgeX = map->MapToWorld(54, 47).getX();
+	int buildingEndgeY = map->MapToWorld(48, 48).getY();
+
+	if ((player->position.getX() > buildingEndgeX || player->position.getY() > buildingEndgeY)) {
+		
+		if (map->Building == false)
+		{
+			SaveState();
+		}
+
+		map->Building = true;
+
+	}
+	else
+	{
+		map->Building = false;
+	}
 
 	return true;
 
@@ -249,7 +262,7 @@ void Scene::LoadState() {
 
 	//Player position
 	Vector2D playerPos = Vector2D(sceneNode.child("entities").child("player").attribute("x").as_int(),
-		sceneNode.child("entities").child("player").attribute("y").as_int());
+		(sceneNode.child("entities").child("player").attribute("y").as_int())-32);
 	player->SetPosition(playerPos);
 
 	pugi::xml_node enemiesNode = sceneNode.child("entities").child("enemies");
