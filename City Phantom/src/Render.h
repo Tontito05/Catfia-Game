@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Vector2D.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 class Render : public Module
 {
@@ -45,4 +46,5 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+	TTF_Font* font;
 };
