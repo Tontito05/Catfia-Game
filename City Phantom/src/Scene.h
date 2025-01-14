@@ -58,9 +58,7 @@ public:
 	GuiControlButton* guiBt;
 	SDL_Texture* mouseTileTex = nullptr;
 
-	std::vector<Item*> CoinList;
-	std::vector<Item*> HeartList;
-	Item* DashCard;
+	std::vector<Item*> ItemList;
 	int CoinCounter = 0;
 	int HeartCounter = 0;
 

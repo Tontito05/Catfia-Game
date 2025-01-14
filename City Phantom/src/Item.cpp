@@ -100,7 +100,6 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 	case ColliderType::PLAYER:
 
 		isPicked = true;
-
 		break;
 	}
 }

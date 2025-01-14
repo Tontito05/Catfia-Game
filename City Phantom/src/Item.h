@@ -29,6 +29,10 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	Vector2D GetPosition() {
+		return position;
+	}
+
 	void SetPosition(Vector2D pos) {
 		position.setX(pos.getX());
 		position.setY(pos.getY());

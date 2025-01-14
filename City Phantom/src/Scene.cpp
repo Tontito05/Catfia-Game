@@ -121,18 +121,18 @@ void Scene::Create()
 						item->SetParameters(itemNode,ItemType::COIN);
 						item->SetPosition(map->MapToWorld(x, y));
 						item->Start();
-						CoinList.push_back(item);
+						ItemList.push_back(item);
 						CoinCounter++;
 					}
 					else if (gid == dash)
 					{
-						//L08 Create a new item using the entity manager and set the position to (200, 672) to test
 						pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
 
-						DashCard = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-						DashCard->SetParameters(itemNode, ItemType::DASH);
-						DashCard->SetPosition(map->MapToWorld(x, y));
-						DashCard->Start();
+						Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+						item->SetParameters(itemNode, ItemType::DASH);
+						item->SetPosition(map->MapToWorld(x, y));
+						item->Start();
+						ItemList.push_back(item);
 					}
 					else if (gid == heart)
 					{
@@ -143,7 +143,8 @@ void Scene::Create()
 						item->SetParameters(itemNode, ItemType::HEART);
 						item->SetPosition(map->MapToWorld(x, y));
 						item->Start();
-						HeartList.push_back(item);
+						ItemList.push_back(item);
+						HeartCounter++;
 					}
 				}
 			}
@@ -268,6 +269,25 @@ void Scene::SaveState() {
 		if (enemy->IsAlive() == false) {
 
 			enemyNode.append_attribute("alive") = false;
+
+		}
+
+	}
+
+	pugi::xml_node ItemsNode = sceneNode.child("entities").child("items");
+	if (!ItemsNode) {
+		ItemsNode = sceneNode.child("entities").append_child("items");
+	}
+
+
+	for (auto& item : ItemList) {
+		pugi::xml_node ItemNode = enemiesNode.append_child("enemy");
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(item->GetPosition().getX());
+		sceneNode.child("entities").child("enemies").child("enemy").attribute("x").set_value(item->GetPosition().getY());
+
+		if (item->isPicked == true) {
+
+			ItemNode.append_attribute("alive") = false;
 
 		}
 
