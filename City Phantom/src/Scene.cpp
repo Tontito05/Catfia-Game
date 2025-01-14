@@ -14,6 +14,7 @@
 #include "tracy/Tracy.hpp"
 #include "GuiControl.h"
 #include "GuiManager.h"
+#include "GuiControlButton.h"
 
 Scene::Scene() : Module()
 {
@@ -39,8 +40,32 @@ bool Scene::Awake()
 	// Create a enemy using the entity manager 
 	//the num of enemyes in tyhe level
 
-	SDL_Rect btPos = { 520, 350, 120,20 };
-	guiBt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+	SDL_Rect startbutton = { 520, 300, 120,20 };
+	SDL_Rect settingbutton = { 520, 350, 120,20 };
+	SDL_Rect exitbutton = { 520, 400, 120,20 };
+	
+	SDL_Rect layoutBounds2 = { 0, -90, WWidth, WHeight };
+	menuLayout = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Layout", layoutBounds2, this);
+	menuLayout->isLayout = true;
+	menuLayout->isMenu = true;
+
+	startbt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START GAME", startbutton, this);
+	startbt->Isvisible = true;
+	guiButtons.push_back(startbt);
+
+	settingsbt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "SETTINGS", settingbutton, this);
+	settingsbt->Isvisible = true;
+	guiButtons.push_back(settingsbt);
+
+	exitbt = (GuiControlButton*)Engine::GetInstance().guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", exitbutton, this);
+	exitbt->Isvisible = true;
+	guiButtons.push_back(exitbt);
+
+	
+
+
+
+
 
 	return ret;
 
@@ -201,9 +226,14 @@ bool Scene::Update(float dt)
 
 	return true;
 
+	if (startbt->isClicked==true) {
 
+		startbt->Isvisible = false;
+
+	}
 
 }
+
 
 // Called each loop iteration
 bool Scene::PostUpdate()

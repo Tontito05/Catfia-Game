@@ -55,12 +55,38 @@ public:
 	int enemyCounter = 0;
 	std::vector<Enemy*> enemyList;
 	bool in = false;
-	GuiControlButton* guiBt;
+	
 	SDL_Texture* mouseTileTex = nullptr;
 
 	std::vector<Item*> ItemList;
 	int CoinCounter = 0;
 	int HeartCounter = 0;
+
+	GuiControlButton* startbt;
+	GuiControlButton* exitbt;
+	GuiControlButton* settingsbt;
+	
+	GuiControlButton* layout;
+
+	std::vector<GuiControlButton*> guiButtons;
+	GuiControlButton* menuLayout;
+
+
+	GuiControlButton* playBt;
+	GuiControlButton* continueBt;
+	GuiControlButton* quitgameMMBT;
+	GuiControlButton* creditsBt;
+	GuiControlButton* exitBt;
+
+	std::vector<GuiControlButton*> guiButtonsMM;
+
+	GuiControlButton* returnSTBT;
+
+	std::vector<GuiControlButton*> guiButtonsSettings;
+
+
+
+
 
 private:
 
