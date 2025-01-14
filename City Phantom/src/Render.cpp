@@ -49,7 +49,9 @@ bool Render::Awake()
 		camera.x = 0;
 		camera.y = 0;
 	}
-	
+	TTF_Init();
+	font = TTF_OpenFont("Assets/Fonts/arial/arial.ttf", 25);
+
 	return ret;
 }
 

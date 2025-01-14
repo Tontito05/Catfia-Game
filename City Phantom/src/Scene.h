@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Vector2D.h"
 #include <vector>
+#include "GuiControlButton.h"
 
 struct SDL_Texture;
 
@@ -39,6 +40,9 @@ public:
 
 	void SaveState();
 
+	// Handles multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	// Return the player position
 	Vector2D GetPlayerPosition();
 
@@ -50,7 +54,8 @@ public:
 	int enemyCounter = 0;
 	std::vector<Enemy*> enemyList;
 	bool in = false;
-
+	GuiControlButton* guiBt;
+	SDL_Texture* mouseTileTex = nullptr;
 private:
 
 	SDL_Texture* img;
@@ -64,5 +69,7 @@ private:
 
 	int WWidth;
 	int WHeight;
+
+
 
 };
