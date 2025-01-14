@@ -2,9 +2,16 @@
 
 #include "Entity.h"
 #include "SDL2/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
-
+enum class ItemType
+{
+	COIN,
+	HEART,
+	DASH,
+	KEY
+};
 class Item : public Entity
 {
 public:
@@ -20,14 +27,29 @@ public:
 
 	bool CleanUp();
 
-	void SetParameters(pugi::xml_node parameters) {
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	void SetPosition(Vector2D pos) {
+		position.setX(pos.getX());
+		position.setY(pos.getY());
+	}
+
+	void SetParameters(pugi::xml_node parameters, ItemType type_) {
 		this->parameters = parameters;
+		type = type_;
 	}
 
 public:
 
 	bool isPicked = false;
 	PhysBody* pbody;
+	ItemType type;
+	int h;
+	int w;
+
+	Animation* currentAnim = nullptr;
+
+	Animation idleAnim;
 
 private:
 

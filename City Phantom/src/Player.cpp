@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "Input.h"
 #include "Render.h"
+#include "Item.h"
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
@@ -164,7 +165,7 @@ bool Player::Update(float dt)
 
 
 				//Set the dash so the player can use it on the LEFT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true && DashIsActive == true) {
 					// Apply an initial Left force
 
 					Engine::GetInstance().audio.get()->PlayFx(dashPlayer, 0);
@@ -195,7 +196,7 @@ bool Player::Update(float dt)
 				}
 
 				//Set the dash so the player can use it on the RIGHT
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RSHIFT) == KEY_DOWN && CanDash == true && DashIsActive == true) {
 					// Apply an initial Right force
 
 					Engine::GetInstance().audio.get()->PlayFx(dashPlayer, 0);
@@ -306,7 +307,6 @@ bool Player::Update(float dt)
 
 			//Dash --> its complicated, but it works, it applyes an impulse to the player, that is lowly being reversed by another variable
 			//to the point that hits 0 and the dash stops
-
 			if (isDashingR == true)
 			{
 				//The parameter that creates the slowing sensation of the dash
@@ -325,7 +325,7 @@ bool Player::Update(float dt)
 				state = States::DASH_L;
 			}
 			//Left Dash
-			else if (isDashingL == true)
+			else if (isDashingL == true )
 			{
 				//Same as on top
 				DashSlower += 0.01f;
@@ -448,8 +448,25 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		TerminalVelocity = 0;
 
 		break;
-	case ColliderType::ITEM:
-		LOG("Collision ITEM");
+	case ColliderType::COIN:
+		LOG("Collision COIN");
+		break;
+	case ColliderType::HEART:
+		if (life < 3)
+		{
+			life++;
+		}
+		else
+		{
+			coins += 3;
+		}
+
+		LOG("Collision HEART");
+		break;
+	case ColliderType::DASH:
+		DashIsActive = true;
+
+		LOG("Collision DASH");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
@@ -572,8 +589,14 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		}
 
 		break;
-	case ColliderType::ITEM:
-		LOG("End Collision ITEM");
+	case ColliderType::COIN:
+		LOG("End Collision COIN");
+		break;
+	case ColliderType::HEART:
+		LOG("End Collision HEART");
+		break;
+	case ColliderType::DASH:
+		LOG("End Collision DASH");
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");

@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Item.h"
 #include "Vector2D.h"
 #include <vector>
 #include "GuiControlButton.h"
@@ -48,7 +49,7 @@ public:
 
 	float Slower(float ogPos, float goalPos, float time);
 
-	void CreateEnemyes();
+	void Create();
 	MapLayer* layerNav;
 	Map* map;
 	int enemyCounter = 0;
@@ -56,6 +57,13 @@ public:
 	bool in = false;
 	GuiControlButton* guiBt;
 	SDL_Texture* mouseTileTex = nullptr;
+
+	std::vector<Item*> CoinList;
+	std::vector<Item*> HeartList;
+	Item* DashCard;
+	int CoinCounter = 0;
+	int HeartCounter = 0;
+
 private:
 
 	SDL_Texture* img;
@@ -65,6 +73,9 @@ private:
 	Player* player;
 	int enemySky = 560;
 	int enemyGround = 561;
+	int coin = 570;
+	int dash = 571;
+	int heart = 572;
 	bool enemyesIn = false;
 
 	int WWidth;

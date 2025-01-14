@@ -84,7 +84,6 @@ public:
 	bool falling = false; //A flag to indicate the terminal velocity
 
 	//Life and damage management
-	int life = 3;
 	Timer damageTimer;
 	int dashPlayer;
 	int damagePlayer;
@@ -108,9 +107,6 @@ public:
 	Animation dash;
 	Animation attack;
 	Animation damage;
-
-
-
 	//fx
 	int walkingplayer;
 
@@ -120,5 +116,8 @@ public:
 	//Godmode bool
 	bool Godmode = false;
 
-
+	//GameElements
+	int coins = 0;
+	int life = 3;
+	bool DashIsActive = false;
 };

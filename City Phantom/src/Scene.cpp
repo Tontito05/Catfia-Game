@@ -35,13 +35,6 @@ bool Scene::Awake()
 	//L04: TODO 3b: Instantiate the player using the entity manager
 	player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);
 	player->SetParameters(configParameters.child("entities").child("player"));
-	
-	//L08 Create a new item using the entity manager and set the position to (200, 672) to test
-	for (pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-		item->SetParameters(itemNode);
-	}
 
 	// Create a enemy using the entity manager 
 	//the num of enemyes in tyhe level
@@ -76,14 +69,14 @@ bool Scene::PreUpdate()
 	layerNav = map->GetNavigationLayer();
 	if (enemyesIn == false)
 	{
-		CreateEnemyes();
+		Create();
 		enemyesIn = true;
 	}
 
 	return true;
 }
 
-void Scene::CreateEnemyes()
+void Scene::Create()
 {
 	for (int x = 0; x < map->GetWidth(); x++)
 	{
@@ -118,6 +111,39 @@ void Scene::CreateEnemyes()
 							enemyList.push_back(enemy);
 							enemyCounter++;
 							
+					}
+					else if (gid == coin)
+					{
+						//L08 Create a new item using the entity manager and set the position to (200, 672) to test
+						pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
+						
+						Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+						item->SetParameters(itemNode,ItemType::COIN);
+						item->SetPosition(map->MapToWorld(x, y));
+						item->Start();
+						CoinList.push_back(item);
+						CoinCounter++;
+					}
+					else if (gid == dash)
+					{
+						//L08 Create a new item using the entity manager and set the position to (200, 672) to test
+						pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
+
+						DashCard = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+						DashCard->SetParameters(itemNode, ItemType::DASH);
+						DashCard->SetPosition(map->MapToWorld(x, y));
+						DashCard->Start();
+					}
+					else if (gid == heart)
+					{
+						//L08 Create a new item using the entity manager and set the position to (200, 672) to test
+						pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
+
+						Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+						item->SetParameters(itemNode, ItemType::HEART);
+						item->SetPosition(map->MapToWorld(x, y));
+						item->Start();
+						HeartList.push_back(item);
 					}
 				}
 			}

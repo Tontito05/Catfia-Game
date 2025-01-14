@@ -24,7 +24,9 @@ enum bodyType {
 
 enum class ColliderType {
 	PLAYER, 
-	ITEM,
+	COIN,
+	HEART,
+	DASH,
 	PLATFORM,
 	WALL,
 	DEATH,
@@ -39,7 +41,10 @@ public:
 	PhysBody() : listener(NULL), body(NULL), ctype(ColliderType::UNKNOWN)
 	{}
 
-	~PhysBody() {}
+	~PhysBody() 
+	{
+
+	}
 
 	void GetPosition(int& x, int& y) const;
 	float GetRotation() const;
@@ -63,6 +68,8 @@ public:
 	// Layers
 	const uint16_t PLAYER_LAYER = 0x0001;
 	const uint16_t ENEMY_LAYER = 0x0002;
+	const uint16_t ITEM_LAYER = 0x0003;
+
 
 	// Constructors & Destructors
 	Physics();

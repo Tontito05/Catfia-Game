@@ -14,7 +14,10 @@ Item::Item() : Entity(EntityType::ITEM)
 	name = "item";
 }
 
-Item::~Item() {}
+Item::~Item() 
+{
+
+}
 
 bool Item::Awake() {
 
@@ -24,14 +27,42 @@ bool Item::Awake() {
 
 bool Item::Start() {
 
+
+	h = 32;
+	w = 32;
+	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + w / 2, (int)position.getY() + h / 2, w, h, bodyType::STATIC);
+
+	b2Filter filter;
+	filter.categoryBits = Engine::GetInstance().physics->ITEM_LAYER;
+	pbody->body->GetFixtureList()[0].SetFilterData(filter);
+
+	pbody->body->GetFixtureList()[0].SetSensor(true);
+
 	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load("Assets/tiles/billete boceto.png");
-	
-	// L08 TODO 4: Add a physics to an item - initialize the physics body
-	Engine::GetInstance().textures.get()->GetSize(texture, texW, texH);
-	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texW,texH/2, bodyType::DYNAMIC);
-	// L08 TODO 7: Assign collider type
-	pbody->ctype = ColliderType::ITEM;
+	switch (type)
+	{
+	case ItemType::COIN:
+		texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/Coin.png");
+		pbody->ctype = ColliderType::COIN;
+		break;
+	case ItemType::HEART:
+		texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/Life.png");
+		pbody->ctype = ColliderType::HEART;
+		break;
+	case ItemType::DASH:
+		texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/Power.png");
+		pbody->ctype = ColliderType::DASH;
+		break;
+	case ItemType::KEY:
+		break;
+	default:
+		break;
+	}
+
+	idleAnim.LoadAnimations(parameters.child("animations").child("idle"));
+	currentAnim = &idleAnim;
+
+	pbody->listener = this;
 
 	return true;
 }
@@ -39,13 +70,20 @@ bool Item::Start() {
 bool Item::Update(float dt)
 {
 	ZoneScoped;
-	// L08 TODO 4: Add a physics to an item - update the position of the object from the physics.  
 
+	if (isPicked)
+	{
+		Disable();
+		pbody->body->DestroyFixture(&pbody->body->GetFixtureList()[0]);
+	}
 	b2Transform pbodyPos = pbody->body->GetTransform();
-	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
-	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - w / 2);
+	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - h / 2);
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnim->GetCurrentFrame());
+	currentAnim->Update();
+
+
 
 	return true;
 }
@@ -53,4 +91,16 @@ bool Item::Update(float dt)
 bool Item::CleanUp()
 {
 	return true;
+}
+
+void Item::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+
+		isPicked = true;
+
+		break;
+	}
 }
