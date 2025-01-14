@@ -17,7 +17,7 @@
 	<scene>
 		<map path="Assets/Maps/" name="Map_.tmx" />
 		<entities>
-			<player x="79" y="84" w="32" h="32" texture="Assets/Textures/spritesheet.png">
+			<player x="1556" y="1570" w="32" h="32" texture="Assets/Textures/spritesheet.png">
 				<animations>
 					<idle loop="true" speed="0.05">
 						<frame x="0" y="0" w="32" h="32" />
@@ -81915,7 +81915,405 @@
 				<enemy />
 				<enemy />
 				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy alive="false" />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
+				<enemy />
 			</enemies>
+			<boss>
+				<slime name="Slime" w="64" h="64" x="0" y="0" texture="Assets/Textures/spritesheet.png" gravity="true">
+					<animations>
+						<walkingright loop="true" speed="0.2">
+							<frame x="0" y="576" w="64" h="64" />
+							<frame x="64" y="576" w="64" h="64" />
+							<frame x="128" y="576" w="64" h="64" />
+							<frame x="192" y="576" w="64" h="64" />
+							<frame x="256" y="576" w="64" h="64" />
+						</walkingright>
+						<walkingleft loop="true" speed="0.2">
+							<frame x="0" y="640" w="64" h="64" />
+							<frame x="64" y="640" w="64" h="64" />
+							<frame x="128" y="640" w="64" h="64" />
+							<frame x="192" y="640" w="64" h="64" />
+							<frame x="256" y="640" w="64" h="64" />
+						</walkingleft>
+						<attackleft loop="true" speed="0.2">
+							<frame x="0" y="704" w="80" h="64" />
+							<frame x="80" y="704" w="80" h="64" />
+							<frame x="160" y="704" w="80" h="64" />
+							<frame x="240" y="704" w="80" h="64" />
+							<frame x="320" y="704" w="80" h="64" />
+						</attackleft>
+						<attackright loop="true" speed="0.2">
+							<frame x="0" y="768" w="80" h="64" />
+							<frame x="80" y="768" w="80" h="64" />
+							<frame x="160" y="768" w="80" h="64" />
+							<frame x="240" y="768" w="80" h="64" />
+							<frame x="320" y="768" w="80" h="64" />
+						</attackright>
+						<stuned loop="true" speed="0.2">
+							<frame x="0" y="832" w="64" h="64" />
+							<frame x="64" y="832" w="64" h="64" />
+							<frame x="128" y="832" w="64" h="64" />
+							<frame x="192" y="832" w="64" h="64" />
+							<frame x="256" y="832" w="64" h="64" />
+							<frame x="320" y="832" w="64" h="64" />
+						</stuned>
+						<dyin loop="false" speed="0.2">
+							<frame x="0" y="896" w="64" h="64" />
+							<frame x="64" y="896" w="64" h="64" />
+							<frame x="128" y="896" w="64" h="64" />
+							<frame x="192" y="896" w="64" h="64" />
+							<frame x="256" y="896" w="64" h="64" />
+							<frame x="320" y="896" w="64" h="64" />
+						</dyin>
+						<damage loop="false" speed="0.2">
+							<frame x="0" y="960" w="64" h="64" />
+							<frame x="64" y="960" w="64" h="64" />
+							<frame x="128" y="960" w="64" h="64" />
+							<frame x="192" y="960" w="64" h="64" />
+							<frame x="256" y="960" w="64" h="64" />
+							<frame x="320" y="960" w="64" h="64" />
+						</damage>
+					</animations>
+				</slime>
+			</boss>
 		</entities>
 	</scene>
 </config>

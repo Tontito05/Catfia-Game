@@ -11,7 +11,8 @@ enum class EntityType
 	ITEM,
 	UNKNOWN,
 	FYING_ENEMY,
-	WALKING_ENEMY
+	WALKING_ENEMY,
+	SLIME
 };
 
 class PhysBody;
@@ -92,6 +93,9 @@ enum class States {
 	IDLE_R,
 	WALKING_L,
 	WALKING_R,
+	ATTACK_L,
+	ATTACK_R,
+	STUNNED,
 	DASH_L,
 	DASH_R,
 	JUMPING_L,

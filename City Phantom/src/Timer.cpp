@@ -4,7 +4,7 @@
 
 #include "Timer.h"
 #include "SDL2\SDL_timer.h"
-	
+
 Timer::Timer()
 {
 	Start();
@@ -12,22 +12,48 @@ Timer::Timer()
 
 void Timer::Start()
 {
-	startTime = SDL_GetTicks();
-	active = true;
+	started_at = GetTime();
+	paused_at = 0;
+	time_paused = false;
 }
 
-int Timer::ReadSec() const
-{ 
-	int secs = (SDL_GetTicks() - startTime) / 1000;
-	return secs;
+double Timer::ReadSec() const
+{
+	if (time_paused == true)
+	{
+		return paused_at;
+	}
+	if (time_paused == false)
+	{
+		return (GetTime() - started_at + paused_at);
+	}
+}
+
+void Timer::Stop()
+{
+	if (time_paused == false)
+	{
+		paused_at = ReadSec();
+	}
+	time_paused = true;
+}
+
+void Timer::continueTimer()
+{
+	time_paused = false;
+}
+
+float Timer::GetTime() const
+{
+	return SDL_GetTicks() / 1000.0f;
 }
 
 float Timer::ReadMSec() const
 {
-	float Msecs = (float)(SDL_GetTicks() - startTime);
+	float Msecs = (float)(SDL_GetTicks() - started_at);
 	return Msecs;
 }
-void Timer::RsetTimer() 
+void Timer::RsetTimer()
 {
 	active = false;
 }
