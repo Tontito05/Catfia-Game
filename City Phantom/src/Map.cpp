@@ -54,7 +54,7 @@ bool Map::Update(float dt)
 
             if (mapLayer->properties.GetProperty("Draw") != NULL && mapLayer->properties.GetProperty("Draw")->value == true) {
 
-				if (mapLayer->name != "Building")
+				if (mapLayer->name != "Building" && mapLayer->name != "Boss")
 				{
                     for (int i = 0; i < mapData.width; i++) {
                         for (int j = 0; j < mapData.height; j++) {
@@ -80,6 +80,31 @@ bool Map::Update(float dt)
                     }
 				}
                 else if (mapLayer->name == "Building" && Building == false)
+                {
+                    for (int i = 0; i < mapData.width; i++) {
+                        for (int j = 0; j < mapData.height; j++) {
+
+                            // L07 TODO 9: Complete the draw function
+
+                            //Get the gid from tile
+                            int gid = mapLayer->Get(i, j);
+                            //Check if the gid is different from 0 - some tiles are empty
+                            if (gid != 0) {
+                                //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
+                                TileSet* tileSet = GetTilesetFromTileId(gid);
+                                if (tileSet != nullptr) {
+                                    //Get the Rect from the tileSetTexture;
+                                    SDL_Rect tileRect = tileSet->GetRect(gid);
+                                    //Get the screen coordinates from the tile coordinates
+                                    Vector2D mapCoord = MapToWorld(i, j);
+                                    //Draw the texture
+                                    Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (mapLayer->name == "Boss" && BossRoom == true)
                 {
                     for (int i = 0; i < mapData.width; i++) {
                         for (int j = 0; j < mapData.height; j++) {

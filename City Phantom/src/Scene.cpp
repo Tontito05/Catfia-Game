@@ -230,7 +230,32 @@ bool Scene::Update(float dt)
 	else
 	{
 		map->Building = false;
+		if ((player->position.getX() > buildingEndgeX || player->position.getY() > buildingEndgeY)) {
+
+			if (map->Building == false)
+			{
+				SaveState();
+			}
+
+			map->Building = true;
+
+		}
+		else
+		{
+			map->Building = false;
+		}
 	}
+
+	Vector2D BossDoor = map->MapToWorld(92, 6);
+	if ((player->position.getX() > BossDoor.getX() || player->position.getY() > BossDoor.getX())) {
+
+		if (map->BossRoom == false)
+		{
+			SaveState();
+		}
+		map->BossRoom = true;
+	}
+	
 
 	return true;
 

@@ -574,7 +574,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//check if the player takes damage
 		if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->Boss_->isDead == false)&&(Engine::GetInstance().scene->Boss_->state != States::STUNNED))
 		{
-			if (Engine::GetInstance().scene->Boss_->state == States::ATTACK_L || Engine::GetInstance().scene->Boss_->state == States::ATTACK_R)
+			if (Engine::GetInstance().scene->Boss_->state != States::STUNNED && Engine::GetInstance().scene->Boss_->state != States::DYING)
 			{
 				damageTimer.Start();
 
@@ -594,7 +594,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 
 			Engine::GetInstance().scene->Boss_->Damaged();
-
+			ResetDash();
 			
 		} 
 

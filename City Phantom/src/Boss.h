@@ -84,6 +84,6 @@ private:
 	pugi::xml_node parameters;
 	Timer attTimer;
 	int attDuration = 2;
-	int loops = 1;
-	int health = 3;
+	int loops = 2;
+	int health = 2;
 };

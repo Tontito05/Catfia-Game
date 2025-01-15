@@ -71,13 +71,17 @@ bool Boss::Update(float dt)
 {
 	ZoneScoped;
 
+	if(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+
+	{
+		Damaged();
+	}
+
 	if ((state != States::DYING) && (state != States::DAMAGE))
 	{
 		CheckIfAttack();
 	}
 
-	if (isDead == false)
-	{
 		switch (state)
 		{
 		case States::WALKING_L:
@@ -117,11 +121,11 @@ bool Boss::Update(float dt)
 			pbody->body->SetLinearVelocity({ 0,-GRAVITY_Y });
 			if(currentAnimation->HasFinished())
 			{
+				damage.Reset();
 				state = States::WALKING_L;
 			}
 			break;
 		case States::DYING:
-			isDead = true;
 			currentAnimation = &dying;
 			break;
 		case States::STUNNED:
@@ -132,11 +136,7 @@ bool Boss::Update(float dt)
 			break;
 		}
 
-	}
-	else
-	{
-		state = States::DYING;
-	}
+
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texH / 2);
@@ -225,7 +225,7 @@ bool Boss::CheckIfAttack()
 	{
 		if (loops <= 0)
 		{
-			loops = 3;
+			loops = 2;
 		}
 
 		attTimer.Start();
@@ -242,19 +242,23 @@ void Boss::Damaged()
 	{
 		health--;
 		state = States::DAMAGE;
-		loops = 3;
+		loops = 2;
 		Engine::GetInstance().audio.get()->PlayFx(enemydamage);
 	}
 	else
 	{
+		pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+
 		b2Filter filter;
+
 		// CatBits tipo de layer, maskBits con que layers colisiona
 		filter.categoryBits = 0;
 		filter.maskBits = 0;
+
 		//Ponidendo nuevo filtro
 		pbody->body->GetFixtureList()[0].SetFilterData(filter);
-		pbody->body->SetGravityScale(0);
 
+		pbody->body->SetGravityScale(0);
 		state = States::DYING;
 	}
 }
