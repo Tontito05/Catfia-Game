@@ -82,6 +82,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::WALKING_ENEMY:
 		entity = new Enemy(EntityType::WALKING_ENEMY);
 		break;
+	case EntityType::SLIME:
+		entity = new Boss(EntityType::SLIME);
+		break;
 	default:
 		break;
 	}

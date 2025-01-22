@@ -31,7 +31,8 @@ enum class ColliderType {
 	WALL,
 	DEATH,
 	UNKNOWN,
-	ENEMY
+	ENEMY,
+	BOSS
 	// ..
 };
 // Small class to return to other modules to track position and rotation of physics bodies
@@ -57,7 +58,6 @@ public:
 	b2Body* body;
 	Entity* listener;
 	ColliderType ctype;
-
 };
 
 // Module --------------------------------------

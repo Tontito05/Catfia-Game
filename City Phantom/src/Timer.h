@@ -6,14 +6,23 @@ public:
 
 	// Constructor
 	Timer();
-	bool active = false;
 
 	void Start();
-	int ReadSec() const;
+	double ReadSec() const;
+	void Stop();
+	void continueTimer();
+	float GetTime() const ;
 	float ReadMSec() const;
 	void RsetTimer();
+	bool active;
 
 private:
-	int startTime;
+
+	// Start time in seconds
+	double started_at;
+	double paused_at = 0;
+
+	bool time_paused;
+
 
 };

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "Boss.h"
 #include "Vector2D.h"
 #include <vector>
 #include "GuiControlButton.h"
@@ -59,6 +60,7 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 
 	std::vector<Item*> ItemList;
+	Boss* Boss_;
 	int CoinCounter = 0;
 	int HeartCounter = 0;
 
@@ -98,7 +100,7 @@ private:
 	int enemySky = 560;
 	int enemyGround = 561;
 	int coin = 570;
-	int dash = 571;
+	int Slime = 571;
 	int heart = 572;
 	bool enemyesIn = false;
 

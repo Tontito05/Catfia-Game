@@ -165,6 +165,7 @@ public:
     std::string mapFileName;
     std::string mapPath;
     bool Building = false;
+	bool BossRoom = false;
 private:
     bool mapLoaded;
     // L06: DONE 1: Declare a variable data of the struct MapData

@@ -10,7 +10,6 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Map.h"
-#include "Item.h"
 #include "tracy/Tracy.hpp"
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -149,15 +148,17 @@ void Scene::Create()
 						ItemList.push_back(item);
 						CoinCounter++;
 					}
-					else if (gid == dash)
+					else if (gid == Slime)
 					{
-						pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
+						pugi::xml_node BossNode = configParameters.child("entities").child("boss").child("slime");
 
-						Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
-						item->SetParameters(itemNode, ItemType::DASH);
-						item->SetPosition(map->MapToWorld(x, y));
-						item->Start();
-						ItemList.push_back(item);
+						Boss_ = (Boss*)Engine::GetInstance().entityManager->CreateEntity(EntityType::SLIME);
+						Boss_->SetParameters(BossNode);
+						Boss_->Start();
+						Boss_->OGposition = Vector2D(map->MapToWorld(x, y));
+						Boss_->SetPosition(Boss_->OGposition);
+
+						enemyCounter++;
 					}
 					else if (gid == heart)
 					{
@@ -176,6 +177,13 @@ void Scene::Create()
 		}
 	}
 
+	pugi::xml_node itemNode = configParameters.child("entities").child("items").child("item");
+
+	Item* item = (Item*)Engine::GetInstance().entityManager->CreateEntity(EntityType::ITEM);
+	item->SetParameters(itemNode, ItemType::DASH);
+	item->SetPosition(map->MapToWorld(7, 46));
+	item->Start();
+	ItemList.push_back(item);
 }
 
 float Scene::Slower(float ogPos, float goalPos, float time)
@@ -237,7 +245,32 @@ bool Scene::Update(float dt)
 	else
 	{
 		map->Building = false;
+		if ((player->position.getX() > buildingEndgeX || player->position.getY() > buildingEndgeY)) {
+
+			if (map->Building == false)
+			{
+				SaveState();
+			}
+
+			map->Building = true;
+
+		}
+		else
+		{
+			map->Building = false;
+		}
 	}
+
+	Vector2D BossDoor = map->MapToWorld(92, 6);
+	if ((player->position.getX() > BossDoor.getX() || player->position.getY() > BossDoor.getX())) {
+
+		if (map->BossRoom == false)
+		{
+			SaveState();
+		}
+		map->BossRoom = true;
+	}
+	
 
 	return true;
 

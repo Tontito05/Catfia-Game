@@ -531,7 +531,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 						Engine::GetInstance().audio.get()->PlayFx(damagePlayer, 0);
 					}
 					ResetDash();
-					
 					Engine::GetInstance().scene->enemyList[i]->isDead = true;
 				}
 			}
@@ -569,6 +568,37 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 
 
+		break;
+	case ColliderType::BOSS:
+
+		//check if the player takes damage
+		if ((Godmode == false) && (state != States::DYING) && (state != States::DASH_L) && (state != States::DASH_R) && (Engine::GetInstance().scene->Boss_->isDead == false)&&(Engine::GetInstance().scene->Boss_->state != States::STUNNED))
+		{
+			if (Engine::GetInstance().scene->Boss_->state != States::STUNNED && Engine::GetInstance().scene->Boss_->state != States::DYING)
+			{
+				damageTimer.Start();
+
+				//Impulse the player when damaged by the boss
+				pbody->body->SetLinearVelocity({ 0,0 });
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				Jumping = false;
+				JumpingReset = true;
+				falling = true;
+
+				state = States::DAMAGE;
+				checkLife();
+			}
+		}
+		else if ((Godmode == false) && (state != States::DYING) && ((state == States::DASH_L) || (state == States::DASH_R)) && (Engine::GetInstance().scene->Boss_->isDead == false) && (Engine::GetInstance().scene->Boss_->state == States::STUNNED))
+		{
+
+
+			Engine::GetInstance().scene->Boss_->Damaged();
+			ResetDash();
+			
+		} 
+
+		LOG("Collision Slime");
 		break;
 	}
 }
