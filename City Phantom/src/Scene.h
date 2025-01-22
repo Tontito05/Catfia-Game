@@ -84,7 +84,7 @@ public:
 
 	std::vector<GuiControlButton*> guiButtonsSettings;
 
-
+	bool gameStarted = false;
 
 
 

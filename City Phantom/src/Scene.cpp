@@ -189,6 +189,21 @@ float Scene::Slower(float ogPos, float goalPos, float time)
 bool Scene::Update(float dt)
 {
 	ZoneScoped;
+
+	
+
+	// Check if the Start button has been clicked
+	if (startbt->isClicked == true)
+	{
+		// Hide all buttons
+		for (auto button : guiButtons)
+		{
+			button->Isvisible = false;
+		}
+		gameStarted = true;
+	}
+
+
 	//L03 TODO 3: Make the camera movement independent of framerate
 	float camSpeed = 2;
 	
